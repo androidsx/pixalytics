@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 10 // Minimum for Flurry: 10
     }
 
     buildTypes {
@@ -14,4 +13,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+dependencies {
+    compile files('libs/FlurryAnalytics-5.0.0.jar')
+
+    compile 'com.android.support:support-v4:21.0.3' // Required by Flurry
+
 }

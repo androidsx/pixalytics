@@ -8,12 +8,12 @@ import java.util.Map;
  */
 public class TrackingEvent {
     private final String eventName;
-    private final Map<String, Object> properties;
+    private final Map<String, String> properties;
 
     /**
      * Use the {@link TrackingEvent.Builder}.
      */
-    private TrackingEvent(String eventName, Map<String, Object> properties) {
+    private TrackingEvent(String eventName, Map<String, String> properties) {
         this.eventName = eventName;
         this.properties = properties;
     }
@@ -26,7 +26,7 @@ public class TrackingEvent {
         return properties.get(propertyName);
     }
 
-    public Map<String, Object> getAllProperties() {
+    public Map<String, String> getAllProperties() {
         return properties;
     }
 
@@ -49,14 +49,14 @@ public class TrackingEvent {
 
     public static class Builder {
         private String eventName = null;
-        private final Map<String, Object> properties = new HashMap<>();
+        private final Map<String, String> properties = new HashMap<>();
 
         public Builder withName(String eventName) {
             this.eventName = eventName;
             return this;
         }
 
-        public Builder addProperty(String name, Object value) {
+        public Builder addProperty(String name, String value) {
             properties.put(name, value);
             return this;
         }

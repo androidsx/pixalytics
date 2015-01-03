@@ -1,6 +1,8 @@
 package com.pixable.trackingwrap;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -20,9 +22,28 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided destinations.
      */
-    public void trackEvent(TrackingEvent event, TrackingDestination... destinations) {
-        if (configuration.getDebugPrints().contains(TrackingConfiguration.DebugPrint.LOGCAT)) {
-            Log.d(TAG, "Track event " + event + " to " + Arrays.asList(destinations));
+    public void trackEvent(Context context, TrackingEvent event, TrackingDestination... destinations) {
+        // First some logging
+        for (TrackingConfiguration.DebugPrint debugPrint : configuration.getDebugPrints()) {
+            switch (debugPrint) {
+                case LOGCAT: {
+                    Log.d(TAG, "Track " + event + " to " + Arrays.asList(destinations));
+                    break;
+                }
+                case TOAST: {
+                    Toast.makeText(context, "Track " + event, Toast.LENGTH_LONG).show();
+                    break;
+                }
+            }
+        }
+
+        // And here's the actual tracking
+        for (TrackingDestination destination : destinations) {
+            switch (destination) {
+                case GOOGLE_ANALYTICS: Log.e(TAG, "Not implemented yet"); break;
+                case MIXPANEL: Log.e(TAG, "Not implemented yet"); break;
+                case FLURRY: Log.e(TAG, "Not implemented yet"); break;
+            }
         }
     }
 }

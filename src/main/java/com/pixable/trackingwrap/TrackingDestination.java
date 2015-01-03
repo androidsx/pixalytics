@@ -5,5 +5,6 @@ package com.pixable.trackingwrap;
  */
 public enum TrackingDestination {
     MIXPANEL,
-    GOOGLE_ANALYTICS;
+    GOOGLE_ANALYTICS,
+    FLURRY;
 }

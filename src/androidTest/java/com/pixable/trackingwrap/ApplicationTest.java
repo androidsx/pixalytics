@@ -21,7 +21,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .addProperty("articleId", 15)
                         .addProperty("screen", "full-view")
                         .build(),
-                TrackingDestination.GOOGLE_ANALYTICS);
+                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"));
     }
 
     public void testMultipleDestination() {
@@ -34,7 +34,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .addProperty("articleId", 15)
                         .addProperty("screen", "full-view")
                         .build(),
-                TrackingDestination.GOOGLE_ANALYTICS, TrackingDestination.MIXPANEL);
+                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"),
+                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "bar"));
     }
 
     public void testDebugOutput() {
@@ -49,7 +50,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 new TrackingEvent.Builder()
                         .withName("completed tutorial")
                         .build(),
-                TrackingDestination.MIXPANEL);
+                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "foo"));
 
         wrap.trackEvent(
                 getContext(),
@@ -58,6 +59,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .addProperty("articleId", 15)
                         .addProperty("screen", "full-view")
                         .build(),
-                TrackingDestination.GOOGLE_ANALYTICS, TrackingDestination.MIXPANEL);
+                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"),
+                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "bar"));
     }
 }

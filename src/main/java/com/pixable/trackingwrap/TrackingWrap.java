@@ -39,7 +39,7 @@ public class TrackingWrap {
 
         // And here's the actual tracking
         for (TrackingDestination destination : destinations) {
-            switch (destination) {
+            switch (destination.getPlatform()) {
                 case GOOGLE_ANALYTICS: Log.e(TAG, "Not implemented yet"); break;
                 case MIXPANEL: Log.e(TAG, "Not implemented yet"); break;
                 case FLURRY: Log.e(TAG, "Not implemented yet"); break;

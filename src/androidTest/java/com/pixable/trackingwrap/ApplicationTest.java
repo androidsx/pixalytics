@@ -15,6 +15,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         TrackingWrap wrap = new TrackingWrap(new TrackingConfiguration.Builder().build());
 
         wrap.trackEvent(
+                getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
                         .addProperty("articleId", 15)
@@ -27,6 +28,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         TrackingWrap wrap = new TrackingWrap(new TrackingConfiguration.Builder().build());
 
         wrap.trackEvent(
+                getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
                         .addProperty("articleId", 15)
@@ -43,12 +45,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .build());
 
         wrap.trackEvent(
+                getContext(),
                 new TrackingEvent.Builder()
                         .withName("completed tutorial")
                         .build(),
                 TrackingDestination.MIXPANEL);
 
         wrap.trackEvent(
+                getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
                         .addProperty("articleId", 15)

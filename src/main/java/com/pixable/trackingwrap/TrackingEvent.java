@@ -3,6 +3,9 @@ package com.pixable.trackingwrap;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An event that is to be tracked, that has a name and a set of properties (key-value pairs).
+ */
 public class TrackingEvent {
     private final String eventName;
     private final Map<String, Object> properties;

@@ -7,9 +7,7 @@ import android.widget.Toast;
 import com.flurry.android.FlurryAgent;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -107,7 +105,7 @@ public class TrackingWrap {
                 case GOOGLE_ANALYTICS: Log.e(TAG, "Not implemented yet"); break;
                 case MIXPANEL: Log.e(TAG, "Not implemented yet"); break;
                 case FLURRY:
-                    FlurryAgent.logEvent(event.getEventName(), event.getAllProperties());
+                    FlurryAgent.logEvent(event.getName(), event.getProperties());
                     break;
             }
         }

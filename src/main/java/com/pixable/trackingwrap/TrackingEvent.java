@@ -18,7 +18,7 @@ public class TrackingEvent {
         this.properties = properties;
     }
 
-    public String getEventName() {
+    public String getName() {
         return eventName;
     }
 
@@ -26,19 +26,19 @@ public class TrackingEvent {
         return properties.get(propertyName);
     }
 
-    public Map<String, String> getAllProperties() {
+    public Map<String, String> getProperties() {
         return properties;
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Event \"").append(getEventName()).append("\" ");
-        if (getAllProperties().isEmpty()) {
+        builder.append("Event \"").append(getName()).append("\" ");
+        if (getProperties().isEmpty()) {
             builder.append("with no properties");
         } else {
-            builder.append("with ").append(getAllProperties().size()).append(" properties (");
-            for (String key : getAllProperties().keySet()) {
+            builder.append("with ").append(getProperties().size()).append(" properties (");
+            for (String key : getProperties().keySet()) {
                 builder.append(key).append(": ").append(getProperty(key)).append(", ");
             }
             builder.deleteCharAt(builder.length() - 1).deleteCharAt(builder.length() - 1);

@@ -18,10 +18,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
-                        .addProperty("articleId", 15)
+                        .addProperty("articleId", String.valueOf(15))
                         .addProperty("screen", "full-view")
                         .build(),
-                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"));
+                TrackingDestination.Platform.GOOGLE_ANALYTICS);
     }
 
     public void testMultipleDestination() {
@@ -31,11 +31,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
-                        .addProperty("articleId", 15)
+                        .addProperty("articleId", String.valueOf(15))
                         .addProperty("screen", "full-view")
                         .build(),
-                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"),
-                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "bar"));
+                TrackingDestination.Platform.GOOGLE_ANALYTICS,
+                TrackingDestination.Platform.MIXPANEL);
     }
 
     public void testDebugOutput() {
@@ -50,16 +50,16 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 new TrackingEvent.Builder()
                         .withName("completed tutorial")
                         .build(),
-                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "foo"));
+                TrackingDestination.Platform.MIXPANEL);
 
         wrap.trackEvent(
                 getContext(),
                 new TrackingEvent.Builder()
                         .withName("share")
-                        .addProperty("articleId", 15)
+                        .addProperty("articleId", String.valueOf(15))
                         .addProperty("screen", "full-view")
                         .build(),
-                new TrackingDestination(TrackingDestination.Platform.GOOGLE_ANALYTICS, "foo"),
-                new TrackingDestination(TrackingDestination.Platform.MIXPANEL, "bar"));
+                TrackingDestination.Platform.GOOGLE_ANALYTICS,
+                TrackingDestination.Platform.MIXPANEL);
     }
 }

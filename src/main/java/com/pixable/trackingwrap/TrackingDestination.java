@@ -5,7 +5,7 @@ package com.pixable.trackingwrap;
  */
 public class TrackingDestination {
 
-    enum Platform {
+    public enum Platform {
         MIXPANEL,
         GOOGLE_ANALYTICS,
         FLURRY;
@@ -18,7 +18,7 @@ public class TrackingDestination {
      * @param platform an analytics platform
      * @param appKey app key, typically a long string that is unique for your app in the provided analytics platform
      */
-    TrackingDestination(Platform platform, String appKey) {
+    public TrackingDestination(Platform platform, String appKey) {
         this.platform = platform;
         this.appKey = appKey;
     }

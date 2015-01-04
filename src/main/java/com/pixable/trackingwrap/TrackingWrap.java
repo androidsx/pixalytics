@@ -55,6 +55,8 @@ public class TrackingWrap {
                 case MIXPANEL: throw new UnsupportedOperationException("not yet");
                 case FLURRY: {
                     FlurryAgent.init(context, destination.getAppKey());
+                    FlurryAgent.setLogEnabled(true); // Should be false
+                    FlurryAgent.setLogLevel(Log.INFO); // Not needed, given the previous one
                     initializedDestinations.add(destination);
                 }
             }

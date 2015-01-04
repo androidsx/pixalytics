@@ -11,20 +11,35 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Entry point for the tracking wrap library. Build a wrap instance with your configuration and use
- * it to send events to your analytics platforms of choice.
- * <p>
- * It is strongly recommended that you initialize a singleton in your <em>Application</em> instance.
- * See the lifecycle methods (named like {@code onXXX}) and call them wherever needed.
+ * Entry point for the tracking wrap library. To make usage simple, it is a singleton. Use the
+ * {@link #initialize} method once, and then grab the instance with {@link #getInstance}. It is
+ * strongly recommended that you perform the initialization from your
+ * {@link android.app.Application#onCreate} method.
+ *
+ * See the lifecycle methods (named like {@code onXXX}) and call them wherever needed. Track your
+ * custom events with {@link #trackEvent}.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
+    private static TrackingWrap INSTANCE;
 
     private final TrackingConfiguration configuration;
     private final Set<TrackingDestination> initializedDestinations = new HashSet<>();
 
-    public TrackingWrap(TrackingConfiguration configuration) {
+    private TrackingWrap(TrackingConfiguration configuration) {
         this.configuration = configuration;
+    }
+
+    public static void initialize(TrackingConfiguration configuration) {
+        INSTANCE = new TrackingWrap(configuration);
+    }
+
+    public static TrackingWrap getInstance() {
+        if (INSTANCE == null) {
+            throw new IllegalStateException("The tracking wrap singleton is not initialized");
+        } else {
+            return INSTANCE;
+        }
     }
 
     /**

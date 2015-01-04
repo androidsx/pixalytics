@@ -1,5 +1,6 @@
 package com.pixable.trackingwrap;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class TrackingWrap {
      * @param destinations destinations to be initialized. You will only be able to use these
      */
     public void onApplicationCreate(Context context, TrackingDestination... destinations) {
+        debugPrint(context, "Initialize tracking for " + Arrays.asList(destinations));
+
         for (TrackingDestination destination : destinations) {
             switch (destination.getPlatform()) {
                 case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
@@ -69,6 +72,8 @@ public class TrackingWrap {
      * @param context activity context, not the global application context
      */
     public void onActivityStart(Context context) {
+        debugPrint(context, "Activity start: " + ((Activity)context).getLocalClassName());
+
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
                 case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
@@ -86,6 +91,8 @@ public class TrackingWrap {
      * @param context activity context, not the global application context
      */
     public void onActivityStop(Context context) {
+        debugPrint(context, "Activity stop: " + ((Activity)context).getLocalClassName());
+
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
                 case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
@@ -102,21 +109,8 @@ public class TrackingWrap {
      */
     public void trackEvent(Context context, TrackingEvent event,
                            TrackingDestination.Platform... platforms) {
-        // First some logging
-        for (TrackingConfiguration.DebugPrint debugPrint : configuration.getDebugPrints()) {
-            switch (debugPrint) {
-                case LOGCAT: {
-                    Log.d(TAG, "Track " + event + " to " + Arrays.asList(platforms));
-                    break;
-                }
-                case TOAST: {
-                    Toast.makeText(context, "Track " + event, Toast.LENGTH_LONG).show();
-                    break;
-                }
-            }
-        }
+        debugPrint(context, "Track " + event + " to " + Arrays.asList(platforms));
 
-        // And here's the actual tracking
         for (TrackingDestination.Platform platform : platforms) {
             switch (platform) {
                 case GOOGLE_ANALYTICS: Log.e(TAG, "Not implemented yet"); break;
@@ -124,6 +118,21 @@ public class TrackingWrap {
                 case FLURRY:
                     FlurryAgent.logEvent(event.getName(), event.getProperties());
                     break;
+            }
+        }
+    }
+
+    private void debugPrint(Context context, String message) {
+        for (TrackingConfiguration.DebugPrint debugPrint : configuration.getDebugPrints()) {
+            switch (debugPrint) {
+                case LOGCAT: {
+                    Log.d(TAG, message);
+                    break;
+                }
+                case TOAST: {
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    break;
+                }
             }
         }
     }

@@ -29,4 +29,9 @@ public class TrackingDestination {
     public String getAppKey() {
         return appKey;
     }
+
+    @Override
+    public String toString() {
+        return getPlatform().toString();
+    }
 }

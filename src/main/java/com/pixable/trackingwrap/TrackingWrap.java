@@ -6,9 +6,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.flurry.android.FlurryAgent;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,6 +31,8 @@ public class TrackingWrap {
     private final TrackingConfiguration configuration;
     private final Set<TrackingDestination> initializedDestinations = new HashSet<>();
 
+    private MixpanelAPI mixpanelAPI = null;
+
     private TrackingWrap(TrackingConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -44,7 +50,8 @@ public class TrackingWrap {
     }
 
     /**
-     * To be called from the {@code onCreate} method of your {@link android.app.Application} instance.
+     * To be called from the {@code onCreate} method of your {@link android.app.Application}
+     * instance. Every destination must be initialized in order to be used later.
      *
      * @param context application context
      * @param destinations destinations to be initialized. You will only be able to use these
@@ -54,7 +61,10 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : destinations) {
             switch (destination.getPlatform()) {
-                case MIXPANEL: throw new UnsupportedOperationException("not yet");
+                case MIXPANEL: {
+                    mixpanelAPI = MixpanelAPI.getInstance(context, destination.getAppKey());
+                    initializedDestinations.add(destination);
+                }
                 case FLURRY: {
                     FlurryAgent.init(context, destination.getAppKey());
                     FlurryAgent.setLogEnabled(true); // Should be false
@@ -66,7 +76,8 @@ public class TrackingWrap {
     }
 
     /**
-     * To be called from the {@code onStart} of every activity in your application.
+     * To be called from the {@code onStart} of every activity in your application. This lifecycle
+     * method is used to track sessions. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
      */
@@ -75,7 +86,10 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
-                case MIXPANEL: throw new UnsupportedOperationException("not yet");
+                case MIXPANEL: {
+                    throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+                    // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
+                }
                 case FLURRY: {
                     FlurryAgent.onStartSession(context);
                     break;
@@ -94,9 +108,34 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
-                case MIXPANEL: throw new UnsupportedOperationException("not yet");
+                case MIXPANEL: {
+                    throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+                    // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
+                }
                 case FLURRY: {
                     FlurryAgent.onEndSession(context);
+                }
+            }
+        }
+    }
+
+    /**
+     * Adds a set of properties that are common to all events. Some providers manage this
+     * automatically, such as Mixpanel's super-properties. For others, this library will add this
+     * properties explicitly to every event.
+     */
+    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
+        debugPrint(context, "Register " + commonProperties.size() + " common properties in "
+                + Arrays.asList(initializedDestinations));
+
+        for (TrackingDestination destination : initializedDestinations) {
+            switch (destination.getPlatform()) {
+                case MIXPANEL: {
+                    mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
+                    break;
+                }
+                case FLURRY: {
+                    throw new UnsupportedOperationException("Not implemented yet");
                 }
             }
         }
@@ -111,10 +150,14 @@ public class TrackingWrap {
 
         for (TrackingDestination.Platform platform : platforms) {
             switch (platform) {
-                case MIXPANEL: Log.e(TAG, "Not implemented yet"); break;
-                case FLURRY:
+                case MIXPANEL: {
+                    mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
+                    break;
+                }
+                case FLURRY: {
                     FlurryAgent.logEvent(event.getName(), event.getProperties());
                     break;
+                }
             }
         }
     }

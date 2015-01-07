@@ -1,5 +1,7 @@
 package com.pixable.trackingwrap;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,10 @@ public class TrackingEvent {
 
     public Map<String, String> getProperties() {
         return properties;
+    }
+
+    public JSONObject getPropertiesAsJson() {
+        return new JSONObject(properties);
     }
 
     @Override

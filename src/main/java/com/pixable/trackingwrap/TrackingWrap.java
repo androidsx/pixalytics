@@ -54,7 +54,6 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : destinations) {
             switch (destination.getPlatform()) {
-                case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
                 case MIXPANEL: throw new UnsupportedOperationException("not yet");
                 case FLURRY: {
                     FlurryAgent.init(context, destination.getAppKey());
@@ -76,10 +75,10 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
-                case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
                 case MIXPANEL: throw new UnsupportedOperationException("not yet");
                 case FLURRY: {
                     FlurryAgent.onStartSession(context);
+                    break;
                 }
             }
         }
@@ -95,7 +94,6 @@ public class TrackingWrap {
 
         for (TrackingDestination destination : initializedDestinations) {
             switch (destination.getPlatform()) {
-                case GOOGLE_ANALYTICS: throw new UnsupportedOperationException("not yet");
                 case MIXPANEL: throw new UnsupportedOperationException("not yet");
                 case FLURRY: {
                     FlurryAgent.onEndSession(context);
@@ -113,7 +111,6 @@ public class TrackingWrap {
 
         for (TrackingDestination.Platform platform : platforms) {
             switch (platform) {
-                case GOOGLE_ANALYTICS: Log.e(TAG, "Not implemented yet"); break;
                 case MIXPANEL: Log.e(TAG, "Not implemented yet"); break;
                 case FLURRY:
                     FlurryAgent.logEvent(event.getName(), event.getProperties());

@@ -7,7 +7,6 @@ public class TrackingDestination {
 
     public enum Platform {
         MIXPANEL,
-        GOOGLE_ANALYTICS,
         FLURRY;
     }
 

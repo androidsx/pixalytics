@@ -1,5 +1,7 @@
 package com.pixable.trackingwrap;
 
+import com.pixable.trackingwrap.platform.Platform;
+
 import java.util.HashSet;
 import java.util.Set;
 

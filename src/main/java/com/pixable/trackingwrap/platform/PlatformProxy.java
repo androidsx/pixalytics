@@ -1,4 +1,4 @@
-package com.pixable.trackingwrap.proxy;
+package com.pixable.trackingwrap.platform;
 
 import android.content.Context;
 

@@ -5,7 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.pixable.trackingwrap.proxy.PlatformProxy;
+import com.pixable.trackingwrap.platform.Platform;
+import com.pixable.trackingwrap.platform.PlatformProxy;
 
 import java.util.Arrays;
 import java.util.HashMap;

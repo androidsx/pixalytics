@@ -1,8 +1,4 @@
-package com.pixable.trackingwrap;
-
-import com.pixable.trackingwrap.proxy.FlurryProxy;
-import com.pixable.trackingwrap.proxy.MixpanelProxy;
-import com.pixable.trackingwrap.proxy.PlatformProxy;
+package com.pixable.trackingwrap.platform;
 
 public class Platform {
 

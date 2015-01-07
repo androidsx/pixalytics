@@ -15,7 +15,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         TrackingWrap.INSTANCE = null;
     }
 
-    public void testSingletonMustBeInitializedExplicitely() {
+    public void testSingletonMustBeInitializedExplicitly() {
         try {
             TrackingWrap.getInstance();
             fail("Should have explicitly created the instance before");
@@ -27,12 +27,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testSingletonCantBeInitializedTwice() {
         TrackingWrap.createInstance(
                 new TrackingConfig.Builder()
-                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
+                        .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
         try {
             TrackingWrap.createInstance(
                     new TrackingConfig.Builder()
-                            .addPlatform(PlatformId.MIXPANEL, new PlatformConfig("key"))
+                            .addPlatform(new Platform(Platform.Id.MIXPANEL, new Platform.Config("key")))
                             .build());
 
             fail("The singleton instance was already created");
@@ -53,14 +53,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testAppMustBeInitialized() {
         TrackingWrap.createInstance(
                 new TrackingConfig.Builder()
-                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
+                        .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
 
         try {
             TrackingWrap.getInstance().trackEvent(
                     getContext(),
                     new TrackingEvent.Builder().withName("share").build(),
-                    PlatformId.FLURRY);
+                    Platform.Id.FLURRY);
             fail("Expected to fail: didn't initialized the application");
         } catch (IllegalStateException e) {
             // Expected
@@ -70,7 +70,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testEveryPlatformMustHaveBeenProvidedAtInitTime() {
         TrackingWrap.createInstance(
                 new TrackingConfig.Builder()
-                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
+                        .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
         TrackingWrap.getInstance().onApplicationCreate(getContext());
 
@@ -78,31 +78,31 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
             TrackingWrap.getInstance().trackEvent(
                     getContext(),
                     new TrackingEvent.Builder().withName("share").build(),
-                    PlatformId.MIXPANEL);
+                    Platform.Id.MIXPANEL);
 
             fail("Expected to fail: this platform is not initialized");
         } catch (IllegalStateException e) {
             // Expected
         }
     }
-
-    /*
-    public void testSimpleEventIsTracked() {
+/*
+    // TODO: not really testing anything yet
+    public void testApplicationCreationIsTracked() {
         TrackingWrap.createInstance(
-                new TrackingConfiguration.Builder()
-                        .addPlatform(Platform.FLURRY, new PlatformConfig("key"))
+                new TrackingConfig.Builder()
+                        .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
-
         TrackingWrap.getInstance().onApplicationCreate(getContext());
+
         TrackingWrap.getInstance().trackEvent(
                 getContext(),
                 new TrackingEvent.Builder().withName("share").build(),
-                Platform.FLURRY);
+                Platform.Id.FLURRY);
 
         // Well, nothing fails, nothing exploded. Not a bad start
-    }
+    }*/
 
-
+    /*
     public void testEventWithProperties() {
                 TrackingWrap.createInstance(
                 new TrackingConfiguration.Builder()

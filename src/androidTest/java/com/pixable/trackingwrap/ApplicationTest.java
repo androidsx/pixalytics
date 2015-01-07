@@ -21,7 +21,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .addProperty("articleId", String.valueOf(15))
                         .addProperty("screen", "full-view")
                         .build(),
-                TrackingDestination.Platform.GOOGLE_ANALYTICS);
+                TrackingDestination.Platform.MIXPANEL);
     }
 
     public void testMultipleDestination() {

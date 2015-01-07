@@ -26,13 +26,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testSingletonCantBeInitializedTwice() {
         TrackingWrap.createInstance(
-                new TrackingConfiguration.Builder()
-                        .addPlatform(Platform.FLURRY, new PlatformConfig("key"))
+                new TrackingConfig.Builder()
+                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
                         .build());
         try {
             TrackingWrap.createInstance(
-                    new TrackingConfiguration.Builder()
-                            .addPlatform(Platform.MIXPANEL, new PlatformConfig("key"))
+                    new TrackingConfig.Builder()
+                            .addPlatform(PlatformId.MIXPANEL, new PlatformConfig("key"))
                             .build());
 
             fail("The singleton instance was already created");
@@ -43,7 +43,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testAtLeastOnePlatformRequired() {
         try {
-            TrackingWrap.createInstance(new TrackingConfiguration.Builder().build());
+            TrackingWrap.createInstance(new TrackingConfig.Builder().build());
             fail("Should have provided at least one platform");
         } catch (IllegalStateException e) {
             // Expected
@@ -52,15 +52,15 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testAppMustBeInitialized() {
         TrackingWrap.createInstance(
-                new TrackingConfiguration.Builder()
-                        .addPlatform(Platform.FLURRY, new PlatformConfig("key"))
+                new TrackingConfig.Builder()
+                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
                         .build());
 
         try {
             TrackingWrap.getInstance().trackEvent(
                     getContext(),
                     new TrackingEvent.Builder().withName("share").build(),
-                    Platform.FLURRY);
+                    PlatformId.FLURRY);
             fail("Expected to fail: didn't initialized the application");
         } catch (IllegalStateException e) {
             // Expected
@@ -69,8 +69,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testEveryPlatformMustHaveBeenProvidedAtInitTime() {
         TrackingWrap.createInstance(
-                new TrackingConfiguration.Builder()
-                        .addPlatform(Platform.FLURRY, new PlatformConfig("key"))
+                new TrackingConfig.Builder()
+                        .addPlatform(PlatformId.FLURRY, new PlatformConfig("key"))
                         .build());
         TrackingWrap.getInstance().onApplicationCreate(getContext());
 
@@ -78,7 +78,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
             TrackingWrap.getInstance().trackEvent(
                     getContext(),
                     new TrackingEvent.Builder().withName("share").build(),
-                    Platform.MIXPANEL);
+                    PlatformId.MIXPANEL);
 
             fail("Expected to fail: this platform is not initialized");
         } catch (IllegalStateException e) {

@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class TrackingConfiguration {
-    private final Map<Platform, PlatformConfig> platforms;
+public class TrackingConfig {
+    private final Map<PlatformId, PlatformConfig> platforms;
     private final Set<DebugPrint> debugPrints;
 
-    public TrackingConfiguration(Map<Platform, PlatformConfig> platforms, Set<DebugPrint> debugPrints) {
+    public TrackingConfig(Map<PlatformId, PlatformConfig> platforms, Set<DebugPrint> debugPrints) {
         this.platforms = platforms;
         this.debugPrints = debugPrints;
     }
 
-    public Map<Platform, PlatformConfig> getPlatforms() {
+    public Map<PlatformId, PlatformConfig> getPlatforms() {
         return platforms;
     }
 
@@ -28,7 +28,7 @@ public class TrackingConfiguration {
     }
 
     public static class Builder {
-        private Map<Platform, PlatformConfig> platforms = new HashMap<>();
+        private Map<PlatformId, PlatformConfig> platforms = new HashMap<>();
         private Set<DebugPrint> debugPrints = new HashSet<>();
 
         /**
@@ -36,11 +36,11 @@ public class TrackingConfiguration {
          * different Mixpanel accounts, for instance. Implementing this may be a little tricky in the
          * library, and a little cumbersome for the clients.
          */
-        public Builder addPlatform(Platform platform, PlatformConfig platformConfig) {
-            if (platforms.containsKey(platform)) {
+        public Builder addPlatform(PlatformId platformId, PlatformConfig platformConfig) {
+            if (platforms.containsKey(platformId)) {
                 throw new IllegalArgumentException("Only one configuration is allowed per platform");
             }
-            platforms.put(platform, platformConfig);
+            platforms.put(platformId, platformConfig);
             return this;
         }
 
@@ -49,12 +49,12 @@ public class TrackingConfiguration {
             return this;
         }
 
-        public TrackingConfiguration build() {
+        public TrackingConfig build() {
             if (platforms.isEmpty()) {
                 throw new IllegalStateException("You should configure at least one platform");
             }
 
-            return new TrackingConfiguration(platforms, debugPrints);
+            return new TrackingConfig(platforms, debugPrints);
         }
     }
 }

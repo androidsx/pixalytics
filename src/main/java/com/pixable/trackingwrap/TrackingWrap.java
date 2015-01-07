@@ -26,16 +26,16 @@ public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
     static TrackingWrap INSTANCE;
 
-    private final TrackingConfiguration configuration;
+    private final TrackingConfig configuration;
 
     private boolean initialized = false;
     private MixpanelAPI mixpanelAPI = null;
 
-    private TrackingWrap(TrackingConfiguration configuration) {
+    private TrackingWrap(TrackingConfig configuration) {
         this.configuration = configuration;
     }
 
-    public static TrackingWrap createInstance(TrackingConfiguration configuration) {
+    public static TrackingWrap createInstance(TrackingConfig configuration) {
         if (INSTANCE == null) {
             INSTANCE = new TrackingWrap(configuration);
             return INSTANCE;
@@ -63,10 +63,10 @@ public class TrackingWrap {
     public void onApplicationCreate(Context context) {
         debugPrint(context, "Initialize tracking for " + configuration.getPlatforms().keySet());
 
-        for (Platform platform : configuration.getPlatforms().keySet()) {
-            final PlatformConfig config = configuration.getPlatforms().get(platform);
+        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
+            final PlatformConfig config = configuration.getPlatforms().get(platformId);
 
-            switch (platform) {
+            switch (platformId) {
                 case MIXPANEL: {
                     mixpanelAPI = MixpanelAPI.getInstance(context, config.getAppKey());
                 }
@@ -91,8 +91,8 @@ public class TrackingWrap {
         checkAppIsInitialized();
         debugPrint(context, "Activity start: " + ((Activity)context).getLocalClassName());
 
-        for (Platform platform : configuration.getPlatforms().keySet()) {
-            switch (platform) {
+        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
+            switch (platformId) {
                 case MIXPANEL: {
                     throw new UnsupportedOperationException("Mixpanel does not support session tracking");
                     // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
@@ -114,8 +114,8 @@ public class TrackingWrap {
         checkAppIsInitialized();
         debugPrint(context, "Activity stop: " + ((Activity)context).getLocalClassName());
 
-        for (Platform platform : configuration.getPlatforms().keySet()) {
-            switch (platform) {
+        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
+            switch (platformId) {
                 case MIXPANEL: {
                     throw new UnsupportedOperationException("Mixpanel does not support session tracking");
                     // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
@@ -137,8 +137,8 @@ public class TrackingWrap {
         debugPrint(context, "Register " + commonProperties.size() + " common properties in "
                 + configuration.getPlatforms().keySet());
 
-        for (Platform platform : configuration.getPlatforms().keySet()) {
-            switch (platform) {
+        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
+            switch (platformId) {
                 case MIXPANEL: {
                     mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
                     break;
@@ -153,13 +153,13 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, TrackingEvent event, Platform... platforms) {
+    public void trackEvent(Context context, TrackingEvent event, PlatformId... platformIds) {
         checkAppIsInitialized();
-        debugPrint(context, "Track " + event + " to " + Arrays.asList(platforms));
+        debugPrint(context, "Track " + event + " to " + Arrays.asList(platformIds));
 
-        for (Platform platform : platforms) {
-            checkPlatformIsConfigured(platform);
-            switch (platform) {
+        for (PlatformId platformId : platformIds) {
+            checkPlatformIsConfigured(platformId);
+            switch (platformId) {
                 case MIXPANEL: {
                     mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
                     break;
@@ -178,16 +178,16 @@ public class TrackingWrap {
         }
     }
 
-    private void checkPlatformIsConfigured(Platform platform) {
-        if (!configuration.getPlatforms().containsKey(platform)) {
-            throw new IllegalStateException("The platform " + platform + " is not initialized."
+    private void checkPlatformIsConfigured(PlatformId platformId) {
+        if (!configuration.getPlatforms().containsKey(platformId)) {
+            throw new IllegalStateException("The platform " + platformId + " is not initialized."
                     + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                     + configuration.getPlatforms().keySet());
         }
     }
 
     private void debugPrint(Context context, String message) {
-        for (TrackingConfiguration.DebugPrint debugPrint : configuration.getDebugPrints()) {
+        for (TrackingConfig.DebugPrint debugPrint : configuration.getDebugPrints()) {
             switch (debugPrint) {
                 case LOGCAT: {
                     Log.d(TAG, message);

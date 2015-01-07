@@ -3,6 +3,8 @@ package com.pixable.trackingwrap;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
+import com.pixable.trackingwrap.platform.Platform;
+
 public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);

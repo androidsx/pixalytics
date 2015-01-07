@@ -1,16 +1,15 @@
-package com.pixable.trackingwrap.proxy;
+package com.pixable.trackingwrap.platform;
 
 import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
-import com.pixable.trackingwrap.Platform;
 import com.pixable.trackingwrap.TrackingEvent;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
-public class MixpanelProxy implements PlatformProxy {
+class MixpanelProxy implements PlatformProxy {
     private final Platform.Config config;
 
     private MixpanelAPI mixpanelAPI;

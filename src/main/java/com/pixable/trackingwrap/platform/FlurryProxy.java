@@ -1,16 +1,14 @@
-package com.pixable.trackingwrap.proxy;
+package com.pixable.trackingwrap.platform;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
-import com.pixable.trackingwrap.Platform;
 import com.pixable.trackingwrap.TrackingEvent;
 
 import java.util.Map;
 
-// TODO: rename proxy to platform and make all these package-protected
-public class FlurryProxy implements PlatformProxy {
+class FlurryProxy implements PlatformProxy {
     private final Platform.Config config;
 
     public FlurryProxy(Platform.Config config) {

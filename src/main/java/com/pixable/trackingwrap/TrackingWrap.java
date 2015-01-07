@@ -5,12 +5,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.flurry.android.FlurryAgent;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
-
-import org.json.JSONObject;
+import com.pixable.trackingwrap.proxy.PlatformProxy;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,8 +26,9 @@ public class TrackingWrap {
 
     private final TrackingConfig configuration;
 
+    /** Map of platform IDs to proxies to be able to have the client just use IDs. */
+    private Map<Platform.Id, PlatformProxy> platformProxyMap = new HashMap<>();
     private boolean initialized = false;
-    private MixpanelAPI mixpanelAPI = null;
 
     private TrackingWrap(TrackingConfig configuration) {
         this.configuration = configuration;
@@ -61,21 +60,12 @@ public class TrackingWrap {
      * @param context application context
      */
     public void onApplicationCreate(Context context) {
-        debugPrint(context, "Initialize tracking for " + configuration.getPlatforms().keySet());
+        debugPrint(context, "Initialize tracking for " + configuration.getPlatforms());
 
-        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
-            final PlatformConfig config = configuration.getPlatforms().get(platformId);
+        for (Platform platform : configuration.getPlatforms()) {
+            platform.getProxy().onApplicationCreate(context);
 
-            switch (platformId) {
-                case MIXPANEL: {
-                    mixpanelAPI = MixpanelAPI.getInstance(context, config.getAppKey());
-                }
-                case FLURRY: {
-                    FlurryAgent.init(context, config.getAppKey());
-                    FlurryAgent.setLogEnabled(true); // Should be false
-                    FlurryAgent.setLogLevel(Log.INFO); // Not needed, given the previous one
-                }
-            }
+            platformProxyMap.put(platform.getId(), platform.getProxy());
         }
 
         initialized = true;
@@ -91,17 +81,8 @@ public class TrackingWrap {
         checkAppIsInitialized();
         debugPrint(context, "Activity start: " + ((Activity)context).getLocalClassName());
 
-        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
-            switch (platformId) {
-                case MIXPANEL: {
-                    throw new UnsupportedOperationException("Mixpanel does not support session tracking");
-                    // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
-                }
-                case FLURRY: {
-                    FlurryAgent.onStartSession(context);
-                    break;
-                }
-            }
+        for (Platform platform : configuration.getPlatforms()) {
+            platform.getProxy().onActivityStart(context);
         }
     }
 
@@ -114,16 +95,8 @@ public class TrackingWrap {
         checkAppIsInitialized();
         debugPrint(context, "Activity stop: " + ((Activity)context).getLocalClassName());
 
-        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
-            switch (platformId) {
-                case MIXPANEL: {
-                    throw new UnsupportedOperationException("Mixpanel does not support session tracking");
-                    // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
-                }
-                case FLURRY: {
-                    FlurryAgent.onEndSession(context);
-                }
-            }
+        for (Platform platform : configuration.getPlatforms()) {
+            platform.getProxy().onActivityStop(context);
         }
     }
 
@@ -135,40 +108,23 @@ public class TrackingWrap {
     public void addCommonProperties(Context context, Map<String, String> commonProperties) {
         checkAppIsInitialized();
         debugPrint(context, "Register " + commonProperties.size() + " common properties in "
-                + configuration.getPlatforms().keySet());
+                + configuration.getPlatforms());
 
-        for (PlatformId platformId : configuration.getPlatforms().keySet()) {
-            switch (platformId) {
-                case MIXPANEL: {
-                    mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
-                    break;
-                }
-                case FLURRY: {
-                    throw new UnsupportedOperationException("Not implemented yet");
-                }
-            }
+        for (Platform platform : configuration.getPlatforms()) {
+            platform.getProxy().addCommonProperties(context, commonProperties);
         }
     }
 
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, TrackingEvent event, PlatformId... platformIds) {
+    public void trackEvent(Context context, TrackingEvent event, Platform.Id... platformIds) {
         checkAppIsInitialized();
         debugPrint(context, "Track " + event + " to " + Arrays.asList(platformIds));
 
-        for (PlatformId platformId : platformIds) {
+        for (Platform.Id platformId : platformIds) {
             checkPlatformIsConfigured(platformId);
-            switch (platformId) {
-                case MIXPANEL: {
-                    mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
-                    break;
-                }
-                case FLURRY: {
-                    FlurryAgent.logEvent(event.getName(), event.getProperties());
-                    break;
-                }
-            }
+            platformProxyMap.get(platformId).trackEvent(context, event);
         }
     }
 
@@ -178,12 +134,16 @@ public class TrackingWrap {
         }
     }
 
-    private void checkPlatformIsConfigured(PlatformId platformId) {
-        if (!configuration.getPlatforms().containsKey(platformId)) {
-            throw new IllegalStateException("The platform " + platformId + " is not initialized."
-                    + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
-                    + configuration.getPlatforms().keySet());
+    private void checkPlatformIsConfigured(Platform.Id platformId) {
+        for (Platform platform : configuration.getPlatforms()) {
+            if (platform.getId().equals(platformId)) {
+                return;
+            }
         }
+
+        throw new IllegalStateException("The platform " + platformId + " is not initialized."
+                + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
+                + configuration.getPlatforms().size());
     }
 
     private void debugPrint(Context context, String message) {

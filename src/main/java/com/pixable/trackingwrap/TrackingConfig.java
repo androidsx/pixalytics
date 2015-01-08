@@ -1,35 +1,39 @@
 package com.pixable.trackingwrap;
 
 import com.pixable.trackingwrap.platform.Platform;
+import com.pixable.trackingwrap.trace.TraceId;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class TrackingConfig {
     private final Set<Platform> platforms;
-    private final Set<Trace> traces;
+    private final Set<TraceId> traceIds;
 
-    public TrackingConfig(Set<Platform> platforms, Set<Trace> traces) {
+    public TrackingConfig(Set<Platform> platforms, Set<TraceId> traceIds) {
         this.platforms = platforms;
-        this.traces = traces;
+        this.traceIds = traceIds;
     }
 
     public Set<Platform> getPlatforms() {
         return platforms;
     }
 
-    public Set<Trace> getTraces() {
-        return traces;
+    public Set<Platform.Id> getPlatformIds() {
+        final Set<Platform.Id> platformIds = new HashSet<>();
+        for (Platform platform : platforms) {
+            platformIds.add(platform.getId());
+        }
+        return platformIds;
     }
 
-    public enum Trace {
-        LOGCAT,
-        TOAST;
+    public Set<TraceId> getTraceIds() {
+        return traceIds;
     }
 
     public static class Builder {
         private Set<Platform> platforms = new HashSet<>();
-        private Set<Trace> traces = new HashSet<>();
+        private Set<TraceId> traceIds = new HashSet<>();
 
         /**
          * Only one configuration is allowed for every provider. That is, you cannot send events to two
@@ -44,8 +48,8 @@ public class TrackingConfig {
             return this;
         }
 
-        public Builder addDebugPrint(Trace trace) {
-            traces.add(trace);
+        public Builder addTrace(TraceId traceId) {
+            traceIds.add(traceId);
             return this;
         }
 
@@ -54,7 +58,7 @@ public class TrackingConfig {
                 throw new IllegalStateException("You should configure at least one platform");
             }
 
-            return new TrackingConfig(platforms, traces);
+            return new TrackingConfig(platforms, traceIds);
         }
     }
 }

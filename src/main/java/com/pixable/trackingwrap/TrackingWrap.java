@@ -2,13 +2,13 @@ package com.pixable.trackingwrap;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.pixable.trackingwrap.platform.Platform;
 import com.pixable.trackingwrap.platform.PlatformProxy;
+import com.pixable.trackingwrap.trace.TraceId;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +61,12 @@ public class TrackingWrap {
      * @param context application context
      */
     public void onApplicationCreate(Context context) {
-        debugPrint(context, "Initialize tracking for " + configuration.getPlatforms());
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    "On application create",
+                    Collections.<String, String>emptyMap(),
+                    configuration.getPlatformIds());
+        }
 
         for (Platform platform : configuration.getPlatforms()) {
             platform.getProxy().onApplicationCreate(context);
@@ -80,7 +85,13 @@ public class TrackingWrap {
      */
     public void onActivityStart(Context context) {
         checkAppIsInitialized();
-        debugPrint(context, "Activity start: " + ((Activity)context).getLocalClassName());
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    "Activity start: " + ((Activity)context).getLocalClassName(),
+                    Collections.<String, String>emptyMap(),
+                    configuration.getPlatformIds());
+        }
 
         for (Platform platform : configuration.getPlatforms()) {
             platform.getProxy().onActivityStart(context);
@@ -94,7 +105,13 @@ public class TrackingWrap {
      */
     public void onActivityStop(Context context) {
         checkAppIsInitialized();
-        debugPrint(context, "Activity stop: " + ((Activity)context).getLocalClassName());
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    "Activity stop: " + ((Activity)context).getLocalClassName(),
+                    Collections.<String, String>emptyMap(),
+                    configuration.getPlatformIds());
+        }
 
         for (Platform platform : configuration.getPlatforms()) {
             platform.getProxy().onActivityStop(context);
@@ -108,8 +125,13 @@ public class TrackingWrap {
      */
     public void addCommonProperties(Context context, Map<String, String> commonProperties) {
         checkAppIsInitialized();
-        debugPrint(context, "Register " + commonProperties.size() + " common properties in "
-                + configuration.getPlatforms());
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    "Register " + commonProperties.size() + " common properties",
+                    commonProperties,
+                    configuration.getPlatformIds());
+        }
 
         for (Platform platform : configuration.getPlatforms()) {
             platform.getProxy().addCommonProperties(context, commonProperties);
@@ -121,7 +143,13 @@ public class TrackingWrap {
      */
     public void trackEvent(Context context, TrackingEvent event, Platform.Id... platformIds) {
         checkAppIsInitialized();
-        debugPrint(context, "Track " + event + " to " + Arrays.asList(platformIds));
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    event.getName(),
+                    event.getProperties(),
+                    Arrays.asList(platformIds));
+        }
 
         for (Platform.Id platformId : platformIds) {
             checkPlatformIsConfigured(platformId);
@@ -145,20 +173,5 @@ public class TrackingWrap {
         throw new IllegalStateException("The platform " + platformId + " is not initialized."
                 + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                 + configuration.getPlatforms().size());
-    }
-
-    private void debugPrint(Context context, String message) {
-        for (TrackingConfig.Trace trace : configuration.getTraces()) {
-            switch (trace) {
-                case LOGCAT: {
-                    Log.d(TAG, message);
-                    break;
-                }
-                case TOAST: {
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                    break;
-                }
-            }
-        }
     }
 }

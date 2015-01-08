@@ -7,29 +7,29 @@ import java.util.Set;
 
 public class TrackingConfig {
     private final Set<Platform> platforms;
-    private final Set<DebugPrint> debugPrints;
+    private final Set<Trace> traces;
 
-    public TrackingConfig(Set<Platform> platforms, Set<DebugPrint> debugPrints) {
+    public TrackingConfig(Set<Platform> platforms, Set<Trace> traces) {
         this.platforms = platforms;
-        this.debugPrints = debugPrints;
+        this.traces = traces;
     }
 
     public Set<Platform> getPlatforms() {
         return platforms;
     }
 
-    public Set<DebugPrint> getDebugPrints() {
-        return debugPrints;
+    public Set<Trace> getTraces() {
+        return traces;
     }
 
-    public enum DebugPrint {
+    public enum Trace {
         LOGCAT,
         TOAST;
     }
 
     public static class Builder {
         private Set<Platform> platforms = new HashSet<>();
-        private Set<DebugPrint> debugPrints = new HashSet<>();
+        private Set<Trace> traces = new HashSet<>();
 
         /**
          * Only one configuration is allowed for every provider. That is, you cannot send events to two
@@ -44,8 +44,8 @@ public class TrackingConfig {
             return this;
         }
 
-        public Builder addDebugPrint(DebugPrint debugPrint) {
-            debugPrints.add(debugPrint);
+        public Builder addDebugPrint(Trace trace) {
+            traces.add(trace);
             return this;
         }
 
@@ -54,7 +54,7 @@ public class TrackingConfig {
                 throw new IllegalStateException("You should configure at least one platform");
             }
 
-            return new TrackingConfig(platforms, debugPrints);
+            return new TrackingConfig(platforms, traces);
         }
     }
 }

@@ -148,8 +148,8 @@ public class TrackingWrap {
     }
 
     private void debugPrint(Context context, String message) {
-        for (TrackingConfig.DebugPrint debugPrint : configuration.getDebugPrints()) {
-            switch (debugPrint) {
+        for (TrackingConfig.Trace trace : configuration.getTraces()) {
+            switch (trace) {
                 case LOGCAT: {
                     Log.d(TAG, message);
                     break;

@@ -12,14 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <com.pixable.photofeed.ui.widgets.CustomTextViewTTF
+        <TextView
             android:id="@+id/toast_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:textColor="@color/tracking_toast_mixpanel_text"
-            android:textSize="@dimen/tracking_toast_title"
-            pixable:ttf="regular" />
+            android:textSize="@dimen/tracking_toast_title" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,12 +63,11 @@
 
     </RelativeLayout>
 
-    <com.pixable.photofeed.ui.widgets.CustomTextViewTTF
+    <TextView
         android:id="@+id/toast_parameters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/tracking_toast_mixpanel_text"
-        android:textSize="@dimen/tracking_toast_parameters"
-        pixable:ttf="regular" />
+        android:textSize="@dimen/tracking_toast_parameters" />
 
 </LinearLayout>

@@ -139,6 +139,14 @@ public class TrackingWrap {
         }
     }
 
+    /** @see #addCommonProperties */
+    public void addCommonProperty(Context context, String name, String value) {
+        final Map<String, String> propertyAsMap = new HashMap<>();
+        propertyAsMap.put(name, value);
+
+        addCommonProperties(context, propertyAsMap);
+    }
+
     /**
      * Tracks the provided event in the provided platforms.
      */
@@ -148,7 +156,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
-                    event.getName(),
+                    "Event " + event.getName(),
                     event.getProperties(),
                     Arrays.asList(platformIds));
         }

@@ -16,10 +16,10 @@ import java.util.Map;
  * Entry point for the tracking wrap library. To make usage simple, it is a singleton.
  *
  * In your {@link android.app.Application#onCreate} lifecycle method, construct the singleton
- * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} to initialize
- * the application tracking.
+ * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
+ * initialize the application tracking.
  *
- * After that, use {@link #getInstance} and the other methods as needed.
+ * After that, use {@link #getInstance} and the other methods as needed, usually in your activities.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -143,6 +143,7 @@ public class TrackingWrap {
      */
     public void trackEvent(Context context, TrackingEvent event, Platform.Id... platformIds) {
         checkAppIsInitialized();
+        checkAtLeastOnePlatform(event, platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
@@ -173,5 +174,12 @@ public class TrackingWrap {
         throw new IllegalStateException("The platform " + platformId + " is not initialized."
                 + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                 + configuration.getPlatforms().size());
+    }
+
+    private void checkAtLeastOnePlatform(TrackingEvent event, Platform.Id... platformIds) {
+        if (platformIds.length == 0) {
+            throw new IllegalArgumentException("Did you forget to add the platforms for the event "
+                    + event.getName() + "?");
+        }
     }
 }

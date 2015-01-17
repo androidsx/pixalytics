@@ -28,7 +28,7 @@ class ToastTraceProxy implements TraceProxy {
         final View layout = inflater.inflate(R.layout.tracking_debug_toast, null);
 
         final Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.setGravity(Gravity.START | Gravity.BOTTOM,
                 context.getResources().getInteger(R.integer.tracking_toast_margin),
                 context.getResources().getInteger(R.integer.tracking_toast_margin));

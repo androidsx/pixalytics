@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:src="@drawable/tracking_toast_mixpanel"
+                android:visibility="invisible"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -40,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:src="@drawable/tracking_toast_flurry"
+                android:visibility="invisible"
                 tools:ignore="ContentDescription" />
 
             <!--
@@ -49,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:src="@drawable/tracking_toast_ga_not_yet"
+                android:visibility="invisible"
                 tools:ignore="ContentDescription" />
 
             <ImageView

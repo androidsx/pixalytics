@@ -7,28 +7,15 @@ import android.view.View;
 
 import com.pixable.trackingwrap.TrackingEvent;
 import com.pixable.trackingwrap.TrackingWrap;
+import com.pixable.trackingwrap.helper.TrackedActionBarActivity;
 import com.pixable.trackingwrap.platform.Platform;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends TrackedActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        TrackingWrap.getInstance().onActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        TrackingWrap.getInstance().onActivityStop(this);
     }
 
     public void onFooClick(View view) {

@@ -19,8 +19,10 @@ import java.util.Map;
  * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
  * initialize the application tracking.
  *
- * After that, use {@link #getInstance} to call the other methods as needed. Don't forget to track
- * the activity start/stop.
+ * After that, use {@link #getInstance} to call the other methods as needed.
+ *
+ * Don't forget to track the activity start/stop. You can do it manually with the {@link #onActivityStart}
+ * and {@link #onActivityStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -89,7 +91,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
-                    "Activity start: " + ((Activity)context).getClass().getSimpleName(),
+                    "Activity start: " + ((Activity) context).getClass().getSimpleName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }

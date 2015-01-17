@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 10 // Minimum for Flurry: 10
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    // Flurry
+    compile files('libs/FlurryAnalytics-5.0.0.jar')
+    compile 'com.android.support:support-v4:21.0.3'
+
+    // Mixpanel
+    compile 'com.mixpanel.android:mixpanel-android:4.5.1'
+
+    compile 'com.jakewharton:butterknife:6.0.0' // Used for the toasts
+}

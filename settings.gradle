@@ -1,1 +1,1 @@
-include ':tracking-wrap'
+include ':tracking-wrap', ':demo'

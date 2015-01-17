@@ -19,7 +19,7 @@ import java.util.Map;
  * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
  * initialize the application tracking.
  *
- * After that, use {@link #getInstance} to call the other methods as needed.
+ * After that, use {@link #get} to call the other methods as needed.
  *
  * Don't forget to track the activity start/stop. You can do it manually with the {@link #onActivityStart}
  * and {@link #onActivityStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
@@ -47,7 +47,11 @@ public class TrackingWrap {
         }
     }
 
-    public static TrackingWrap getInstance() {
+    /**
+     * Returns the singleton instance. It should typically be called {@code getInstance}, but we
+     * decided to make it shorter given that it's used extensively.
+     */
+    public static TrackingWrap get() {
         if (INSTANCE == null) {
             throw new IllegalStateException("The tracking wrap singleton is not initialized");
         } else {
@@ -152,7 +156,7 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, TrackingEvent event, Platform.Id... platformIds) {
+    public void trackEvent(Context context, Event event, Platform.Id... platformIds) {
         checkAppIsInitialized();
         checkAtLeastOnePlatform(event, platformIds);
 
@@ -187,7 +191,7 @@ public class TrackingWrap {
                 + configuration.getPlatforms().size());
     }
 
-    private void checkAtLeastOnePlatform(TrackingEvent event, Platform.Id... platformIds) {
+    private void checkAtLeastOnePlatform(Event event, Platform.Id... platformIds) {
         if (platformIds.length == 0) {
             throw new IllegalArgumentException("Did you forget to add the platforms for the event "
                     + event.getName() + "?");

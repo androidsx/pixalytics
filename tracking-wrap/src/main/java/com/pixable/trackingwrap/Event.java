@@ -8,14 +8,14 @@ import java.util.Map;
 /**
  * An event that is to be tracked, that has a name and a set of properties (key-value pairs).
  */
-public class TrackingEvent {
+public class Event {
     private final String eventName;
     private final Map<String, String> properties;
 
     /**
-     * Use the {@link TrackingEvent.Builder}.
+     * Use the {@link Event.Builder}.
      */
-    private TrackingEvent(String eventName, Map<String, String> properties) {
+    private Event(String eventName, Map<String, String> properties) {
         this.eventName = eventName;
         this.properties = properties;
     }
@@ -57,21 +57,23 @@ public class TrackingEvent {
         private String eventName = null;
         private final Map<String, String> properties = new HashMap<>();
 
-        public Builder withName(String eventName) {
+        /** Sets the name of the event. This parameter is compulsory. */
+        public Builder name(String eventName) {
             this.eventName = eventName;
             return this;
         }
 
-        public Builder addProperty(String name, String value) {
+        /** Adds a property. Add as many properties (key-value pairs) as you wish. */
+        public Builder property(String name, String value) {
             properties.put(name, value);
             return this;
         }
 
-        public TrackingEvent build() {
+        public Event build() {
             if (eventName == null) {
                 throw new IllegalStateException("No name was provided for this event");
             } else {
-                return new TrackingEvent(eventName, properties);
+                return new Event(eventName, properties);
             }
         }
     }

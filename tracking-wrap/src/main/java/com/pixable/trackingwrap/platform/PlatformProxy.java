@@ -2,7 +2,7 @@ package com.pixable.trackingwrap.platform;
 
 import android.content.Context;
 
-import com.pixable.trackingwrap.TrackingEvent;
+import com.pixable.trackingwrap.Event;
 
 import java.util.Map;
 
@@ -16,5 +16,5 @@ public interface PlatformProxy {
 
     void addCommonProperties(Context context, Map<String, String> commonProperties);
 
-    void trackEvent(Context context, TrackingEvent event);
+    void trackEvent(Context context, Event event);
 }

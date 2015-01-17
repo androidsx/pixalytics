@@ -10,13 +10,13 @@ public class TrackedFragmentActivity extends FragmentActivity {
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.getInstance().onActivityStart(this);
+        TrackingWrap.get().onActivityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.getInstance().onActivityStop(this);
+        TrackingWrap.get().onActivityStop(this);
     }
 }

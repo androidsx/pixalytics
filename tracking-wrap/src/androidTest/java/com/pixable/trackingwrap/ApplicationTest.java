@@ -19,7 +19,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     public void testSingletonMustBeInitializedExplicitly() {
         try {
-            TrackingWrap.getInstance();
+            TrackingWrap.get();
             fail("Should have explicitly created the instance before");
         } catch (IllegalStateException e) {
             // Expected
@@ -59,9 +59,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .build());
 
         try {
-            TrackingWrap.getInstance().trackEvent(
+            TrackingWrap.get().trackEvent(
                     getContext(),
-                    new TrackingEvent.Builder().withName("share").build(),
+                    new Event.Builder().name("share").build(),
                     Platform.Id.FLURRY);
             fail("Expected to fail: didn't initialized the application");
         } catch (IllegalStateException e) {
@@ -74,12 +74,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 new TrackingConfig.Builder()
                         .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
-        TrackingWrap.getInstance().onApplicationCreate(getContext());
+        TrackingWrap.get().onApplicationCreate(getContext());
 
         try {
-            TrackingWrap.getInstance().trackEvent(
+            TrackingWrap.get().trackEvent(
                     getContext(),
-                    new TrackingEvent.Builder().withName("share").build(),
+                    new Event.Builder().name("share").build(),
                     Platform.Id.MIXPANEL);
 
             fail("Expected to fail: this platform is not initialized");
@@ -94,11 +94,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 new TrackingConfig.Builder()
                         .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("key")))
                         .build());
-        TrackingWrap.getInstance().onApplicationCreate(getContext());
+        TrackingWrap.get().onApplicationCreate(getContext());
 
-        TrackingWrap.getInstance().trackEvent(
+        TrackingWrap.get().trackEvent(
                 getContext(),
-                new TrackingEvent.Builder().withName("share").build(),
+                new TrackingEvent.Builder().name("share").build(),
                 Platform.Id.FLURRY);
 
         // Well, nothing fails, nothing exploded. Not a bad start
@@ -112,12 +112,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .build());
 
 
-        TrackingWrap.getInstance().trackEvent(
+        TrackingWrap.get().trackEvent(
                 getContext(),
                 new TrackingEvent.Builder()
-                        .withName("share")
-                        .addProperty("articleId", String.valueOf(15))
-                        .addProperty("screen", "full-view")
+                        .name("share")
+                        .property("articleId", String.valueOf(15))
+                        .property("screen", "full-view")
                         .build(),
                 Platform.MIXPANEL);
     }
@@ -129,12 +129,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .build());
 
 
-        TrackingWrap.getInstance().trackEvent(
+        TrackingWrap.get().trackEvent(
                 getContext(),
                 new TrackingEvent.Builder()
-                        .withName("share")
-                        .addProperty("articleId", String.valueOf(15))
-                        .addProperty("screen", "full-view")
+                        .name("share")
+                        .property("articleId", String.valueOf(15))
+                        .property("screen", "full-view")
                         .build(),
                 Platform.FLURRY,
                 Platform.MIXPANEL);
@@ -147,19 +147,19 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         .addDebugPrint(TrackingConfiguration.DebugPrint.TOAST)
                         .build());
 
-        TrackingWrap.getInstance().trackEvent(
+        TrackingWrap.get().trackEvent(
                 getContext(),
                 new TrackingEvent.Builder()
-                        .withName("completed tutorial")
+                        .name("completed tutorial")
                         .build(),
                 Platform.MIXPANEL);
 
-        TrackingWrap.getInstance().trackEvent(
+        TrackingWrap.get().trackEvent(
                 getContext(),
                 new TrackingEvent.Builder()
-                        .withName("share")
-                        .addProperty("articleId", String.valueOf(15))
-                        .addProperty("screen", "full-view")
+                        .name("share")
+                        .property("articleId", String.valueOf(15))
+                        .property("screen", "full-view")
                         .build(),
                 Platform.FLURRY,
                 Platform.MIXPANEL);

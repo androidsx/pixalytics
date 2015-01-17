@@ -3,7 +3,7 @@ package com.pixable.trackingwrap.platform;
 import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
-import com.pixable.trackingwrap.TrackingEvent;
+import com.pixable.trackingwrap.Event;
 
 import org.json.JSONObject;
 
@@ -41,7 +41,7 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackEvent(Context context, TrackingEvent event) {
+    public void trackEvent(Context context, Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
     }
 }

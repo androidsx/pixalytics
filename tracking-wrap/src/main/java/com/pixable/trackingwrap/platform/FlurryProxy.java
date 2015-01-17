@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
-import com.pixable.trackingwrap.TrackingEvent;
+import com.pixable.trackingwrap.Event;
 
 import java.util.Map;
 
@@ -38,7 +38,7 @@ class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackEvent(Context context, TrackingEvent event) {
+    public void trackEvent(Context context, Event event) {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
     }
 }

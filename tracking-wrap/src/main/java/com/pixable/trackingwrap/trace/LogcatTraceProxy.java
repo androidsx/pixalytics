@@ -13,6 +13,6 @@ class LogcatTraceProxy implements TraceProxy {
 
     @Override
     public void traceMessage(Context context, String messageTitle, Map<String, String> properties, Collection<Platform.Id> platforms) {
-        Log.d(TAG, messageTitle + " (" + properties + ") to " + platforms);
+        Log.i(TAG, messageTitle + " (" + properties + ") to " + platforms);
     }
 }

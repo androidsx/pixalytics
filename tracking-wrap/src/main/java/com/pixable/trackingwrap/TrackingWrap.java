@@ -6,6 +6,7 @@ import android.content.Context;
 import com.pixable.trackingwrap.platform.Platform;
 import com.pixable.trackingwrap.platform.PlatformProxy;
 import com.pixable.trackingwrap.trace.TraceId;
+import com.pixable.trackingwrap.trace.TraceProxy;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -70,6 +71,7 @@ public class TrackingWrap {
     public void onApplicationCreate(Context context) {
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
                     "On application create",
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
@@ -95,6 +97,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
                     "Activity start: " + ((Activity) context).getClass().getSimpleName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
@@ -115,6 +118,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
                     "Activity stop: " + ((Activity)context).getClass().getSimpleName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
@@ -135,6 +139,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
                     "Register " + commonProperties.size() + " common properties",
                     commonProperties,
                     configuration.getPlatformIds());
@@ -158,10 +163,14 @@ public class TrackingWrap {
      */
     public void trackEvent(Context context, Event event, Platform.Id... platformIds) {
         checkAppIsInitialized();
-        checkAtLeastOnePlatform(event, platformIds);
+
+        if (platformIds.length == 0) {
+            platformIds = configuration.getPlatformIds().toArray(new Platform.Id[configuration.getPlatformIds().size()]);
+        }
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.INFO,
                     "Event " + event.getName(),
                     event.getProperties(),
                     Arrays.asList(platformIds));
@@ -189,12 +198,5 @@ public class TrackingWrap {
         throw new IllegalStateException("The platform " + platformId + " is not initialized."
                 + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                 + configuration.getPlatforms().size());
-    }
-
-    private void checkAtLeastOnePlatform(Event event, Platform.Id... platformIds) {
-        if (platformIds.length == 0) {
-            throw new IllegalArgumentException("Did you forget to add the platforms for the event "
-                    + event.getName() + "?");
-        }
     }
 }

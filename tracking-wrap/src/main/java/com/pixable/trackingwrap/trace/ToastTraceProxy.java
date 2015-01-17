@@ -13,27 +13,37 @@ import com.pixable.trackingwrap.R;
 import com.pixable.trackingwrap.platform.Platform;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.ButterKnife;
 
-class ToastTraceProxy implements TraceProxy {
-    private final int backgroundColor = android.R.color.black;
+public class ToastTraceProxy implements TraceProxy {
+
+    Map<Level, Integer> durationMap = new HashMap<Level, Integer>() {{
+        put(Level.DEBUG, Toast.LENGTH_SHORT);
+        put(Level.INFO, Toast.LENGTH_LONG);
+    }};
+    Map<Level, Integer> backgroundColorMap = new HashMap<Level, Integer>() {{
+        put(Level.DEBUG, R.color.toast_debug);
+        put(Level.INFO, R.color.toast_info);
+    }};
 
     @Override
-    public void traceMessage(Context context, String messageTitle, Map<String, String> properties, Collection<Platform.Id> platforms) {
+    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform.Id> platforms) {
         final LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.tracking_debug_toast, null);
 
         final Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_LONG);
+        //noinspection ResourceType
+        toast.setDuration(durationMap.get(level));
         toast.setGravity(Gravity.START | Gravity.BOTTOM,
                 context.getResources().getInteger(R.integer.tracking_toast_margin),
                 context.getResources().getInteger(R.integer.tracking_toast_margin));
         ButterKnife.findById(layout, R.id.toast_container).setBackgroundColor(
-                context.getResources().getColor(backgroundColor));
+                context.getResources().getColor(backgroundColorMap.get(level)));
 
         ((TextView) ButterKnife.findById(layout, R.id.toast_title)).setText(messageTitle);
         ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(

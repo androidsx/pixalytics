@@ -34,7 +34,11 @@ public class MainActivity extends ActionBarActivity {
     public void onFooClick(View view) {
         TrackingWrap.getInstance()
                 .trackEvent(this,
-                        new TrackingEvent.Builder().withName("foo").addProperty("view", "main").build(),
+                        new TrackingEvent.Builder().withName("foo")
+                                .addProperty("view", "main")
+                                .addProperty("property2", "value2")
+                                .addProperty("property3", "value3")
+                                .build(),
                         Platform.Id.FLURRY);
         new AlertDialog.Builder(this)
                 .setMessage(R.string.foo_dialog_message)

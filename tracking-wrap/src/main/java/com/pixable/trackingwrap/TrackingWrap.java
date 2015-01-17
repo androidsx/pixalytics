@@ -19,7 +19,8 @@ import java.util.Map;
  * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
  * initialize the application tracking.
  *
- * After that, use {@link #getInstance} and the other methods as needed, usually in your activities.
+ * After that, use {@link #getInstance} to call the other methods as needed. Don't forget to track
+ * the activity start/stop.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -88,7 +89,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
-                    "Activity start: " + ((Activity)context).getLocalClassName(),
+                    "Activity start: " + ((Activity)context).getClass().getSimpleName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }
@@ -108,7 +109,7 @@ public class TrackingWrap {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
-                    "Activity stop: " + ((Activity)context).getLocalClassName(),
+                    "Activity stop: " + ((Activity)context).getClass().getSimpleName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }

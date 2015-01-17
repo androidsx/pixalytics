@@ -17,6 +17,20 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        TrackingWrap.getInstance().onActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        TrackingWrap.getInstance().onActivityStop(this);
+    }
+
     public void onFooClick(View view) {
         TrackingWrap.getInstance()
                 .trackEvent(this,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tracking Wrap Demo</string>
-    <string name="foo">Foo</string>
+    <string name="foo">Foo (Flurry)</string>
     <string name="foo_dialog_message">Foo button was clicked. We should have tracked it</string>
 </resources>

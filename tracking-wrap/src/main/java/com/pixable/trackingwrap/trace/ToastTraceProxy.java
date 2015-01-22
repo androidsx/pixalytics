@@ -21,14 +21,21 @@ import butterknife.ButterKnife;
 
 public class ToastTraceProxy implements TraceProxy {
 
-    Map<Level, Integer> durationMap = new HashMap<Level, Integer>() {{
+    final Map<Level, Integer> durationMap = new HashMap<Level, Integer>() {{
         put(Level.DEBUG, Toast.LENGTH_SHORT);
         put(Level.INFO, Toast.LENGTH_LONG);
     }};
-    Map<Level, Integer> backgroundColorMap = new HashMap<Level, Integer>() {{
-        put(Level.DEBUG, R.color.toast_debug);
-        put(Level.INFO, R.color.toast_info);
-    }};
+    /** Read always through {@link #getBackgroundColorMap} */
+    final Map<Level, Integer> backgroundColorMap = new HashMap<>();
+
+    private Map<Level, Integer> getBackgroundColorMap() {
+        if (backgroundColorMap.isEmpty()) {
+            backgroundColorMap.put(Level.DEBUG, R.color.toast_debug);
+            backgroundColorMap.put(Level.INFO, R.color.toast_info);
+        }
+
+        return backgroundColorMap;
+    }
 
     @Override
     public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform.Id> platforms) {
@@ -43,7 +50,7 @@ public class ToastTraceProxy implements TraceProxy {
                 context.getResources().getInteger(R.integer.tracking_toast_margin),
                 context.getResources().getInteger(R.integer.tracking_toast_margin));
         ButterKnife.findById(layout, R.id.toast_container).setBackgroundColor(
-                context.getResources().getColor(backgroundColorMap.get(level)));
+                context.getResources().getColor(getBackgroundColorMap().get(level)));
 
         ((TextView) ButterKnife.findById(layout, R.id.toast_title)).setText(messageTitle);
         ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(

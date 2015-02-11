@@ -25,13 +25,13 @@ class MixpanelProxy implements PlatformProxy {
 
     @Override
     public void onActivityStart(Context context) {
-        throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+        //throw new UnsupportedOperationException("Mixpanel does not support session tracking");
         // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
     }
 
     @Override
     public void onActivityStop(Context context) {
-        throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+        //throw new UnsupportedOperationException("Mixpanel does not support session tracking");
         // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
     }
 

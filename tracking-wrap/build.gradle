@@ -28,4 +28,7 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:6.0.0' // Used for the toasts
 
+    // Google Analytics
+    compile 'com.google.apis:google-api-services-analytics:v3-rev111-1.19.1'
+
 }

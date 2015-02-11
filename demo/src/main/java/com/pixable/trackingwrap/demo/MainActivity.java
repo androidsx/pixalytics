@@ -1,11 +1,10 @@
 package com.pixable.trackingwrap.demo;
 
 import android.app.AlertDialog;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.pixable.trackingwrap.TrackingEvent;
+import com.pixable.trackingwrap.Event;
 import com.pixable.trackingwrap.TrackingWrap;
 import com.pixable.trackingwrap.helper.TrackedActionBarActivity;
 import com.pixable.trackingwrap.platform.Platform;
@@ -19,12 +18,12 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     public void onFooClick(View view) {
-        TrackingWrap.getInstance()
+        TrackingWrap.get()
                 .trackEvent(this,
-                        new TrackingEvent.Builder().withName("foo")
-                                .addProperty("view", "main")
-                                .addProperty("property2", "value2")
-                                .addProperty("property3", "value3")
+                        new Event.Builder().name("foo")
+                                .property("view", "main")
+                                .property("property2", "value2")
+                                .property("property3", "value3")
                                 .build(),
                         Platform.Id.FLURRY);
         new AlertDialog.Builder(this)

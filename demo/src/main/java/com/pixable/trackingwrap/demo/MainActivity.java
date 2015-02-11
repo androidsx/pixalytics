@@ -17,7 +17,15 @@ public class MainActivity extends TrackedActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onFooClick(View view) {
+    public void onFooFlurryClick(View view) {
+        trackEvent(Platform.Id.FLURRY);
+    }
+
+    public void onFooMixpanelClick(View view) {
+        trackEvent(Platform.Id.MIXPANEL);
+    }
+
+    private void trackEvent(Platform.Id platformId) {
         TrackingWrap.get()
                 .trackEvent(this,
                         new Event.Builder().name("foo")
@@ -25,7 +33,7 @@ public class MainActivity extends TrackedActionBarActivity {
                                 .property("property2", "value2")
                                 .property("property3", "value3")
                                 .build(),
-                        Platform.Id.FLURRY);
+                        platformId);
         new AlertDialog.Builder(this)
                 .setMessage(R.string.foo_dialog_message)
                 .setPositiveButton(android.R.string.ok, null)

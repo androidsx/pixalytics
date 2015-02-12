@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 
 import java.util.Map;
 
@@ -23,7 +24,7 @@ class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, String screenName) {
+    public void onScreenStart(Context context, Screen screen) {
         FlurryAgent.onStartSession(context);
     }
 

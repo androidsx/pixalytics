@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 
 import org.json.JSONObject;
 
@@ -24,7 +25,7 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, String screenName) {
+    public void onScreenStart(Context context, Screen screen) {
         //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
     }
 

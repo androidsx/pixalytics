@@ -3,6 +3,7 @@ package com.pixable.trackingwrap.platform;
 import android.content.Context;
 
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public interface PlatformProxy {
 
     void onApplicationCreate(Context context);
 
-    void onScreenStart(Context context, String screenName);
+    void onScreenStart(Context context, Screen screen);
 
     void onScreenStop(Context context);
 

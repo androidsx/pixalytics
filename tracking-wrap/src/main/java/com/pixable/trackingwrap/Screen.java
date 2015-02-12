@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * An event that is to be tracked, that has a name and a set of properties (key-value pairs).
+ * An Screen that is to be tracked, that has a name and a set of properties (key-value pairs).
  */
-public class Event extends Trackable {
+public class Screen extends Trackable {
 
     /**
-     * Use the {@link com.pixable.trackingwrap.Event.Builder}.
+     * Use the {@link com.pixable.trackingwrap.Screen.Builder}.
      *
-     * @param eventName
+     * @param screenName
      * @param properties
      */
-    private Event(String eventName, Map<String, String> properties) {
-        super(eventName, properties, Type.EVENT);
+    private Screen(String screenName, Map<String, String> properties) {
+        super(screenName, properties, Trackable.Type.EVENT);
     }
 
     public static class Builder {
         private String name = null;
         private final Map<String, String> properties = new HashMap<>();
 
-        /** Sets the name of the Event object. This parameter is compulsory. */
+        /** Sets the name of the Screen object. This parameter is compulsory. */
         public Builder name(String name) {
             this.name = name;
             return this;
@@ -34,11 +34,11 @@ public class Event extends Trackable {
             return this;
         }
 
-        public Event build() {
+        public Screen build() {
             if (name == null) {
-                throw new IllegalStateException("No name was provided for this event");
+                throw new IllegalStateException("No name was provided for this screen");
             } else {
-                return new Event(name, properties);
+                return new Screen(name, properties);
             }
         }
     }

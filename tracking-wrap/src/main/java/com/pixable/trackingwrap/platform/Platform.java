@@ -7,7 +7,8 @@ public class Platform {
     */
     public static enum Id {
         MIXPANEL,
-        FLURRY;
+        FLURRY,
+        GOOGLE_ANALYTICS;
     }
 
     /**
@@ -59,6 +60,7 @@ public class Platform {
         switch (id) {
             case FLURRY: proxy = new FlurryProxy(config); break;
             case MIXPANEL: proxy = new MixpanelProxy(config); break;
+            case GOOGLE_ANALYTICS: proxy = new GoogleAnalyticsProxy(config); break;
             default: throw new IllegalStateException("What kind of platform is " + id + "?");
         }
     }

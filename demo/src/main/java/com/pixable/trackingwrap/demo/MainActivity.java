@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 import com.pixable.trackingwrap.TrackingWrap;
 import com.pixable.trackingwrap.helper.TrackedActionBarActivity;
 import com.pixable.trackingwrap.platform.Platform;
@@ -25,6 +26,10 @@ public class MainActivity extends TrackedActionBarActivity {
         trackEvent(Platform.Id.MIXPANEL);
     }
 
+    public void onFooGoogleAnalyticsClick(View view) {
+        trackEvent(Platform.Id.GOOGLE_ANALYTICS);
+    }
+
     private void trackEvent(Platform.Id platformId) {
         TrackingWrap.get()
                 .trackEvent(this,
@@ -41,7 +46,9 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     @Override
-    protected String getScreenName() {
-        return "Main";
+    protected Screen getScreen() {
+        return new Screen.Builder()
+                .name("Main")
+                .property("1", "test").build();
     }
 }

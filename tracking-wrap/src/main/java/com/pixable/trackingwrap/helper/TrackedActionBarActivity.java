@@ -4,13 +4,13 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.pixable.trackingwrap.TrackingWrap;
 
-public class TrackedActionBarActivity extends ActionBarActivity {
+public abstract class TrackedActionBarActivity extends ActionBarActivity {
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onScreenStart(this);
+        TrackingWrap.get().onScreenStart(this, getScreenName());
     }
 
     @Override
@@ -19,4 +19,6 @@ public class TrackedActionBarActivity extends ActionBarActivity {
 
         TrackingWrap.get().onScreenStop(this);
     }
+
+    protected abstract String getScreenName();
 }

@@ -91,20 +91,21 @@ public class TrackingWrap {
      * method is used to track Screens viewed or Sessions. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
+     * @param screenName screen we are tracking
      */
-    public void onScreenStart(Context context) {
+    public void onScreenStart(Context context, String screenName) {
         checkAppIsInitialized();
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
-                    "Screen start: " + ((Activity) context).getClass().getSimpleName(),
+                    "Screen start: " + screenName,
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onScreenStart(context);
+            platform.getProxy().onScreenStart(context, screenName);
         }
     }
 
@@ -115,14 +116,6 @@ public class TrackingWrap {
      */
     public void onScreenStop(Context context) {
         checkAppIsInitialized();
-
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Screen stop: " + ((Activity)context).getClass().getSimpleName(),
-                    Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
-        }
 
         for (Platform platform : configuration.getPlatforms()) {
             platform.getProxy().onScreenStop(context);

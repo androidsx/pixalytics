@@ -23,7 +23,7 @@ class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context) {
+    public void onScreenStart(Context context, String screenName) {
         FlurryAgent.onStartSession(context);
     }
 

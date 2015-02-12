@@ -4,13 +4,13 @@ import android.support.v4.app.FragmentActivity;
 
 import com.pixable.trackingwrap.TrackingWrap;
 
-public class TrackedFragmentActivity extends FragmentActivity {
+public abstract class TrackedFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onScreenStart(this);
+        TrackingWrap.get().onScreenStart(this, getScreenName());
     }
 
     @Override
@@ -19,4 +19,6 @@ public class TrackedFragmentActivity extends FragmentActivity {
 
         TrackingWrap.get().onScreenStop(this);
     }
+
+    protected abstract String getScreenName();
 }

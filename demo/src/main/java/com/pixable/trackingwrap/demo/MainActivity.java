@@ -39,4 +39,9 @@ public class MainActivity extends TrackedActionBarActivity {
                 .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
+
+    @Override
+    protected String getScreenName() {
+        return "Main";
+    }
 }

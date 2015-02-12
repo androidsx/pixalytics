@@ -10,7 +10,7 @@ public interface PlatformProxy {
 
     void onApplicationCreate(Context context);
 
-    void onScreenStart(Context context);
+    void onScreenStart(Context context, String screenName);
 
     void onScreenStop(Context context);
 

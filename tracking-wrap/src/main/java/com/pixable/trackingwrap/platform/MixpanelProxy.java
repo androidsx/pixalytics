@@ -24,7 +24,7 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context) {
+    public void onScreenStart(Context context, String screenName) {
         //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
     }
 

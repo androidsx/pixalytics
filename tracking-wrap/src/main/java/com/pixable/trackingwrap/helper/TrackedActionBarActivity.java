@@ -10,13 +10,13 @@ public class TrackedActionBarActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onActivityStart(this);
+        TrackingWrap.get().onScreenStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.get().onActivityStop(this);
+        TrackingWrap.get().onScreenStop(this);
     }
 }

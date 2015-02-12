@@ -10,9 +10,9 @@ public interface PlatformProxy {
 
     void onApplicationCreate(Context context);
 
-    void onActivityStart(Context context);
+    void onScreenStart(Context context);
 
-    void onActivityStop(Context context);
+    void onScreenStop(Context context);
 
     void addCommonProperties(Context context, Map<String, String> commonProperties);
 

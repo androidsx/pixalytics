@@ -22,8 +22,8 @@ import java.util.Map;
  *
  * After that, use {@link #get} to call the other methods as needed.
  *
- * Don't forget to track the activity start/stop. You can do it manually with the {@link #onActivityStart}
- * and {@link #onActivityStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
+ * Don't forget to track the activity start/stop. You can do it manually with the {@link #onScreenStart}
+ * and {@link #onScreenStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -88,23 +88,24 @@ public class TrackingWrap {
 
     /**
      * To be called from the {@code onStart} of every activity in your application. This lifecycle
-     * method is used to track sessions. Not all tracking services support it.
+     * method is used to track Screens viewed or Sessions. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
+     * @param screen screen we are tracking
      */
-    public void onActivityStart(Context context) {
+    public void onScreenStart(Context context, Screen screen) {
         checkAppIsInitialized();
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
-                    "Activity start: " + ((Activity) context).getClass().getSimpleName(),
+                    "Screen start: " + screen.getName(),
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onActivityStart(context);
+            platform.getProxy().onScreenStart(context, screen);
         }
     }
 
@@ -113,19 +114,11 @@ public class TrackingWrap {
      *
      * @param context activity context, not the global application context
      */
-    public void onActivityStop(Context context) {
+    public void onScreenStop(Context context) {
         checkAppIsInitialized();
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Activity stop: " + ((Activity)context).getClass().getSimpleName(),
-                    Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
-        }
-
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onActivityStop(context);
+            platform.getProxy().onScreenStop(context);
         }
     }
 

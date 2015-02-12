@@ -16,6 +16,7 @@ public class DemoApplication extends Application {
         final TrackingConfig configuration = new TrackingConfig.Builder()
                 .addPlatform(new Platform(Platform.Id.FLURRY, new Platform.Config("flurry-app-key")))
                 .addPlatform(new Platform(Platform.Id.MIXPANEL, new Platform.Config("mixpanel-app-key")))
+                .addPlatform(new Platform(Platform.Id.GOOGLE_ANALYTICS, new Platform.Config("ga-app-key")))
                 .addTrace(TraceId.LOGCAT)
                 .addTrace(TraceId.TOAST)
                 .build();

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 
 import org.json.JSONObject;
 
@@ -24,15 +25,13 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void onActivityStart(Context context) {
-        //throw new UnsupportedOperationException("Mixpanel does not support session tracking");
-        // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
+    public void onScreenStart(Context context, Screen screen) {
+        //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
     }
 
     @Override
-    public void onActivityStop(Context context) {
-        //throw new UnsupportedOperationException("Mixpanel does not support session tracking");
-        // FIXME: come up with a way for the lib user to mix Flurry and Mixpanel
+    public void onScreenStop(Context context) {
+        //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
     }
 
     @Override

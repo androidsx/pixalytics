@@ -65,6 +65,9 @@ public class ToastTraceProxy implements TraceProxy {
                 case MIXPANEL:
                     platformIcon = R.id.toast_icon_mixpanel;
                     break;
+                case GOOGLE_ANALYTICS:
+                    platformIcon = R.id.toast_icon_ga;
+                    break;
                 default:
                     throw new IllegalArgumentException("There's no icon for the platform " + platform);
             }

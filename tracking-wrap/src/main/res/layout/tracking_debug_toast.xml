@@ -44,16 +44,16 @@
                 android:visibility="invisible"
                 tools:ignore="ContentDescription" />
 
-            <!--
+
             <ImageView
                 android:id="@+id/toast_icon_ga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="1dp"
-                android:src="@drawable/tracking_toast_ga_not_yet"
+                android:src="@drawable/tracking_toast_ga"
                 android:visibility="invisible"
                 tools:ignore="ContentDescription" />
-
+            <!--
             <ImageView
                 android:id="@+id/toast_icon_facebook"
                 android:layout_width="wrap_content"

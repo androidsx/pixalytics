@@ -2,21 +2,24 @@ package com.pixable.trackingwrap.helper;
 
 import android.app.Activity;
 
+import com.pixable.trackingwrap.Screen;
 import com.pixable.trackingwrap.TrackingWrap;
 
-public class TrackedActivity extends Activity {
+public abstract class TrackedActivity extends Activity {
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onActivityStart(this);
+        TrackingWrap.get().onScreenStart(this, getScreen());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.get().onActivityStop(this);
+        TrackingWrap.get().onScreenStop(this);
     }
+
+    protected abstract Screen getScreen();
 }

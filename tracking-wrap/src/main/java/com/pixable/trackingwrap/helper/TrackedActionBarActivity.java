@@ -11,15 +11,13 @@ public abstract class TrackedActionBarActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onScreenStart(this, getScreen());
+        TrackingWrap.get().onSessionStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.get().onScreenStop(this);
+        TrackingWrap.get().onSessionFinish(this);
     }
-
-    protected abstract Screen getScreen();
 }

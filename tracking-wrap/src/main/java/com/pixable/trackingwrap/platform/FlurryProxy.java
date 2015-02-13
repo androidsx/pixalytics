@@ -24,12 +24,12 @@ class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, Screen screen) {
+    public void onSessionStart(Context context) {
         FlurryAgent.onStartSession(context);
     }
 
     @Override
-    public void onScreenStop(Context context) {
+    public void onSessionFinish(Context context) {
         FlurryAgent.onEndSession(context);
     }
 
@@ -41,5 +41,11 @@ class FlurryProxy implements PlatformProxy {
     @Override
     public void trackEvent(Context context, Event event) {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
+    }
+
+
+    @Override
+    public void trackScreen(Context context, Screen screen) {
+        //No Screens in Flurry
     }
 }

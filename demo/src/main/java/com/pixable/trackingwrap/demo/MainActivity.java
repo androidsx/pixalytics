@@ -16,6 +16,7 @@ public class MainActivity extends TrackedActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        trackScreen();
     }
 
     public void onFooFlurryClick(View view) {
@@ -45,10 +46,10 @@ public class MainActivity extends TrackedActionBarActivity {
                 .show();
     }
 
-    @Override
-    protected Screen getScreen() {
-        return new Screen.Builder()
-                .name("Main")
-                .property("1", "test").build();
+    private void trackScreen() {
+        Screen screen = new Screen.Builder().name("Main")
+                .property("1", "Value1")
+                .build();
+        TrackingWrap.get().trackScreen(this, screen);
     }
 }

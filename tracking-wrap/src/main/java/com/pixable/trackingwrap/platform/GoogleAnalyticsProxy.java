@@ -35,16 +35,13 @@ class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, Screen screen) {
-        tracker.setScreenName(screen.getName());
-        HitBuilders.AppViewBuilder builder = new HitBuilders.AppViewBuilder();
-        addDimensions(builder, screen.getProperties());
-        tracker.send(builder.build());
+    public void onSessionStart(Context context) {
+        //No need to open Session in GA
     }
 
     @Override
-    public void onScreenStop(Context context) {
-        //There is no session concept in GA, so...no need to do anything here
+    public void onSessionFinish(Context context) {
+        //No need to close Session in GA
     }
 
     @Override
@@ -60,6 +57,14 @@ class GoogleAnalyticsProxy implements PlatformProxy {
                 .setLabel("");
         addDimensions(builder, event.getProperties());
         //TODO: Find a way of adding Metrics somehow
+        tracker.send(builder.build());
+    }
+
+    @Override
+    public void trackScreen(Context context, Screen screen) {
+        tracker.setScreenName(screen.getName());
+        HitBuilders.AppViewBuilder builder = new HitBuilders.AppViewBuilder();
+        addDimensions(builder, screen.getProperties());
         tracker.send(builder.build());
     }
 

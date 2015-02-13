@@ -22,8 +22,6 @@ import java.util.Map;
  *
  * After that, use {@link #get} to call the other methods as needed.
  *
- * Don't forget to track the activity start/stop. You can do it manually with the {@link #onScreenStart}
- * and {@link #onScreenStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -88,24 +86,23 @@ public class TrackingWrap {
 
     /**
      * To be called from the {@code onStart} of every activity in your application. This lifecycle
-     * method is used to track Screens viewed or Sessions. Not all tracking services support it.
+     * method is used to open session. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
-     * @param screen screen we are tracking
      */
-    public void onScreenStart(Context context, Screen screen) {
+    public void onSessionStart(Context context) {
         checkAppIsInitialized();
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
-                    "Screen start: " + screen.getName(),
+                    "Session start",
                     Collections.<String, String>emptyMap(),
                     configuration.getPlatformIds());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onScreenStart(context, screen);
+            platform.getProxy().onSessionStart(context);
         }
     }
 
@@ -114,11 +111,11 @@ public class TrackingWrap {
      *
      * @param context activity context, not the global application context
      */
-    public void onScreenStop(Context context) {
+    public void onSessionFinish(Context context) {
         checkAppIsInitialized();
 
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onScreenStop(context);
+            platform.getProxy().onSessionFinish(context);
         }
     }
 
@@ -172,6 +169,27 @@ public class TrackingWrap {
         for (Platform.Id platformId : platformIds) {
             checkPlatformIsConfigured(platformId);
             platformProxyMap.get(platformId).trackEvent(context, event);
+        }
+    }
+
+    /**
+     * Track Screen in all platform
+     * @param context
+     * @param screen
+     */
+    public void trackScreen(Context context, Screen screen) {
+        checkAppIsInitialized();
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.INFO,
+                    "Screen " + screen.getName(),
+                    screen.getProperties(),
+                    configuration.getPlatformIds());
+        }
+
+        for (Platform platform : configuration.getPlatforms()) {
+            platform.getProxy().trackScreen(context, screen);
         }
     }
 

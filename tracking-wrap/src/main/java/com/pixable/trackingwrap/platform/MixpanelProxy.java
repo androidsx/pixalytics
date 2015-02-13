@@ -25,13 +25,13 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, Screen screen) {
-        //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
+    public void onSessionStart(Context context) {
+        //No need to open session in Mixpanel
     }
 
     @Override
-    public void onScreenStop(Context context) {
-        //According to Mixpanel Docs, we don's have a way of tracking Screens and no need to open or close session
+    public void onSessionFinish(Context context) {
+        //No need to close session in Mixpanel
     }
 
     @Override
@@ -42,5 +42,10 @@ class MixpanelProxy implements PlatformProxy {
     @Override
     public void trackEvent(Context context, Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
+    }
+
+    @Override
+    public void trackScreen(Context context, Screen screen) {
+        //No Screens in Mixpanel
     }
 }

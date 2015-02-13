@@ -11,11 +11,13 @@ public interface PlatformProxy {
 
     void onApplicationCreate(Context context);
 
-    void onScreenStart(Context context, Screen screen);
+    void onSessionStart(Context context);
 
-    void onScreenStop(Context context);
+    void onSessionFinish(Context context);
 
     void addCommonProperties(Context context, Map<String, String> commonProperties);
 
     void trackEvent(Context context, Event event);
+
+    void trackScreen(Context context, Screen screen);
 }

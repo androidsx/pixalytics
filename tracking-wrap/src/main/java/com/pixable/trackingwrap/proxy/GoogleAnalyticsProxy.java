@@ -1,4 +1,4 @@
-package com.pixable.trackingwrap.platform;
+package com.pixable.trackingwrap.proxy;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,23 +8,22 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.pixable.trackingwrap.Event;
 import com.pixable.trackingwrap.Screen;
-
-import org.json.JSONObject;
+import com.pixable.trackingwrap.platform.GoogleAnalyticsPlatform;
 
 import java.util.Iterator;
 import java.util.Map;
 
-class GoogleAnalyticsProxy implements PlatformProxy {
+public class GoogleAnalyticsProxy extends PlatformProxy {
 
     private final static String TAG = GoogleAnalyticsProxy.class.getSimpleName();
 
     private final static String EVENT_CATEGORY = "Tracker Events";
 
-    private final Platform.Config config;
+    private final GoogleAnalyticsPlatform.Config config;
 
     private Tracker tracker;
 
-    public GoogleAnalyticsProxy(Platform.Config config) {
+    public GoogleAnalyticsProxy(GoogleAnalyticsPlatform.Config config) {
         this.config = config;
     }
 
@@ -32,21 +31,6 @@ class GoogleAnalyticsProxy implements PlatformProxy {
     public void onApplicationCreate(Context context) {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         tracker = analytics.newTracker(config.getAppKey());
-    }
-
-    @Override
-    public void onSessionStart(Context context) {
-        //No need to open Session in GA
-    }
-
-    @Override
-    public void onSessionFinish(Context context) {
-        //No need to close Session in GA
-    }
-
-    @Override
-    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
-        //GA doesn't support global properties
     }
 
     @Override
@@ -77,18 +61,25 @@ class GoogleAnalyticsProxy implements PlatformProxy {
         Iterator it = properties.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry)it.next();
-            try {
-                int key = Integer.parseInt(pairs.getKey().toString());
+            int key = getParameterIdForKey(pairs.getKey().toString());
+            if(key >= 0) {
                 String value = pairs.getValue().toString();
                 if (builder instanceof HitBuilders.AppViewBuilder) {
                     ((HitBuilders.AppViewBuilder) builder).setCustomDimension(key, value);
                 } else {
                     ((HitBuilders.EventBuilder) builder).setCustomDimension(key, value);
                 }
-            }  catch(NumberFormatException nfe) {
-                Log.e(TAG, "Parameter Key passed should be an Int. Cannot parse '" + pairs.getKey().toString() + "' as Integer");
             }
             it.remove();
+        }
+    }
+
+    private int getParameterIdForKey(String key) {
+        if(config.getParameterMapping().containsKey(key)) {
+            return config.getParameterMapping().get(key);
+        } else {
+            Log.e(TAG, "No Mapping found for parameter '" + key + "'");
+            return -1;
         }
     }
 }

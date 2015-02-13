@@ -1,5 +1,10 @@
 package com.pixable.trackingwrap.platform;
 
+import com.pixable.trackingwrap.proxy.FlurryProxy;
+import com.pixable.trackingwrap.proxy.GoogleAnalyticsProxy;
+import com.pixable.trackingwrap.proxy.MixpanelProxy;
+import com.pixable.trackingwrap.proxy.PlatformProxy;
+
 public class Platform {
 
     /**
@@ -53,16 +58,11 @@ public class Platform {
     }
 
     private final Id id;
-    private final PlatformProxy proxy;
+    private PlatformProxy proxy;
 
-    public Platform(Id id, Config config) {
+    public Platform(Id id, PlatformProxy platformProxy) {
         this.id = id;
-        switch (id) {
-            case FLURRY: proxy = new FlurryProxy(config); break;
-            case MIXPANEL: proxy = new MixpanelProxy(config); break;
-            case GOOGLE_ANALYTICS: proxy = new GoogleAnalyticsProxy(config); break;
-            default: throw new IllegalStateException("What kind of platform is " + id + "?");
-        }
+        this.proxy = platformProxy;
     }
 
     public Id getId() {

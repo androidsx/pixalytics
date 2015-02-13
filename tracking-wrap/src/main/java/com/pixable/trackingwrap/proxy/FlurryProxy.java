@@ -1,4 +1,4 @@
-package com.pixable.trackingwrap.platform;
+package com.pixable.trackingwrap.proxy;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,10 +6,11 @@ import android.util.Log;
 import com.flurry.android.FlurryAgent;
 import com.pixable.trackingwrap.Event;
 import com.pixable.trackingwrap.Screen;
+import com.pixable.trackingwrap.platform.Platform;
 
 import java.util.Map;
 
-class FlurryProxy implements PlatformProxy {
+public class FlurryProxy extends PlatformProxy {
     private final Platform.Config config;
 
     public FlurryProxy(Platform.Config config) {

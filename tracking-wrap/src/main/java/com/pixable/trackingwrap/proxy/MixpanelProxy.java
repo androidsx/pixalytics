@@ -1,16 +1,16 @@
-package com.pixable.trackingwrap.platform;
+package com.pixable.trackingwrap.proxy;
 
 import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.pixable.trackingwrap.Event;
-import com.pixable.trackingwrap.Screen;
+import com.pixable.trackingwrap.platform.Platform;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
-class MixpanelProxy implements PlatformProxy {
+public class MixpanelProxy extends PlatformProxy {
     private final Platform.Config config;
 
     private MixpanelAPI mixpanelAPI;
@@ -25,16 +25,6 @@ class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void onSessionStart(Context context) {
-        //No need to open session in Mixpanel
-    }
-
-    @Override
-    public void onSessionFinish(Context context) {
-        //No need to close session in Mixpanel
-    }
-
-    @Override
     public void addCommonProperties(Context context, Map<String, String> commonProperties) {
         mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
     }
@@ -42,10 +32,5 @@ class MixpanelProxy implements PlatformProxy {
     @Override
     public void trackEvent(Context context, Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
-    }
-
-    @Override
-    public void trackScreen(Context context, Screen screen) {
-        //No Screens in Mixpanel
     }
 }

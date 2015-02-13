@@ -1,10 +1,9 @@
 package com.pixable.trackingwrap;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.pixable.trackingwrap.platform.Platform;
-import com.pixable.trackingwrap.platform.PlatformProxy;
+import com.pixable.trackingwrap.proxy.PlatformProxy;
 import com.pixable.trackingwrap.trace.TraceId;
 import com.pixable.trackingwrap.trace.TraceProxy;
 

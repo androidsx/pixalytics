@@ -4,13 +4,14 @@ import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.pixable.trackingwrap.Event;
+import com.pixable.trackingwrap.Screen;
 import com.pixable.trackingwrap.platform.Platform;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
-public class MixpanelProxy extends PlatformProxy {
+public class MixpanelProxy implements PlatformProxy {
     private final Platform.Config config;
 
     private MixpanelAPI mixpanelAPI;
@@ -25,6 +26,21 @@ public class MixpanelProxy extends PlatformProxy {
     }
 
     @Override
+    public boolean supportsSession() {
+        return false;
+    }
+
+    @Override
+    public void onSessionStart(Context context) {
+        throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+    }
+
+    @Override
+    public void onSessionFinish(Context context) {
+        throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+    }
+
+    @Override
     public void addCommonProperties(Context context, Map<String, String> commonProperties) {
         mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
     }
@@ -32,5 +48,15 @@ public class MixpanelProxy extends PlatformProxy {
     @Override
     public void trackEvent(Context context, Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
+    }
+
+    @Override
+    public boolean supportsScreens() {
+        return false;
+    }
+
+    @Override
+    public void trackScreen(Context context, Screen screen) {
+        throw new UnsupportedOperationException("Mixpanel does not support Screen tracking");
     }
 }

@@ -7,41 +7,51 @@ import com.pixable.trackingwrap.Screen;
 
 import java.util.Map;
 
-public abstract class PlatformProxy {
+public interface PlatformProxy {
 
     /**
-     * Platform should be initialized. Mandatory implementation
+     * Platform initialization
      * @param context
      */
-    public abstract void onApplicationCreate(Context context);
+    void onApplicationCreate(Context context);
 
     /**
-     * Platform session opening. Optional implementation
-     * @param context
+     * @return true/false if platform support sessions
      */
-    public void onSessionStart(Context context){}
+    boolean supportsSession();
 
     /**
-     * Platform session closing. Optional implementation
+     * Platform session opening
      * @param context
      */
-    public void onSessionFinish(Context context){}
+    void onSessionStart(Context context);
 
     /**
-     * Platform Global properties. Optional implementation
+     * Platform session closing
      * @param context
      */
-    public void addCommonProperties(Context context, Map<String, String> commonProperties){}
+    void onSessionFinish(Context context);
 
     /**
-     * Platform Tracking event. Optional implementation
+     * Platform Global properties
      * @param context
      */
-    public void trackEvent(Context context, Event event){}
+    void addCommonProperties(Context context, Map<String, String> commonProperties);
 
     /**
-     * Platform Tracking Screen. Optional implementation
+     * Platform Tracking event
      * @param context
      */
-    public void trackScreen(Context context, Screen screen){}
+    void trackEvent(Context context, Event event);
+
+    /**
+     * @return true/false if platform support screens
+     */
+    boolean supportsScreens();
+
+    /**
+     * Platform Tracking Screen
+     * @param context
+     */
+    void trackScreen(Context context, Screen screen);
 }

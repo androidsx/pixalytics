@@ -7,10 +7,13 @@ import com.pixable.trackingwrap.proxy.PlatformProxy;
 import com.pixable.trackingwrap.trace.TraceId;
 import com.pixable.trackingwrap.trace.TraceProxy;
 
+import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Entry point for the tracking wrap library. To make usage simple, it is a singleton.
@@ -92,15 +95,18 @@ public class TrackingWrap {
     public void onSessionStart(Context context) {
         checkAppIsInitialized();
 
+        Set<Platform> platforms = getSessionPlatforms();
+        Set<Platform.Id> platformIds = getPlatformIdsFromPlatform(platforms);
+
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Session start",
                     Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
+                    platformIds);
         }
 
-        for (Platform platform : configuration.getPlatforms()) {
+        for (Platform platform : platforms) {
             platform.getProxy().onSessionStart(context);
         }
     }
@@ -113,7 +119,9 @@ public class TrackingWrap {
     public void onSessionFinish(Context context) {
         checkAppIsInitialized();
 
-        for (Platform platform : configuration.getPlatforms()) {
+        Set<Platform> platforms = getSessionPlatforms();
+
+        for (Platform platform : platforms) {
             platform.getProxy().onSessionFinish(context);
         }
     }
@@ -179,15 +187,18 @@ public class TrackingWrap {
     public void trackScreen(Context context, Screen screen) {
         checkAppIsInitialized();
 
+        Set<Platform> platforms = getScreenPlatforms();
+        Set<Platform.Id> platformIds = getPlatformIdsFromPlatform(platforms);
+
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.INFO,
                     "Screen " + screen.getName(),
                     screen.getProperties(),
-                    configuration.getPlatformIds());
+                    platformIds);
         }
 
-        for (Platform platform : configuration.getPlatforms()) {
+        for (Platform platform : platforms) {
             platform.getProxy().trackScreen(context, screen);
         }
     }
@@ -208,5 +219,33 @@ public class TrackingWrap {
         throw new IllegalStateException("The platform " + platformId + " is not initialized."
                 + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                 + configuration.getPlatforms().size());
+    }
+
+    private Set<Platform> getSessionPlatforms() {
+        Set<Platform> filteredPlatforms = new HashSet<Platform>();
+        for(Platform platform : configuration.getPlatforms()) {
+            if(platform.getProxy().supportsSession()) {
+                filteredPlatforms.add(platform);
+            }
+        }
+        return filteredPlatforms;
+    }
+
+    private Set<Platform.Id> getPlatformIdsFromPlatform(Set<Platform> platforms) {
+        Set<Platform.Id> filteredPlatformIds = new HashSet<Platform.Id>();
+        for(Platform platform : platforms) {
+            filteredPlatformIds.add(platform.getId());
+        }
+        return filteredPlatformIds;
+    }
+
+    private Set<Platform> getScreenPlatforms() {
+        Set<Platform> filteredPlatforms = new HashSet<Platform>();
+        for(Platform platform : configuration.getPlatforms()) {
+            if(platform.getProxy().supportsScreens()) {
+                filteredPlatforms.add(platform);
+            }
+        }
+        return filteredPlatforms;
     }
 }

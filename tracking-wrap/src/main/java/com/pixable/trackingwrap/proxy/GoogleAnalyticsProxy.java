@@ -13,7 +13,7 @@ import com.pixable.trackingwrap.platform.GoogleAnalyticsPlatform;
 import java.util.Iterator;
 import java.util.Map;
 
-public class GoogleAnalyticsProxy extends PlatformProxy {
+public class GoogleAnalyticsProxy implements PlatformProxy {
 
     private final static String TAG = GoogleAnalyticsProxy.class.getSimpleName();
 
@@ -34,6 +34,26 @@ public class GoogleAnalyticsProxy extends PlatformProxy {
     }
 
     @Override
+    public boolean supportsSession() {
+        return false;
+    }
+
+    @Override
+    public void onSessionStart(Context context) {
+        throw new UnsupportedOperationException("Google Analytics does not support session tracking");
+    }
+
+    @Override
+    public void onSessionFinish(Context context) {
+        throw new UnsupportedOperationException("Google Analytics does not support session tracking");
+    }
+
+    @Override
+    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
+        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+    }
+
+    @Override
     public void trackEvent(Context context, Event event) {
         HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder()
                 .setCategory(EVENT_CATEGORY)
@@ -42,6 +62,11 @@ public class GoogleAnalyticsProxy extends PlatformProxy {
         addDimensions(builder, event.getProperties());
         //TODO: Find a way of adding Metrics somehow
         tracker.send(builder.build());
+    }
+
+    @Override
+    public boolean supportsScreens() {
+        return true;
     }
 
     @Override

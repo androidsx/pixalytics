@@ -10,7 +10,7 @@ import com.pixable.trackingwrap.platform.Platform;
 
 import java.util.Map;
 
-public class FlurryProxy extends PlatformProxy {
+public class FlurryProxy implements PlatformProxy {
     private final Platform.Config config;
 
     public FlurryProxy(Platform.Config config) {
@@ -22,6 +22,11 @@ public class FlurryProxy extends PlatformProxy {
         FlurryAgent.init(context, config.getAppKey());
         FlurryAgent.setLogEnabled(true); // Should be false
         FlurryAgent.setLogLevel(Log.INFO); // Not needed, given the previous one
+    }
+
+    @Override
+    public boolean supportsSession() {
+        return true;
     }
 
     @Override
@@ -44,6 +49,10 @@ public class FlurryProxy extends PlatformProxy {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
     }
 
+    @Override
+    public boolean supportsScreens() {
+        return false;
+    }
 
     @Override
     public void trackScreen(Context context, Screen screen) {

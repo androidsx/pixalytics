@@ -74,7 +74,7 @@ public class TrackingWrap {
                     TraceProxy.Level.DEBUG,
                     "On application create",
                     Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
+                    configuration.getPlatforms());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
@@ -96,14 +96,13 @@ public class TrackingWrap {
         checkAppIsInitialized();
 
         Set<Platform> platforms = getSessionPlatforms();
-        Set<Platform.Id> platformIds = getPlatformIdsFromPlatform(platforms);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Session start",
                     Collections.<String, String>emptyMap(),
-                    platformIds);
+                    platforms);
         }
 
         for (Platform platform : platforms) {
@@ -139,7 +138,7 @@ public class TrackingWrap {
                     TraceProxy.Level.DEBUG,
                     "Register " + commonProperties.size() + " common properties",
                     commonProperties,
-                    configuration.getPlatformIds());
+                    configuration.getPlatforms());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
@@ -158,11 +157,11 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, Event event, Platform.Id... platformIds) {
+    public void trackEvent(Context context, Event event, Set<Platform> platforms) {
         checkAppIsInitialized();
 
-        if (platformIds.length == 0) {
-            platformIds = configuration.getPlatformIds().toArray(new Platform.Id[configuration.getPlatformIds().size()]);
+        if (platforms.size() == 0) {
+            platforms = configuration.getPlatforms();
         }
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -170,12 +169,12 @@ public class TrackingWrap {
                     TraceProxy.Level.INFO,
                     "Event " + event.getName(),
                     event.getProperties(),
-                    Arrays.asList(platformIds));
+                    platforms);
         }
 
-        for (Platform.Id platformId : platformIds) {
-            checkPlatformIsConfigured(platformId);
-            platformProxyMap.get(platformId).trackEvent(context, event);
+        for (Platform platform : platforms) {
+            checkPlatformIsConfigured(platform.getId());
+            platformProxyMap.get(platform.getId()).trackEvent(context, event);
         }
     }
 
@@ -188,14 +187,13 @@ public class TrackingWrap {
         checkAppIsInitialized();
 
         Set<Platform> platforms = getScreenPlatforms();
-        Set<Platform.Id> platformIds = getPlatformIdsFromPlatform(platforms);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.INFO,
                     "Screen " + screen.getName(),
                     screen.getProperties(),
-                    platformIds);
+                    platforms);
         }
 
         for (Platform platform : platforms) {
@@ -209,10 +207,10 @@ public class TrackingWrap {
         }
     }
 
-    private void checkPlatformIsConfigured(Platform.Id platformId) {
-        for (Platform platform : configuration.getPlatforms()) {
-            if (platform.getId().equals(platformId)) {
-                return;
+    public Platform checkPlatformIsConfigured(Platform.Id platformId) {
+        for (Platform platformTemp : configuration.getPlatforms()) {
+            if (platformId.equals(platformTemp.getId())) {
+                return platformTemp;
             }
         }
 
@@ -229,14 +227,6 @@ public class TrackingWrap {
             }
         }
         return filteredPlatforms;
-    }
-
-    private Set<Platform.Id> getPlatformIdsFromPlatform(Set<Platform> platforms) {
-        Set<Platform.Id> filteredPlatformIds = new HashSet<Platform.Id>();
-        for(Platform platform : platforms) {
-            filteredPlatformIds.add(platform.getId());
-        }
-        return filteredPlatformIds;
     }
 
     private Set<Platform> getScreenPlatforms() {

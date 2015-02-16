@@ -10,6 +10,10 @@ import com.pixable.trackingwrap.TrackingWrap;
 import com.pixable.trackingwrap.helper.TrackedActionBarActivity;
 import com.pixable.trackingwrap.platform.Platform;
 
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Set;
+
 public class MainActivity extends TrackedActionBarActivity {
 
     @Override
@@ -32,6 +36,8 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     private void trackEvent(Platform.Id platformId) {
+        Set<Platform> platforms = new HashSet<>();
+        platforms.add(TrackingWrap.get().checkPlatformIsConfigured(platformId));
         TrackingWrap.get()
                 .trackEvent(this,
                         new Event.Builder().name("foo")
@@ -39,7 +45,7 @@ public class MainActivity extends TrackedActionBarActivity {
                                 .property("property2", "value2")
                                 .property("property3", "value3")
                                 .build(),
-                        platformId);
+                        platforms);
         new AlertDialog.Builder(this)
                 .setMessage(R.string.foo_dialog_message)
                 .setPositiveButton(android.R.string.ok, null)

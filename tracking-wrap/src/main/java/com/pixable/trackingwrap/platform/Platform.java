@@ -89,4 +89,9 @@ public class Platform {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return getId().toString();
+    }
 }

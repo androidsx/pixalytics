@@ -1,4 +1,4 @@
-package com.pixable.trackingwrap.platform;
+package com.pixable.trackingwrap.proxy;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,10 +6,11 @@ import android.util.Log;
 import com.flurry.android.FlurryAgent;
 import com.pixable.trackingwrap.Event;
 import com.pixable.trackingwrap.Screen;
+import com.pixable.trackingwrap.platform.Platform;
 
 import java.util.Map;
 
-class FlurryProxy implements PlatformProxy {
+public class FlurryProxy implements PlatformProxy {
     private final Platform.Config config;
 
     public FlurryProxy(Platform.Config config) {
@@ -24,12 +25,17 @@ class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void onScreenStart(Context context, Screen screen) {
+    public boolean supportsSession() {
+        return true;
+    }
+
+    @Override
+    public void onSessionStart(Context context) {
         FlurryAgent.onStartSession(context);
     }
 
     @Override
-    public void onScreenStop(Context context) {
+    public void onSessionFinish(Context context) {
         FlurryAgent.onEndSession(context);
     }
 
@@ -41,5 +47,15 @@ class FlurryProxy implements PlatformProxy {
     @Override
     public void trackEvent(Context context, Event event) {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
+    }
+
+    @Override
+    public boolean supportsScreens() {
+        return false;
+    }
+
+    @Override
+    public void trackScreen(Context context, Screen screen) {
+        //No Screens in Flurry
     }
 }

@@ -1,17 +1,19 @@
 package com.pixable.trackingwrap;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.pixable.trackingwrap.platform.Platform;
-import com.pixable.trackingwrap.platform.PlatformProxy;
+import com.pixable.trackingwrap.proxy.PlatformProxy;
 import com.pixable.trackingwrap.trace.TraceId;
 import com.pixable.trackingwrap.trace.TraceProxy;
 
+import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Entry point for the tracking wrap library. To make usage simple, it is a singleton.
@@ -22,8 +24,6 @@ import java.util.Map;
  *
  * After that, use {@link #get} to call the other methods as needed.
  *
- * Don't forget to track the activity start/stop. You can do it manually with the {@link #onScreenStart}
- * and {@link #onScreenStop} methods, or check the helper classes in {@link com.pixable.trackingwrap.helper}.
  */
 public class TrackingWrap {
     private static final String TAG = TrackingWrap.class.getSimpleName();
@@ -74,7 +74,7 @@ public class TrackingWrap {
                     TraceProxy.Level.DEBUG,
                     "On application create",
                     Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
+                    configuration.getPlatforms());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
@@ -88,24 +88,25 @@ public class TrackingWrap {
 
     /**
      * To be called from the {@code onStart} of every activity in your application. This lifecycle
-     * method is used to track Screens viewed or Sessions. Not all tracking services support it.
+     * method is used to open session. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
-     * @param screen screen we are tracking
      */
-    public void onScreenStart(Context context, Screen screen) {
+    public void onSessionStart(Context context) {
         checkAppIsInitialized();
+
+        Set<Platform> platforms = getSessionPlatforms();
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
-                    "Screen start: " + screen.getName(),
+                    "Session start",
                     Collections.<String, String>emptyMap(),
-                    configuration.getPlatformIds());
+                    platforms);
         }
 
-        for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onScreenStart(context, screen);
+        for (Platform platform : platforms) {
+            platform.getProxy().onSessionStart(context);
         }
     }
 
@@ -114,11 +115,13 @@ public class TrackingWrap {
      *
      * @param context activity context, not the global application context
      */
-    public void onScreenStop(Context context) {
+    public void onSessionFinish(Context context) {
         checkAppIsInitialized();
 
-        for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().onScreenStop(context);
+        Set<Platform> platforms = getSessionPlatforms();
+
+        for (Platform platform : platforms) {
+            platform.getProxy().onSessionFinish(context);
         }
     }
 
@@ -135,7 +138,7 @@ public class TrackingWrap {
                     TraceProxy.Level.DEBUG,
                     "Register " + commonProperties.size() + " common properties",
                     commonProperties,
-                    configuration.getPlatformIds());
+                    configuration.getPlatforms());
         }
 
         for (Platform platform : configuration.getPlatforms()) {
@@ -154,11 +157,11 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, Event event, Platform.Id... platformIds) {
+    public void trackEvent(Context context, Event event, Set<Platform> platforms) {
         checkAppIsInitialized();
 
-        if (platformIds.length == 0) {
-            platformIds = configuration.getPlatformIds().toArray(new Platform.Id[configuration.getPlatformIds().size()]);
+        if (platforms.size() == 0) {
+            platforms = configuration.getPlatforms();
         }
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -166,12 +169,35 @@ public class TrackingWrap {
                     TraceProxy.Level.INFO,
                     "Event " + event.getName(),
                     event.getProperties(),
-                    Arrays.asList(platformIds));
+                    platforms);
         }
 
-        for (Platform.Id platformId : platformIds) {
-            checkPlatformIsConfigured(platformId);
-            platformProxyMap.get(platformId).trackEvent(context, event);
+        for (Platform platform : platforms) {
+            checkPlatformIsConfigured(platform.getId());
+            platformProxyMap.get(platform.getId()).trackEvent(context, event);
+        }
+    }
+
+    /**
+     * Track Screen in all platform
+     * @param context
+     * @param screen
+     */
+    public void trackScreen(Context context, Screen screen) {
+        checkAppIsInitialized();
+
+        Set<Platform> platforms = getScreenPlatforms();
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.INFO,
+                    "Screen " + screen.getName(),
+                    screen.getProperties(),
+                    platforms);
+        }
+
+        for (Platform platform : platforms) {
+            platform.getProxy().trackScreen(context, screen);
         }
     }
 
@@ -181,15 +207,35 @@ public class TrackingWrap {
         }
     }
 
-    private void checkPlatformIsConfigured(Platform.Id platformId) {
-        for (Platform platform : configuration.getPlatforms()) {
-            if (platform.getId().equals(platformId)) {
-                return;
+    public Platform checkPlatformIsConfigured(Platform.Id platformId) {
+        for (Platform platformTemp : configuration.getPlatforms()) {
+            if (platformId.equals(platformTemp.getId())) {
+                return platformTemp;
             }
         }
 
         throw new IllegalStateException("The platform " + platformId + " is not initialized."
                 + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
                 + configuration.getPlatforms().size());
+    }
+
+    private Set<Platform> getSessionPlatforms() {
+        Set<Platform> filteredPlatforms = new HashSet<Platform>();
+        for(Platform platform : configuration.getPlatforms()) {
+            if(platform.getProxy().supportsSession()) {
+                filteredPlatforms.add(platform);
+            }
+        }
+        return filteredPlatforms;
+    }
+
+    private Set<Platform> getScreenPlatforms() {
+        Set<Platform> filteredPlatforms = new HashSet<Platform>();
+        for(Platform platform : configuration.getPlatforms()) {
+            if(platform.getProxy().supportsScreens()) {
+                filteredPlatforms.add(platform);
+            }
+        }
+        return filteredPlatforms;
     }
 }

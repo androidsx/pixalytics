@@ -38,7 +38,7 @@ public class ToastTraceProxy implements TraceProxy {
     }
 
     @Override
-    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform.Id> platforms) {
+    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform> platforms) {
         final LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.tracking_debug_toast, null);
@@ -56,9 +56,9 @@ public class ToastTraceProxy implements TraceProxy {
         ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(
                 mapToLinedString(properties));
 
-        for (Platform.Id platform : platforms) {
+        for (Platform platform : platforms) {
             final int platformIcon;
-            switch (platform) {
+            switch (platform.getId()) {
                 case FLURRY:
                     platformIcon = R.id.toast_icon_flurry;
                     break;
@@ -67,6 +67,9 @@ public class ToastTraceProxy implements TraceProxy {
                     break;
                 case GOOGLE_ANALYTICS:
                     platformIcon = R.id.toast_icon_ga;
+                    break;
+                case FACEBOOK:
+                    platformIcon = R.id.toast_icon_facebook;
                     break;
                 default:
                     throw new IllegalArgumentException("There's no icon for the platform " + platform);

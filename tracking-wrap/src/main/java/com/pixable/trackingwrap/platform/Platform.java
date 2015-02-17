@@ -13,7 +13,8 @@ public class Platform {
     public static enum Id {
         MIXPANEL,
         FLURRY,
-        GOOGLE_ANALYTICS;
+        GOOGLE_ANALYTICS,
+        FACEBOOK;
     }
 
     /**

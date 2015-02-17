@@ -30,4 +30,7 @@ dependencies {
 
     // Google Analytics
     compile 'com.google.android.gms:play-services-base:6.5.87'
+
+    //Facebook
+    compile 'com.facebook.android:facebook-android-sdk:3.23.0'
 }

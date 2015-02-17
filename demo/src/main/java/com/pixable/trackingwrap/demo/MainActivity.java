@@ -35,6 +35,10 @@ public class MainActivity extends TrackedActionBarActivity {
         trackEvent(Platform.Id.GOOGLE_ANALYTICS);
     }
 
+    public void onFooFacebookClick(View view) {
+        trackEvent(Platform.Id.FACEBOOK);
+    }
+
     private void trackEvent(Platform.Id platformId) {
         Set<Platform> platforms = new HashSet<>();
         platforms.add(TrackingWrap.get().checkPlatformIsConfigured(platformId));

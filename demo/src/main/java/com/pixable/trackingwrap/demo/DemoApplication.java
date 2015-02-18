@@ -2,15 +2,15 @@ package com.pixable.trackingwrap.demo;
 
 import android.app.Application;
 
+import com.example.ruben.tracking_wrap_mixpanel.platform.MixpanelPlatform;
 import com.facebook.AppEventsConstants;
-import com.pixable.trackingwrap.TrackingConfig;
-import com.pixable.trackingwrap.TrackingWrap;
-import com.pixable.trackingwrap.platform.FacebookPlatform;
-import com.pixable.trackingwrap.platform.FlurryPlatform;
-import com.pixable.trackingwrap.platform.GoogleAnalyticsPlatform;
-import com.pixable.trackingwrap.platform.MixpanelPlatform;
-import com.pixable.trackingwrap.platform.Platform;
-import com.pixable.trackingwrap.trace.TraceId;
+import com.pixable.trackingwrap.core.TrackingConfig;
+import com.pixable.trackingwrap.core.TrackingWrap;
+import com.pixable.trackingwrap.core.platform.FacebookPlatform;
+import com.pixable.trackingwrap.core.platform.FlurryPlatform;
+import com.pixable.trackingwrap.core.platform.GoogleAnalyticsPlatform;
+import com.pixable.trackingwrap.core.platform.Platform;
+import com.pixable.trackingwrap.core.trace.TraceId;
 
 import java.util.HashMap;
 import java.util.Map;

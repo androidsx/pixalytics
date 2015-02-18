@@ -4,13 +4,12 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 
-import com.pixable.trackingwrap.Event;
-import com.pixable.trackingwrap.Screen;
-import com.pixable.trackingwrap.TrackingWrap;
-import com.pixable.trackingwrap.helper.TrackedActionBarActivity;
-import com.pixable.trackingwrap.platform.Platform;
+import com.pixable.trackingwrap.core.Event;
+import com.pixable.trackingwrap.core.Screen;
+import com.pixable.trackingwrap.core.TrackingWrap;
+import com.pixable.trackingwrap.core.helper.TrackedActionBarActivity;
+import com.pixable.trackingwrap.core.platform.Platform;
 
-import java.lang.reflect.Array;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,8 +39,8 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     private void trackEvent(Platform.Id platformId) {
-        Set<Platform> platforms = new HashSet<>();
-        platforms.add(TrackingWrap.get().checkPlatformIsConfigured(platformId));
+        Set<Platform.Id> platformIds = new HashSet<>();
+        platformIds.add(platformId);
         TrackingWrap.get()
                 .trackEvent(this,
                         new Event.Builder().name("foo")
@@ -49,7 +48,7 @@ public class MainActivity extends TrackedActionBarActivity {
                                 .property("property2", "value2")
                                 .property("property3", "value3")
                                 .build(),
-                        platforms);
+                        platformIds);
         new AlertDialog.Builder(this)
                 .setMessage(R.string.foo_dialog_message)
                 .setPositiveButton(android.R.string.ok, null)

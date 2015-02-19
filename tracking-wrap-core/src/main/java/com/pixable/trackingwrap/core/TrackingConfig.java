@@ -19,14 +19,6 @@ public class TrackingConfig {
         return platforms;
     }
 
-    public Set<Platform.Id> getPlatformIds() {
-        final Set<Platform.Id> platformIds = new HashSet<>();
-        for (Platform platform : platforms) {
-            platformIds.add(platform.getId());
-        }
-        return platformIds;
-    }
-
     public Set<TraceId> getTraceIds() {
         return traceIds;
     }

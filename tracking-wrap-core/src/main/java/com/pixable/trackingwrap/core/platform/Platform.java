@@ -2,17 +2,7 @@ package com.pixable.trackingwrap.core.platform;
 
 import com.pixable.trackingwrap.core.proxy.PlatformProxy;
 
-public class Platform {
-
-    /**
-     * Tracking platform to which events can be sent. Also known as analytics provider.
-     */
-    public static enum Id {
-        MIXPANEL,
-        FLURRY,
-        GOOGLE_ANALYTICS,
-        FACEBOOK;
-    }
+public abstract class Platform {
 
     /**
      * Configuration parameters for a tracking platform. For instance, a project in your Mixpanel
@@ -55,19 +45,15 @@ public class Platform {
         }
     }
 
-    private final Id id;
     private PlatformProxy proxy;
     private int iconId;
 
-    public Platform(Id id, int iconId, PlatformProxy platformProxy) {
-        this.id = id;
+    public Platform(int iconId, PlatformProxy platformProxy) {
         this.iconId = iconId;
         this.proxy = platformProxy;
     }
 
-    public Id getId() {
-        return id;
-    }
+    public abstract String getId();
 
     public int getIconId() {
         return iconId;
@@ -84,18 +70,18 @@ public class Platform {
 
         Platform platform = (Platform) o;
 
-        if (id != platform.id) return false;
+        if (getId() != platform.getId()) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return getId().hashCode();
     }
 
     @Override
     public String toString() {
-        return getId().toString();
+        return getId();
     }
 }

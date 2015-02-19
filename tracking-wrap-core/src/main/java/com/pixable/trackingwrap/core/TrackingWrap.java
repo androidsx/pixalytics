@@ -31,7 +31,7 @@ public class TrackingWrap {
     /**
      * Map of platform IDs to proxies to be able to have the client just use IDs.
      */
-    private Map<Platform.Id, PlatformProxy> platformProxyMap = new HashMap<>();
+    private Map<String, PlatformProxy> platformProxyMap = new HashMap<>();
     private boolean initialized = false;
 
     private TrackingWrap(TrackingConfig configuration) {
@@ -158,14 +158,14 @@ public class TrackingWrap {
     /**
      * Tracks the provided event in the provided platforms.
      */
-    public void trackEvent(Context context, Event event, Set<Platform.Id> platformIds) {
+    public void trackEvent(Context context, Event event, Set<String> platformIds) {
         checkAppIsInitialized();
 
         Set<Platform> platforms = new HashSet<Platform>();
         if (platformIds.size() == 0) {
             platforms = configuration.getPlatforms();
         } else {
-            for(Platform.Id platformId : platformIds) {
+            for(String platformId : platformIds) {
                 Platform platform = getPlatformFromId(platformId);
                 if(platform != null) {
                     platforms.add(platform);
@@ -217,7 +217,7 @@ public class TrackingWrap {
         }
     }
 
-    public Platform checkPlatformIsConfigured(Platform.Id platformId) {
+    public Platform checkPlatformIsConfigured(String platformId) {
         Platform platform = getPlatformFromId(platformId);
         if(platform != null) {
             return platform;
@@ -228,7 +228,7 @@ public class TrackingWrap {
                 + configuration.getPlatforms().size());
     }
 
-    private Platform getPlatformFromId(Platform.Id platformId) {
+    private Platform getPlatformFromId(String platformId) {
         for (Platform platformTemp : configuration.getPlatforms()) {
             if (platformId.equals(platformTemp.getId())) {
                 return platformTemp;

@@ -7,8 +7,15 @@ import java.util.Map;
 
 public class FacebookPlatform extends Platform {
 
+    public static String ID = "facebook";
+
     public FacebookPlatform(Config config) {
-        super(Id.FACEBOOK, R.drawable.tracking_toast_facebook, new FacebookProxy(config));
+        super(R.drawable.tracking_toast_facebook, new FacebookProxy(config));
+    }
+
+    @Override
+    public String getId() {
+        return ID;
     }
 
     /**

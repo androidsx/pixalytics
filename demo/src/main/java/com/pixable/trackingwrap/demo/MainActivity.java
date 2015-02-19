@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.ruben.tracking_wrap_mixpanel.platform.MixpanelPlatform;
 import com.pixable.trackingwrap.core.Event;
 import com.pixable.trackingwrap.core.Screen;
 import com.pixable.trackingwrap.core.TrackingWrap;
 import com.pixable.trackingwrap.core.helper.TrackedActionBarActivity;
+import com.pixable.trackingwrap.core.platform.FacebookPlatform;
+import com.pixable.trackingwrap.core.platform.FlurryPlatform;
+import com.pixable.trackingwrap.core.platform.GoogleAnalyticsPlatform;
 import com.pixable.trackingwrap.core.platform.Platform;
 
 import java.util.HashSet;
@@ -23,23 +27,23 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     public void onFooFlurryClick(View view) {
-        trackEvent(Platform.Id.FLURRY);
+        trackEvent(FlurryPlatform.ID);
     }
 
     public void onFooMixpanelClick(View view) {
-        trackEvent(Platform.Id.MIXPANEL);
+        trackEvent(MixpanelPlatform.ID);
     }
 
     public void onFooGoogleAnalyticsClick(View view) {
-        trackEvent(Platform.Id.GOOGLE_ANALYTICS);
+        trackEvent(GoogleAnalyticsPlatform.ID);
     }
 
     public void onFooFacebookClick(View view) {
-        trackEvent(Platform.Id.FACEBOOK);
+        trackEvent(FacebookPlatform.ID);
     }
 
-    private void trackEvent(Platform.Id platformId) {
-        Set<Platform.Id> platformIds = new HashSet<>();
+    private void trackEvent(String platformId) {
+        Set<String> platformIds = new HashSet<>();
         platformIds.add(platformId);
         TrackingWrap.get()
                 .trackEvent(this,

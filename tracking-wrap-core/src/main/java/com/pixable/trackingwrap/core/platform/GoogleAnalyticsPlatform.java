@@ -7,8 +7,15 @@ import java.util.Map;
 
 public class GoogleAnalyticsPlatform extends Platform {
 
+    public static String ID = "ga";
+
     public GoogleAnalyticsPlatform(Config config) {
-        super(Platform.Id.GOOGLE_ANALYTICS, R.drawable.tracking_toast_ga, new GoogleAnalyticsProxy(config));
+        super(R.drawable.tracking_toast_ga, new GoogleAnalyticsProxy(config));
+    }
+
+    @Override
+    public String getId() {
+        return ID;
     }
 
     /**

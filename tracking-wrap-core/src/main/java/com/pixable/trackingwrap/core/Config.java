@@ -15,22 +15,6 @@ public class Config {
         this.traceIds = traceIds;
     }
 
-    public Set<Platform> getPlatforms() {
-        return platforms;
-    }
-
-    public Set<Platform.Id> getPlatformIds() {
-        final Set<Platform.Id> platformIds = new HashSet<>();
-        for (Platform platform : platforms) {
-            platformIds.add(platform.getId());
-        }
-        return platformIds;
-    }
-
-    public Set<TraceId> getTraceIds() {
-        return traceIds;
-    }
-
     public static class Builder {
         private Set<Platform> platforms = new HashSet<>();
         private Set<TraceId> traceIds = new HashSet<>();

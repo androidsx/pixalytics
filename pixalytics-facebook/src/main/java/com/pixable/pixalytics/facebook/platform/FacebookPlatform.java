@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.facebook.platform;
 
 import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.facebook.R;
 import com.pixable.pixalytics.facebook.proxy.FacebookProxy;
 
 import java.util.Map;

@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 
-import com.pixable.trackingwrap.core.Event;
-import com.pixable.trackingwrap.core.Screen;
-import com.pixable.trackingwrap.core.TrackingWrap;
-import com.pixable.trackingwrap.core.helper.TrackedActionBarActivity;
-import com.pixable.trackingwrap.core.platform.Platform;
+import com.pixable.pixalytics.core.Event;
+import com.pixable.pixalytics.core.Screen;
+import com.pixable.pixalytics.core.TrackingWrap;
+import com.pixable.pixalytics.core.helper.TrackedActionBarActivity;
+import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
+import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
+import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
+import com.pixable.pixalytics.mixpanel.platform.MixpanelPlatform;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,23 +26,23 @@ public class MainActivity extends TrackedActionBarActivity {
     }
 
     public void onFooFlurryClick(View view) {
-        trackEvent(Platform.Id.FLURRY);
+        trackEvent(FlurryPlatform.ID);
     }
 
     public void onFooMixpanelClick(View view) {
-        trackEvent(Platform.Id.MIXPANEL);
+        trackEvent(MixpanelPlatform.ID);
     }
 
     public void onFooGoogleAnalyticsClick(View view) {
-        trackEvent(Platform.Id.GOOGLE_ANALYTICS);
+        trackEvent(GoogleAnalyticsPlatform.ID);
     }
 
     public void onFooFacebookClick(View view) {
-        trackEvent(Platform.Id.FACEBOOK);
+        trackEvent(FacebookPlatform.ID);
     }
 
-    private void trackEvent(Platform.Id platformId) {
-        Set<Platform.Id> platformIds = new HashSet<>();
+    private void trackEvent(String platformId) {
+        Set<String> platformIds = new HashSet<>();
         platformIds.add(platformId);
         TrackingWrap.get()
                 .trackEvent(this,

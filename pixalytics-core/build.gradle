@@ -1,12 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.pixble.trackingwrap.demo"
-        minSdkVersion 14
+        minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -20,11 +19,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // For the tracked activity helpers
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile project(':pixalytics-core')
-    compile project(':pixalytics-mixpanel')
-    compile project(':pixalytics-flurry')
-    compile project(':pixalytics-ga')
-    compile project(':pixalytics-facebook')
+    compile 'com.android.support:support-v4:21.0.2'
+
+    //Toasts
+    compile 'com.jakewharton:butterknife:6.0.0'
 }

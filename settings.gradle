@@ -1,1 +1,1 @@
-include ':tracking-wrap-core', ':demo', ':tracking-wrap-mixpanel'
+include ':pixalytics-core', ':demo', ':pixalytics-mixpanel'

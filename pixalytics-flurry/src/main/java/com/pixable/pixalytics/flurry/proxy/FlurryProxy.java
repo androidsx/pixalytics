@@ -1,4 +1,4 @@
-package com.pixable.pixalytics.core.proxy;
+package com.pixable.pixalytics.flurry.proxy;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,7 @@ import com.flurry.android.FlurryAgent;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
 import java.util.Map;
 

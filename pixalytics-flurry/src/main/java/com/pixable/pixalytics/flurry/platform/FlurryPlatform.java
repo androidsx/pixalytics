@@ -1,7 +1,7 @@
-package com.pixable.pixalytics.core.platform;
+package com.pixable.pixalytics.flurry.platform;
 
-import com.pixable.pixalytics.core.R;
-import com.pixable.pixalytics.core.proxy.FlurryProxy;
+import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.flurry.proxy.FlurryProxy;
 
 public class FlurryPlatform extends Platform {
 

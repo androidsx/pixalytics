@@ -1,7 +1,7 @@
-package com.pixable.pixalytics.core.platform;
+package com.pixable.pixalytics.facebook.platform;
 
-import com.pixable.pixalytics.core.R;
-import com.pixable.pixalytics.core.proxy.FacebookProxy;
+import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.facebook.proxy.FacebookProxy;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.example.ruben.tracking_wrap_mixpanel;
+package com.pixable.pixalytics.mixpanel;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

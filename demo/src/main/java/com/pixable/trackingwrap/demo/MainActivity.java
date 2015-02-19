@@ -4,15 +4,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.ruben.tracking_wrap_mixpanel.platform.MixpanelPlatform;
-import com.pixable.trackingwrap.core.Event;
-import com.pixable.trackingwrap.core.Screen;
-import com.pixable.trackingwrap.core.TrackingWrap;
-import com.pixable.trackingwrap.core.helper.TrackedActionBarActivity;
-import com.pixable.trackingwrap.core.platform.FacebookPlatform;
-import com.pixable.trackingwrap.core.platform.FlurryPlatform;
-import com.pixable.trackingwrap.core.platform.GoogleAnalyticsPlatform;
-import com.pixable.trackingwrap.core.platform.Platform;
+import com.pixable.pixalytics.core.Event;
+import com.pixable.pixalytics.core.Screen;
+import com.pixable.pixalytics.core.TrackingWrap;
+import com.pixable.pixalytics.core.helper.TrackedActionBarActivity;
+import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
+import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
+import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
+import com.pixable.pixalytics.mixpanel.platform.MixpanelPlatform;
 
 import java.util.HashSet;
 import java.util.Set;

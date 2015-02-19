@@ -1,12 +1,14 @@
-package com.pixable.pixalytics.core.proxy;
+package com.pixable.pixalytics.facebook.proxy;
 
 import android.content.Context;
 import android.os.Bundle;
 
+
 import com.facebook.AppEventsLogger;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.platform.FacebookPlatform;
+import com.pixable.pixalytics.core.proxy.PlatformProxy;
+import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 
 import java.util.Iterator;
 import java.util.Map;

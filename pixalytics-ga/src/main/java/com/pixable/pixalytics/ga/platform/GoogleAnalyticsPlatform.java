@@ -1,7 +1,7 @@
-package com.pixable.pixalytics.core.platform;
+package com.pixable.pixalytics.ga.platform;
 
-import com.pixable.pixalytics.core.R;
-import com.pixable.pixalytics.core.proxy.GoogleAnalyticsProxy;
+import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.ga.proxy.GoogleAnalyticsProxy;
 
 import java.util.Map;
 

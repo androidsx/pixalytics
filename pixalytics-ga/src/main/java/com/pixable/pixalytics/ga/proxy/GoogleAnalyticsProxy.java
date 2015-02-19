@@ -1,14 +1,12 @@
-package com.pixable.pixalytics.core.proxy;
+package com.pixable.pixalytics.ga.proxy;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.platform.GoogleAnalyticsPlatform;
+import com.pixable.pixalytics.core.proxy.PlatformProxy;
+import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
 
 import java.util.Iterator;
 import java.util.Map;

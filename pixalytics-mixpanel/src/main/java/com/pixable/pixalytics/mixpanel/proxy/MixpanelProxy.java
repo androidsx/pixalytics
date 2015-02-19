@@ -1,12 +1,12 @@
-package com.example.ruben.tracking_wrap_mixpanel.proxy;
+package com.pixable.pixalytics.mixpanel.proxy;
 
 import android.content.Context;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
-import com.pixable.trackingwrap.core.Event;
-import com.pixable.trackingwrap.core.Screen;
-import com.pixable.trackingwrap.core.platform.Platform;
-import com.pixable.trackingwrap.core.proxy.PlatformProxy;
+import com.pixable.pixalytics.core.Event;
+import com.pixable.pixalytics.core.Screen;
+import com.pixable.pixalytics.core.platform.Platform;
+import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
 import org.json.JSONObject;
 

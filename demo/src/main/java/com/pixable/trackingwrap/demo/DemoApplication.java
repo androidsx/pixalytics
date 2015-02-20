@@ -3,8 +3,8 @@ package com.pixable.trackingwrap.demo;
 import android.app.Application;
 
 import com.facebook.AppEventsConstants;
-import com.pixable.pixalytics.core.TrackingConfig;
 import com.pixable.pixalytics.core.TrackingWrap;
+import com.pixable.pixalytics.core.Config;
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
@@ -21,7 +21,7 @@ public class DemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        final TrackingConfig configuration = new TrackingConfig.Builder()
+        final Config configuration = new Config.Builder()
                 .addPlatform(new FlurryPlatform(new Platform.Config("flurry-app-key")))
                 .addPlatform(new MixpanelPlatform(new Platform.Config("mixpanel-app-key")))
                 .addPlatform(new GoogleAnalyticsPlatform(new GoogleAnalyticsPlatform.Config("ga-app-key", gaParametersMapping)))

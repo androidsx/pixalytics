@@ -15,6 +15,14 @@ public class Config {
         this.traceIds = traceIds;
     }
 
+    public Set<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public Set<TraceId> getTraceIds() {
+        return traceIds;
+    }
+
     public static class Builder {
         private Set<Platform> platforms = new HashSet<>();
         private Set<TraceId> traceIds = new HashSet<>();

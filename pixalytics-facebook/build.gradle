@@ -22,3 +22,5 @@ dependencies {
     compile project(':pixalytics-core')
     compile 'com.facebook.android:facebook-android-sdk:3.23.0'
 }
+
+apply from: '../maven_push.gradle'

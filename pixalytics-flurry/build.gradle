@@ -22,3 +22,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':pixalytics-core')
 }
+
+apply from: '../maven_push.gradle'

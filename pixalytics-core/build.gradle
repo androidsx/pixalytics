@@ -26,3 +26,4 @@ dependencies {
     //Toasts
     compile 'com.jakewharton:butterknife:6.0.0'
 }
+apply from: '../maven_push.gradle'

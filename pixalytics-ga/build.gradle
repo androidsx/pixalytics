@@ -22,3 +22,5 @@ dependencies {
     compile project(':pixalytics-core')
     compile 'com.google.android.gms:play-services-base:6.5.87'
 }
+
+apply from: '../maven_push.gradle'

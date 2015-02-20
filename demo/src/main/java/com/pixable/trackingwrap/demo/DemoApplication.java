@@ -3,8 +3,8 @@ package com.pixable.trackingwrap.demo;
 import android.app.Application;
 
 import com.facebook.AppEventsConstants;
-import com.pixable.pixalytics.core.TrackingWrap;
 import com.pixable.pixalytics.core.Config;
+import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
@@ -29,7 +29,7 @@ public class DemoApplication extends Application {
                 .addTrace(TraceId.LOGCAT)
                 .addTrace(TraceId.TOAST)
                 .build();
-        TrackingWrap.createInstance(configuration).onApplicationCreate(this);
+        Pixalytics.createInstance(configuration).onApplicationCreate(this);
     }
 
     private static Map<String, Integer> gaParametersMapping = new HashMap<>();

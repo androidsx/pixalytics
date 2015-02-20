@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Entry point for the tracking wrap library. To make usage simple, it is a singleton.
+ * Entry point for the Pixalytics. To make usage simple, it is a singleton.
  * <p/>
  * In your {@link android.app.Application#onCreate} lifecycle method, construct the singleton
  * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
@@ -22,11 +22,11 @@ import java.util.Set;
  * <p/>
  * After that, use {@link #get} to call the other methods as needed.
  */
-public class TrackingWrap {
-    private static final String TAG = TrackingWrap.class.getSimpleName();
-    static TrackingWrap INSTANCE;
+public class Pixalytics {
+    private static final String TAG = Pixalytics.class.getSimpleName();
+    static Pixalytics INSTANCE;
 
-    private final TrackingConfig configuration;
+    private final Config configuration;
 
     /**
      * Map of platform IDs to proxies to be able to have the client just use IDs.
@@ -34,16 +34,16 @@ public class TrackingWrap {
     private Map<String, PlatformProxy> platformProxyMap = new HashMap<>();
     private boolean initialized = false;
 
-    private TrackingWrap(TrackingConfig configuration) {
+    private Pixalytics(Config configuration) {
         this.configuration = configuration;
     }
 
-    public static TrackingWrap createInstance(TrackingConfig configuration) {
+    public static Pixalytics createInstance(Config configuration) {
         if (INSTANCE == null) {
-            INSTANCE = new TrackingWrap(configuration);
+            INSTANCE = new Pixalytics(configuration);
             return INSTANCE;
         } else {
-            throw new IllegalStateException("The tracking wrap singleton was already instantiated");
+            throw new IllegalStateException("The singleton was already instantiated");
         }
     }
 
@@ -51,9 +51,9 @@ public class TrackingWrap {
      * Returns the singleton instance. It should typically be called {@code getInstance}, but we
      * decided to make it shorter given that it's used extensively.
      */
-    public static TrackingWrap get() {
+    public static Pixalytics get() {
         if (INSTANCE == null) {
-            throw new IllegalStateException("The tracking wrap singleton is not initialized");
+            throw new IllegalStateException("The singleton is not initialized");
         } else {
             return INSTANCE;
         }

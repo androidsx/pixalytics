@@ -18,8 +18,15 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 dependencies {
-    compile project(':pixalytics-core')
+    compile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
     compile 'com.facebook.android:facebook-android-sdk:3.23.0'
 }
 

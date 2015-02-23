@@ -18,9 +18,16 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':pixalytics-core')
+    compile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
 }
 
 apply from: '../maven_push.gradle'

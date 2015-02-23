@@ -18,8 +18,15 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 dependencies {
-    compile project(':pixalytics-core')
+    compile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
     compile 'com.google.android.gms:play-services-base:6.5.87'
 }
 

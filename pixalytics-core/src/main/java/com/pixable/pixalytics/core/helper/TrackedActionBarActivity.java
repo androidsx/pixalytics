@@ -2,7 +2,7 @@ package com.pixable.pixalytics.core.helper;
 
 import android.support.v7.app.ActionBarActivity;
 
-import com.pixable.pixalytics.core.TrackingWrap;
+import com.pixable.pixalytics.core.Pixalytics;
 
 public abstract class TrackedActionBarActivity extends ActionBarActivity {
 
@@ -10,13 +10,13 @@ public abstract class TrackedActionBarActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onSessionStart(this);
+        Pixalytics.get().onSessionStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.get().onSessionFinish(this);
+        Pixalytics.get().onSessionFinish(this);
     }
 }

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.pixable.pixalytics.core.Event;
+import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.TrackingWrap;
 import com.pixable.pixalytics.core.helper.TrackedActionBarActivity;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
@@ -44,14 +44,13 @@ public class MainActivity extends TrackedActionBarActivity {
     private void trackEvent(String platformId) {
         Set<String> platformIds = new HashSet<>();
         platformIds.add(platformId);
-        TrackingWrap.get()
-                .trackEvent(this,
-                        new Event.Builder().name("foo")
-                                .property("view", "main")
-                                .property("property2", "value2")
-                                .property("property3", "value3")
-                                .build(),
-                        platformIds);
+        Pixalytics.get().trackEvent(this,
+                new Event.Builder().name("foo")
+                        .property("view", "main")
+                        .property("property2", "value2")
+                        .property("property3", "value3")
+                        .build(),
+                platformIds);
         new AlertDialog.Builder(this)
                 .setMessage(R.string.foo_dialog_message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -62,6 +61,6 @@ public class MainActivity extends TrackedActionBarActivity {
         Screen screen = new Screen.Builder().name("Main")
                 .property("1", "Value1")
                 .build();
-        TrackingWrap.get().trackScreen(this, screen);
+        Pixalytics.get().trackScreen(this, screen);
     }
 }

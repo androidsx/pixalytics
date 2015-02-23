@@ -2,8 +2,8 @@ package com.pixable.pixalytics.core.helper;
 
 import android.app.Activity;
 
+import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.TrackingWrap;
 
 public abstract class TrackedActivity extends Activity {
 
@@ -11,14 +11,14 @@ public abstract class TrackedActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        TrackingWrap.get().onSessionStart(this);
+        Pixalytics.get().onSessionStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        TrackingWrap.get().onSessionFinish(this);
+        Pixalytics.get().onSessionFinish(this);
     }
 
     protected abstract Screen getScreen();

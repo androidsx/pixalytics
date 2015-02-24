@@ -18,19 +18,13 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-}
-
 dependencies {
-    compile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
     
     //Need to include all google play services package (not just base) because project will use Pixalytics
     //needs whole google play services package and cannot have both
     compile 'com.google.android.gms:play-services:6.5.87'
+    compile project(':pixalytics-core')
+    
 }
 
 apply from: '../maven_push.gradle'

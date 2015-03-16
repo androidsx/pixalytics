@@ -38,6 +38,14 @@ public class Event extends Trackable {
             return this;
         }
 
+        /**
+         * Adds a bunch of properties
+         */
+        public Builder properties(Map<String, String> properties) {
+            this.properties.putAll(properties);
+            return this;
+        }
+
         public Event build() {
             if (name == null) {
                 throw new IllegalStateException("No name was provided for this event");

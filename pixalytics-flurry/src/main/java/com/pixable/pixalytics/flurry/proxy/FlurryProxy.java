@@ -42,7 +42,12 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void addCommonProperties(Context context, Map<String, String> commonProperties) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        throw new UnsupportedOperationException("Flurry does not support Common Properties");
+    }
+
+    @Override
+    public void clearCommonProperties() {
+        throw new UnsupportedOperationException("Flurry does not support Common Properties");
     }
 
     @Override
@@ -58,5 +63,20 @@ public class FlurryProxy implements PlatformProxy {
     @Override
     public void trackScreen(Context context, Screen screen) {
         //No Screens in Flurry
+    }
+
+    @Override
+    public void flush() {
+        throw new UnsupportedOperationException("Flurry does not support Flush");
+    }
+
+    @Override
+    public void setIdentifier(String identifier) {
+        throw new UnsupportedOperationException("Flurry does not support Identifier management");
+    }
+
+    @Override
+    public String getIdentifier() {
+        throw new UnsupportedOperationException("Flurry does not support Identifier management");
     }
 }

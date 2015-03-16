@@ -43,6 +43,11 @@ public interface PlatformProxy {
     void addCommonProperties(Context context, Map<String, String> commonProperties);
 
     /**
+     * Clear Common properties
+     */
+    void clearCommonProperties();
+
+    /**
      * Platform Tracking event
      *
      * @param context
@@ -60,4 +65,20 @@ public interface PlatformProxy {
      * @param context
      */
     void trackScreen(Context context, Screen screen);
+
+    /**
+     * Flush logged events and screens
+     */
+    void flush();
+
+    /**
+     * Set Identifier
+     * @param identifier
+     */
+    void setIdentifier(String identifier);
+
+    /**
+     * Get Identifier
+     */
+    String getIdentifier();
 }

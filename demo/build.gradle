@@ -19,14 +19,20 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile project(':pixalytics-core')
-    compile project(':pixalytics-mixpanel')
-    compile project(':pixalytics-flurry')
-    compile project(':pixalytics-ga')
-    compile project(':pixalytics-facebook')
+    compile 'com.pixable.pixalytics:mixpanel:0.1-SNAPSHOT'
+    compile 'com.pixable.pixalytics:flurry:0.1-SNAPSHOT'
+    compile 'com.pixable.pixalytics:ga:0.1-SNAPSHOT'
+    compile 'com.pixable.pixalytics:facebook:0.1-SNAPSHOT'
 }
 
 apply from: '../maven_push.gradle'

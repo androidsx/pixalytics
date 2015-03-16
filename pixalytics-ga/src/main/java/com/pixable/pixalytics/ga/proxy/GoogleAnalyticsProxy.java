@@ -55,6 +55,11 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
+    public void clearCommonProperties() {
+        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+    }
+
+    @Override
     public void trackEvent(Context context, Event event) {
         HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder()
                 .setCategory(EVENT_CATEGORY)
@@ -76,6 +81,21 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         HitBuilders.AppViewBuilder builder = new HitBuilders.AppViewBuilder();
         addDimensions(builder, screen.getProperties());
         tracker.send(builder.build());
+    }
+
+    @Override
+    public void flush() {
+        throw new UnsupportedOperationException("Google Analytics does not support Flush");
+    }
+
+    @Override
+    public void setIdentifier(String identifier) {
+        throw new UnsupportedOperationException("Google Analytics does not support identifier Management");
+    }
+
+    @Override
+    public String getIdentifier() {
+        throw new UnsupportedOperationException("Google Analytics does not support identifier Management");
     }
 
     /**

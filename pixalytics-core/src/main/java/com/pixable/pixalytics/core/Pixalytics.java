@@ -156,6 +156,13 @@ public class Pixalytics {
     }
 
     /**
+     * Tracks the provided event in the All platforms.
+     */
+    public void trackEvent(Context context, Event event) {
+        trackEvent(context, event, new HashSet<String>());
+    }
+
+    /**
      * Tracks the provided event in the provided platforms.
      */
     public void trackEvent(Context context, Event event, Set<String> platformIds) {

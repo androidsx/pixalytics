@@ -41,7 +41,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, String> commonProperties) {
         throw new UnsupportedOperationException("Flurry does not support Common Properties");
     }
 
@@ -51,7 +51,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackEvent(Context context, Event event) {
+    public void trackEvent(Event event) {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
     }
 
@@ -61,7 +61,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackScreen(Context context, Screen screen) {
+    public void trackScreen(Screen screen) {
         //No Screens in Flurry
     }
 

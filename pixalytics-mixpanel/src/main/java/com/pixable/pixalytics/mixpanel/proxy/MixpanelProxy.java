@@ -42,7 +42,7 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, String> commonProperties) {
         mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
     }
 
@@ -52,7 +52,7 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackEvent(Context context, Event event) {
+    public void trackEvent(Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
     }
 
@@ -62,7 +62,7 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackScreen(Context context, Screen screen) {
+    public void trackScreen(Screen screen) {
         throw new UnsupportedOperationException("Mixpanel does not support Screen tracking");
     }
 

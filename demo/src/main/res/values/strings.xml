@@ -5,5 +5,5 @@
     <string name="foo_mixpanel">Foo (Mixpanel)</string>
     <string name="foo_google_analytics">Foo (Google Analytics)</string>
     <string name="foo_facebook">Foo (Facebook)</string>
-    <string name="foo_dialog_message">Foo button was clicked. We should have tracked it</string>
+    <string name="all_platforms">Event Bar to all platforms</string>
 </resources>

@@ -49,10 +49,6 @@ public class MainActivity extends TrackedActionBarActivity {
                         .property("property3", "value3")
                         .build(),
                 platformId);
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.foo_dialog_message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
     }
 
     private void trackScreen() {

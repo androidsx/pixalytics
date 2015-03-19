@@ -57,4 +57,13 @@ public class MainActivity extends TrackedActionBarActivity {
                 .build();
         Pixalytics.get().trackScreen(this, screen);
     }
+
+    public void onAllPlatformsClick(View view) {
+        Pixalytics.get().trackEvent(this,
+                new Event.Builder().name("Bar")
+                        .property("Key1", "Value1")
+                        .property("Key2", "Value2")
+                        .build(),
+                FlurryPlatform.ID, MixpanelPlatform.ID, GoogleAnalyticsPlatform.ID, FacebookPlatform.ID);
+    }
 }

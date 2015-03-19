@@ -29,10 +29,20 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.2'
-    compile 'com.pixable.pixalytics:mixpanel:0.1-SNAPSHOT'
-    compile 'com.pixable.pixalytics:flurry:0.1-SNAPSHOT'
-    compile 'com.pixable.pixalytics:ga:0.1-SNAPSHOT'
-    compile 'com.pixable.pixalytics:facebook:0.1-SNAPSHOT'
+
+    // List of dependencies that the typical library user should include
+    releaseCompile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:mixpanel:0.1-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:flurry:0.1-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:ga:0.1-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:facebook:0.1-SNAPSHOT'
+
+    // For the development of the library itself, we'll use local dependencies instead
+    debugCompile project(':pixalytics-core')
+    debugCompile project(':pixalytics-mixpanel')
+    debugCompile project(':pixalytics-flurry')
+    debugCompile project(':pixalytics-ga')
+    debugCompile project(':pixalytics-facebook')
 }
 
 apply from: '../maven_push.gradle'

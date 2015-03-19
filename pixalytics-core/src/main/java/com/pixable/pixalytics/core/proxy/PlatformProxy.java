@@ -38,9 +38,9 @@ public interface PlatformProxy {
     /**
      * Platform Global properties
      *
-     * @param context
+     * @param commonProperties
      */
-    void addCommonProperties(Context context, Map<String, String> commonProperties);
+    void addCommonProperties(Map<String, String> commonProperties);
 
     /**
      * Clear Common properties
@@ -50,9 +50,9 @@ public interface PlatformProxy {
     /**
      * Platform Tracking event
      *
-     * @param context
+     * @param event
      */
-    void trackEvent(Context context, Event event);
+    void trackEvent(Event event);
 
     /**
      * @return true/false if platform support screens
@@ -62,9 +62,9 @@ public interface PlatformProxy {
     /**
      * Platform Tracking Screen
      *
-     * @param context
+     * @param screen
      */
-    void trackScreen(Context context, Screen screen);
+    void trackScreen(Screen screen);
 
     /**
      * Flush logged events and screens

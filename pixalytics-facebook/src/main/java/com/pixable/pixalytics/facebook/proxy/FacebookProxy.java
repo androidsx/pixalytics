@@ -43,7 +43,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, String> commonProperties) {
         throw new UnsupportedOperationException("Facebook does not support common properties");
     }
 
@@ -53,7 +53,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackEvent(Context context, Event event) {
+    public void trackEvent(Event event) {
         if (this.config.getEventMapping().containsKey(event.getName())) {
             Bundle properties = getProperties(event.getProperties());
             facebookLogger.logEvent(event.getName(), properties);
@@ -79,7 +79,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void trackScreen(Context context, Screen screen) {
+    public void trackScreen(Screen screen) {
         throw new UnsupportedOperationException("Facebook does not support Screen tracking");
     }
 

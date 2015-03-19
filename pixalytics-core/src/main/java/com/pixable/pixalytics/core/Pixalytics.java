@@ -141,7 +141,7 @@ public class Pixalytics {
         }
 
         for (Platform platform : configuration.getPlatforms()) {
-            platform.getProxy().addCommonProperties(context, commonProperties);
+            platform.getProxy().addCommonProperties(commonProperties);
         }
     }
 
@@ -190,7 +190,7 @@ public class Pixalytics {
 
         for (Platform platform : platforms) {
             checkPlatformIsConfigured(platform.getId());
-            platformProxyMap.get(platform.getId()).trackEvent(context, event);
+            platformProxyMap.get(platform.getId()).trackEvent(event);
         }
     }
 
@@ -214,7 +214,7 @@ public class Pixalytics {
         }
 
         for (Platform platform : platforms) {
-            platform.getProxy().trackScreen(context, screen);
+            platform.getProxy().trackScreen(screen);
         }
     }
 

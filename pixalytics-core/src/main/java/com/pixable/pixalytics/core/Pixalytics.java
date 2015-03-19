@@ -173,7 +173,7 @@ public class Pixalytics {
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.INFO,
-                    "Event " + event.getName(),
+                    event.getName(),
                     event.getProperties(),
                     platforms);
         }

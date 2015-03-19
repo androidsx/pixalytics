@@ -31,4 +31,10 @@
         android:layout_height="wrap_content"
         android:text="@string/foo_facebook"
         android:onClick="onFooFacebookClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_platforms"
+        android:onClick="onAllPlatformsClick"/>
 </LinearLayout>

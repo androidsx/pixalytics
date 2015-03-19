@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Pixalytics</string>
-    <string name="foo_flurry">Foo (Flurry)</string>
-    <string name="foo_mixpanel">Foo (Mixpanel)</string>
-    <string name="foo_google_analytics">Foo (Google Analytics)</string>
-    <string name="foo_facebook">Foo (Facebook)</string>
-    <string name="all_platforms">Event Bar to all platforms</string>
+    <string name="foo_flurry">Event to Flurry</string>
+    <string name="foo_mixpanel">Event to Mixpanel</string>
+    <string name="foo_google_analytics">Event to Google Analytics</string>
+    <string name="foo_facebook">Event to Facebook</string>
+    <string name="all_platforms">Event to all platforms</string>
 </resources>

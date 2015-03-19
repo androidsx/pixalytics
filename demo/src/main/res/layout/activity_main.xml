@@ -12,25 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/foo_flurry"
-        android:onClick="onFooFlurryClick"/>
+        android:onClick="onFlurryClick"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/foo_mixpanel"
-        android:onClick="onFooMixpanelClick"/>
+        android:onClick="onMixpanelClick"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/foo_google_analytics"
-        android:onClick="onFooGoogleAnalyticsClick"/>
+        android:onClick="onGoogleAnalyticsClick"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/foo_facebook"
-        android:onClick="onFooFacebookClick"/>
+        android:onClick="onFacebookClick"/>
 
     <Button
         android:layout_width="wrap_content"

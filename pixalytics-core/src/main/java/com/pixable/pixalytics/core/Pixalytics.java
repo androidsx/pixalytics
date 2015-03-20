@@ -156,40 +156,30 @@ public class Pixalytics {
     }
 
     /**
-     * Tracks the provided event in the All platforms.
-     */
-    public void trackEvent(Context context, Event event) {
-        trackEvent(context, event, new HashSet<String>());
-    }
-
-    /**
      * Tracks the provided event in the provided platforms.
+     *
+     * @param context activity context
+     * @param event event to be tracked
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      */
-    public void trackEvent(Context context, Event event, Set<String> platformIds) {
+    public void trackEvent(Context context, Event event, String... platformIds) {
         checkAppIsInitialized();
+        checkPlatformsAreValid(platformIds);
 
-        Set<Platform> platforms = new HashSet<Platform>();
-        if (platformIds.size() == 0) {
-            platforms = configuration.getPlatforms();
-        } else {
-            for(String platformId : platformIds) {
-                Platform platform = getPlatformFromId(platformId);
-                if(platform != null) {
-                    platforms.add(platform);
-                }
-            }
-        }
+        final Set<Platform> platforms = idsToPlatforms(platformIds);
 
+        // Trace
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.INFO,
-                    "Event " + event.getName(),
+                    event.getName(),
                     event.getProperties(),
                     platforms);
         }
 
+        // Track the event
         for (Platform platform : platforms) {
-            checkPlatformIsConfigured(platform.getId());
             platformProxyMap.get(platform.getId()).trackEvent(event);
         }
     }
@@ -218,21 +208,36 @@ public class Pixalytics {
         }
     }
 
+    private Set<Platform> idsToPlatforms(String[] platformIds) {
+        final Set<Platform> platforms = new HashSet<>();
+        for(String platformId : platformIds) {
+            platforms.add(getPlatformFromId(platformId));
+        }
+        return platforms;
+    }
+
     private void checkAppIsInitialized() {
         if (!initialized) {
             throw new IllegalStateException("Did you forget to call #onApplicationCreate?");
         }
     }
 
-    public Platform checkPlatformIsConfigured(String platformId) {
-        Platform platform = getPlatformFromId(platformId);
-        if(platform != null) {
-            return platform;
+    private void checkPlatformsAreValid(String[] platformIds) {
+        if (platformIds == null || platformIds.length == 0) {
+            throw new IllegalArgumentException("At least one platform must be provided");
+        } else {
+            for (String platformId: platformIds) {
+                Platform platform = getPlatformFromId(platformId);
+                //noinspection StatementWithEmptyBody
+                if (platform == null) {
+                    throw new IllegalStateException("The platform " + platformId + " is not initialized."
+                            + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
+                            + configuration.getPlatforms().size());
+                } else {
+                    // All good, this platform is configured
+                }
+            }
         }
-
-        throw new IllegalStateException("The platform " + platformId + " is not initialized."
-                + " Currently, only " + configuration.getPlatforms().size() + " are initialized: "
-                + configuration.getPlatforms().size());
     }
 
     private Platform getPlatformFromId(String platformId) {

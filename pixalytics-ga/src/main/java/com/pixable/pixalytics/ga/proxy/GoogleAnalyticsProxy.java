@@ -35,11 +35,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return false;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         throw new UnsupportedOperationException("Google Analytics does not support session tracking");
     }
@@ -68,11 +63,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         addDimensions(builder, event.getProperties());
         //TODO: Find a way of adding Metrics somehow
         tracker.send(builder.build());
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return true;
     }
 
     @Override

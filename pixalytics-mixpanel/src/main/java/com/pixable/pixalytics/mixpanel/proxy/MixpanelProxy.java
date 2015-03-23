@@ -27,11 +27,6 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return false;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         throw new UnsupportedOperationException("Mixpanel does not support session tracking");
     }
@@ -54,11 +49,6 @@ public class MixpanelProxy implements PlatformProxy {
     @Override
     public void trackEvent(Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return false;
     }
 
     @Override

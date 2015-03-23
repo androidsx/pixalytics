@@ -28,11 +28,6 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return false;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         throw new UnsupportedOperationException("Facebook does not support session tracking");
     }
@@ -71,11 +66,6 @@ public class FacebookProxy implements PlatformProxy {
             it.remove();
         }
         return properties;
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return false;
     }
 
     @Override

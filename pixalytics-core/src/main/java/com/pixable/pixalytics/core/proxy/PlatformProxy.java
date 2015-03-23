@@ -17,11 +17,6 @@ public interface PlatformProxy {
     void onApplicationCreate(Context context);
 
     /**
-     * @return true/false if platform support sessions
-     */
-    boolean supportsSession();
-
-    /**
      * Platform session opening
      *
      * @param context
@@ -53,11 +48,6 @@ public interface PlatformProxy {
      * @param event
      */
     void trackEvent(Event event);
-
-    /**
-     * @return true/false if platform support screens
-     */
-    boolean supportsScreens();
 
     /**
      * Platform Tracking Screen

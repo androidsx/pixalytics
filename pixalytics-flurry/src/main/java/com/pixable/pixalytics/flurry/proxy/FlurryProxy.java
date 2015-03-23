@@ -26,11 +26,6 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return true;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         FlurryAgent.onStartSession(context);
     }
@@ -53,11 +48,6 @@ public class FlurryProxy implements PlatformProxy {
     @Override
     public void trackEvent(Event event) {
         FlurryAgent.logEvent(event.getName(), event.getProperties());
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return false;
     }
 
     @Override

@@ -94,10 +94,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void onSessionStart(Context context, String... platformIds) {
-        checkAppIsInitialized();
-        checkPlatformsAreValid(platformIds);
-
-        final Set<Platform> platforms = idsToPlatforms(platformIds);
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
@@ -120,10 +117,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void onSessionFinish(Context context, String... platformIds) {
-        checkAppIsInitialized();
-        checkPlatformsAreValid(platformIds);
-
-        final Set<Platform> platforms = idsToPlatforms(platformIds);
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (Platform platform : platforms) {
             platform.getProxy().onSessionFinish(context);
@@ -140,17 +134,17 @@ public class Pixalytics {
      *                    be provided
      */
     public void addCommonProperties(Context context, Map<String, String> commonProperties, String... platformIds) {
-        checkAppIsInitialized();
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Register " + commonProperties.size() + " common properties",
                     commonProperties,
-                    configuration.getPlatforms());
+                    platforms);
         }
 
-        for (Platform platform : configuration.getPlatforms()) {
+        for (Platform platform : platforms) {
             platform.getProxy().addCommonProperties(commonProperties);
         }
     }
@@ -181,10 +175,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void trackEvent(Context context, Event event, String... platformIds) {
-        checkAppIsInitialized();
-        checkPlatformsAreValid(platformIds);
-
-        final Set<Platform> platforms = idsToPlatforms(platformIds);
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Trace
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -210,10 +201,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void trackScreen(Context context, Screen screen, String... platformIds) {
-        checkAppIsInitialized();
-        checkPlatformsAreValid(platformIds);
-
-        final Set<Platform> platforms = idsToPlatforms(platformIds);
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
@@ -228,6 +216,12 @@ public class Pixalytics {
         }
     }
 
+    private Set<Platform> checkAndGetPlatformsFromIds(String[] platformIds) {
+        checkAppIsInitialized();
+        checkPlatformsAreValid(platformIds);
+
+        return idsToPlatforms(platformIds);
+    }
     private Set<Platform> idsToPlatforms(String[] platformIds) {
         final Set<Platform> platforms = new HashSet<>();
         for(String platformId : platformIds) {

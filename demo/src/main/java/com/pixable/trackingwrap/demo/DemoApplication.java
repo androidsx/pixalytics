@@ -29,7 +29,7 @@ public class DemoApplication extends Application {
                 .addTrace(TraceId.LOGCAT)
                 .addTrace(TraceId.TOAST)
                 .build();
-        Pixalytics.createInstance(configuration).onApplicationCreate(this);
+        Pixalytics.createInstance(this, configuration).onApplicationCreate();
     }
 
     private static Map<String, Integer> gaParametersMapping = new HashMap<>();

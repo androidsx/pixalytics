@@ -34,20 +34,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onFlurryClick(View view) {
-        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), new String[]{FlurryPlatform.ID});
+        Pixalytics.get().trackEvent(new Event.Builder().name("Foo").build(), new String[]{FlurryPlatform.ID});
     }
 
     public void onMixpanelClick(View view) {
-        Pixalytics.get().trackEvent(this,
-                new Event.Builder().name("Foo")
+        Pixalytics.get().trackEvent(new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .build(),
                 new String[]{MixpanelPlatform.ID});
     }
 
     public void onGoogleAnalyticsClick(View view) {
-        Pixalytics.get().trackEvent(this,
-                new Event.Builder().name("Foo")
+        Pixalytics.get().trackEvent(new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
                         .build(),
@@ -55,8 +53,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onFacebookClick(View view) {
-        Pixalytics.get().trackEvent(this,
-                new Event.Builder().name("Foo")
+        Pixalytics.get().trackEvent(new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
                         .property("Key3", "Value3")
@@ -65,8 +62,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onAllPlatformsClick(View view) {
-        Pixalytics.get().trackEvent(this,
-                new Event.Builder().name("Bar")
+        Pixalytics.get().trackEvent(new Event.Builder().name("Bar")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
                         .property("Key3", "Value3")
@@ -80,6 +76,6 @@ public class MainActivity extends ActionBarActivity {
         Screen screen = new Screen.Builder().name("Main")
                 .property("Key1", "Value1")
                 .build();
-        Pixalytics.get().trackScreen(this, screen, new String[]{GoogleAnalyticsPlatform.ID});
+        Pixalytics.get().trackScreen(screen, new String[]{GoogleAnalyticsPlatform.ID});
     }
 }

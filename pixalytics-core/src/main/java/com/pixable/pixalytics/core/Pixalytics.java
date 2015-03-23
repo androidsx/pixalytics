@@ -27,6 +27,7 @@ public class Pixalytics {
     static Pixalytics INSTANCE;
 
     private final Config configuration;
+    private final Context context;
 
     /**
      * Map of platform IDs to proxies to be able to have the client just use IDs.
@@ -34,13 +35,14 @@ public class Pixalytics {
     private Map<String, PlatformProxy> platformProxyMap = new HashMap<>();
     private boolean initialized = false;
 
-    private Pixalytics(Config configuration) {
+    private Pixalytics(Context context, Config configuration) {
+        this.context = context;
         this.configuration = configuration;
     }
 
-    public static Pixalytics createInstance(Config configuration) {
+    public static Pixalytics createInstance(Context context, Config configuration) {
         if (INSTANCE == null) {
-            INSTANCE = new Pixalytics(configuration);
+            INSTANCE = new Pixalytics(context, configuration);
             return INSTANCE;
         } else {
             throw new IllegalStateException("The singleton was already instantiated");
@@ -65,9 +67,8 @@ public class Pixalytics {
      * <p/>
      * This is required.
      *
-     * @param context application context
      */
-    public void onApplicationCreate(Context context) {
+    public void onApplicationCreate() {
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
@@ -89,7 +90,7 @@ public class Pixalytics {
      * To be called from the {@code onStart} of every activity in your application. This lifecycle
      * method is used to open session. Not all tracking services support it.
      *
-     * @param context activity context, not the global application context
+     * @param context Activity Context (Not Application)
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
@@ -112,7 +113,7 @@ public class Pixalytics {
     /**
      * To be called from the {@code onStop} of every activity in your application.
      *
-     * @param context activity context, not the global application context
+     * @param context Activity Context (Not Application)
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
@@ -128,12 +129,11 @@ public class Pixalytics {
      * Adds a set of properties to specified platforms. Some providers manage this
      * automatically, such as Mixpanel's super-properties. For others, this library will add this
      * properties explicitly to every event.
-     * @param context activity context
      * @param commonProperties hashMap of properties to add as Common
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperties(Context context, Map<String, String> commonProperties, String... platformIds) {
+    public void addCommonProperties(Map<String, String> commonProperties, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -153,28 +153,26 @@ public class Pixalytics {
      * Adds a single property to specified platforms. Some providers manage this
      * automatically, such as Mixpanel's super-properties. For others, this library will add this
      * properties explicitly to every event.
-     * @param context activity context
      * @param name name of the property to add
      * @param value value of the property to add
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperty(Context context, String name, String value, String... platformIds) {
+    public void addCommonProperty(String name, String value, String... platformIds) {
         final Map<String, String> propertyAsMap = new HashMap<>();
         propertyAsMap.put(name, value);
 
-        addCommonProperties(context, propertyAsMap);
+        addCommonProperties(propertyAsMap);
     }
 
     /**
      * Tracks the provided event in the provided platforms.
      *
-     * @param context activity context
      * @param event event to be tracked
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void trackEvent(Context context, Event event, String... platformIds) {
+    public void trackEvent(Event event, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Trace
@@ -195,12 +193,11 @@ public class Pixalytics {
     /**
      * Track Screen in all platform
      *
-     * @param context
      * @param screen
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void trackScreen(Context context, Screen screen, String... platformIds) {
+    public void trackScreen(Screen screen, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -222,6 +219,7 @@ public class Pixalytics {
 
         return idsToPlatforms(platformIds);
     }
+
     private Set<Platform> idsToPlatforms(String[] platformIds) {
         final Set<Platform> platforms = new HashSet<>();
         for(String platformId : platformIds) {

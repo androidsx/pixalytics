@@ -52,7 +52,7 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void trackScreen(Screen screen) {
-        throw new UnsupportedOperationException("Flurry does not support Screens");
+        //No Screens in Flurry
     }
 
     @Override

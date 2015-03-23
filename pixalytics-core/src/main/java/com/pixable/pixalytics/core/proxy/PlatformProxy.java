@@ -18,13 +18,15 @@ public interface PlatformProxy {
 
     /**
      * Platform session opening
-     * @param context Activity context (not Application)
+     *
+     * @param context
      */
     void onSessionStart(Context context);
 
     /**
      * Platform session closing
-     * @param context Activity context (not Application)
+     *
+     * @param context
      */
     void onSessionFinish(Context context);
 

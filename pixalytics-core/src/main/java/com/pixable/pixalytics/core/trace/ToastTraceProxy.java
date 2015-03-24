@@ -41,7 +41,7 @@ public class ToastTraceProxy implements TraceProxy {
     }
 
     @Override
-    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform> platforms) {
+    public void traceMessage(Context context, Level level, String messageTitle, Map<String, Object> properties, Collection<Platform> platforms) {
         final LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.tracking_debug_toast, null);
@@ -73,14 +73,14 @@ public class ToastTraceProxy implements TraceProxy {
         toast.show();
     }
 
-    private static String mapToLinedString(Map<String, String> map) {
+    private static String mapToLinedString(Map<String, Object> map) {
         final StringBuilder builder = new StringBuilder();
-        final Map<String, String> sortedMap = new TreeMap<>(map);
-        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
+        final Map<String, Object> sortedMap = new TreeMap<>(map);
+        for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
             builder.append("- ");
             builder.append(entry.getKey());
             builder.append(": ");
-            builder.append(entry.getValue());
+            builder.append(entry.getValue().toString());
             builder.append('\n');
         }
         return (builder.length() > 0) ? builder.substring(0, builder.length() - 1) : "";

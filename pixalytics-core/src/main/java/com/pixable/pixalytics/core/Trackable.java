@@ -10,9 +10,9 @@ import java.util.Map;
 public class Trackable {
     private final Type type;
     private final String name;
-    private final Map<String, String> properties;
+    private final Map<String, Object> properties;
 
-    protected Trackable(String name, Map<String, String> properties, Type type) {
+    protected Trackable(String name, Map<String, Object> properties, Type type) {
         this.name = name;
         this.properties = properties;
         this.type = type;
@@ -26,7 +26,7 @@ public class Trackable {
         return properties.get(propertyName);
     }
 
-    public Map<String, String> getProperties() {
+    public Map<String, Object> getProperties() {
         return properties;
     }
 

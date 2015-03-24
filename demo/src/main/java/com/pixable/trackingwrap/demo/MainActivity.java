@@ -1,24 +1,41 @@
 package com.pixable.trackingwrap.demo;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.helper.TrackedActionBarActivity;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
 import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
 import com.pixable.pixalytics.mixpanel.platform.MixpanelPlatform;
 
-public class MainActivity extends TrackedActionBarActivity {
+public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         trackScreen();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Track the session start on Flurry
+        Pixalytics.get().onSessionStart(this, FlurryPlatform.ID);
+
+        // Add a common property for all events sent to Mixpanel
+        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", MixpanelPlatform.ID);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Pixalytics.get().onSessionFinish(this, FlurryPlatform.ID);
     }
 
     public void onFlurryClick(View view) {
@@ -68,6 +85,6 @@ public class MainActivity extends TrackedActionBarActivity {
         Screen screen = new Screen.Builder().name("Main")
                 .property("Key1", "Value1")
                 .build();
-        Pixalytics.get().trackScreen(this, screen);
+        Pixalytics.get().trackScreen(this, screen, GoogleAnalyticsPlatform.ID);
     }
 }

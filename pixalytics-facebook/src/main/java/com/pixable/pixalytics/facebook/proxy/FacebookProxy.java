@@ -28,11 +28,6 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return false;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         throw new UnsupportedOperationException("Facebook does not support session tracking");
     }
@@ -43,7 +38,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Facebook does not support common properties");
     }
 
@@ -60,7 +55,7 @@ public class FacebookProxy implements PlatformProxy {
         }
     }
 
-    private Bundle getProperties(Map<String, String> propertiesMap) {
+    private Bundle getProperties(Map<String, Object> propertiesMap) {
         Bundle properties = new Bundle();
         Iterator it = propertiesMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -71,11 +66,6 @@ public class FacebookProxy implements PlatformProxy {
             it.remove();
         }
         return properties;
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return false;
     }
 
     @Override

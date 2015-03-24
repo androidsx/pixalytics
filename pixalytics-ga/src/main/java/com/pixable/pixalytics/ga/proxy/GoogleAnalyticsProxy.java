@@ -35,11 +35,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return false;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         throw new UnsupportedOperationException("Google Analytics does not support session tracking");
     }
@@ -50,7 +45,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Google Analytics does not support common properties");
     }
 
@@ -68,11 +63,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         addDimensions(builder, event.getProperties());
         //TODO: Find a way of adding Metrics somehow
         tracker.send(builder.build());
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return true;
     }
 
     @Override
@@ -104,7 +94,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
      * @param builder
      * @param properties
      */
-    private void addDimensions(Object builder, Map<String, String> properties) {
+    private void addDimensions(Object builder, Map<String, Object> properties) {
         Iterator it = properties.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();

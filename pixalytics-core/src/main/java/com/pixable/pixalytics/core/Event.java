@@ -14,13 +14,13 @@ public class Event extends Trackable {
      * @param eventName
      * @param properties
      */
-    private Event(String eventName, Map<String, String> properties) {
+    private Event(String eventName, Map<String, Object> properties) {
         super(eventName, properties, Type.EVENT);
     }
 
     public static class Builder {
         private String name = null;
-        private final Map<String, String> properties = new HashMap<>();
+        private final Map<String, Object> properties = new HashMap<>();
 
         /**
          * Sets the name of the Event object. This parameter is compulsory.
@@ -41,7 +41,7 @@ public class Event extends Trackable {
         /**
          * Adds a bunch of properties
          */
-        public Builder properties(Map<String, String> properties) {
+        public Builder properties(Map<String, Object> properties) {
             this.properties.putAll(properties);
             return this;
         }

@@ -17,5 +17,5 @@ public interface TraceProxy {
     void traceMessage(Context context,
                       Level level,
                       String messageTitle,
-                      Map<String, String> properties, Collection<Platform> platforms);
+                      Map<String, Object> properties, Collection<Platform> platforms);
 }

@@ -72,7 +72,7 @@ public class Pixalytics {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "On application create",
-                    Collections.<String, String>emptyMap(),
+                    Collections.<String, Object>emptyMap(),
                     configuration.getPlatforms());
         }
 
@@ -90,17 +90,17 @@ public class Pixalytics {
      * method is used to open session. Not all tracking services support it.
      *
      * @param context activity context, not the global application context
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      */
-    public void onSessionStart(Context context) {
-        checkAppIsInitialized();
-
-        Set<Platform> platforms = getSessionPlatforms();
+    public void onSessionStart(Context context, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Session start",
-                    Collections.<String, String>emptyMap(),
+                    Collections.<String, Object>emptyMap(),
                     platforms);
         }
 
@@ -113,11 +113,11 @@ public class Pixalytics {
      * To be called from the {@code onStop} of every activity in your application.
      *
      * @param context activity context, not the global application context
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      */
-    public void onSessionFinish(Context context) {
-        checkAppIsInitialized();
-
-        Set<Platform> platforms = getSessionPlatforms();
+    public void onSessionFinish(Context context, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (Platform platform : platforms) {
             platform.getProxy().onSessionFinish(context);
@@ -125,34 +125,60 @@ public class Pixalytics {
     }
 
     /**
-     * Adds a set of properties that are common to all events. Some providers manage this
-     * automatically, such as Mixpanel's super-properties. For others, this library will add this
-     * properties explicitly to every event.
+     * Adds a set of properties to specified platforms. Some providers manage this
+     * automatically, such as Mixpanel's super-properties. For others, this is not
+     * supported. TODO: for others, handle it manually
+     *
+     * @param context activity context
+     * @param commonProperties hashMap of properties to add as Common
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      */
-    public void addCommonProperties(Context context, Map<String, String> commonProperties) {
-        checkAppIsInitialized();
+    public void addCommonProperties(Context context, Map<String, Object> commonProperties, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Register " + commonProperties.size() + " common properties",
                     commonProperties,
-                    configuration.getPlatforms());
+                    platforms);
         }
 
-        for (Platform platform : configuration.getPlatforms()) {
+        for (Platform platform : platforms) {
             platform.getProxy().addCommonProperties(commonProperties);
         }
     }
 
     /**
+     * Adds a single property to specified platforms.
+     *
+     * @param context activity context
+     * @param name name of the property to add
+     * @param value value of the property to add
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      * @see #addCommonProperties
      */
-    public void addCommonProperty(Context context, String name, String value) {
-        final Map<String, String> propertyAsMap = new HashMap<>();
+    public void addCommonProperty(Context context, String name, String value, String... platformIds) {
+        final Map<String, Object> propertyAsMap = new HashMap<>();
         propertyAsMap.put(name, value);
 
-        addCommonProperties(context, propertyAsMap);
+        addCommonProperties(context, propertyAsMap, platformIds);
+    }
+
+    /**
+     * Clears all common properties for the specified platforms.
+     *
+     * @param platformIds platforms where to clear common properties. At least one platform must
+     *                    be provided
+     */
+    public void clearCommonProperties(String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().clearCommonProperties();
+        }
     }
 
     /**
@@ -164,10 +190,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void trackEvent(Context context, Event event, String... platformIds) {
-        checkAppIsInitialized();
-        checkPlatformsAreValid(platformIds);
-
-        final Set<Platform> platforms = idsToPlatforms(platformIds);
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Trace
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -185,15 +208,15 @@ public class Pixalytics {
     }
 
     /**
-     * Track Screen in all platform
+     * Tracks a screen transition in the provided platforms.
      *
-     * @param context
-     * @param screen
+     * @param context activity context
+     * @param screen screen to be tracked
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
      */
-    public void trackScreen(Context context, Screen screen) {
-        checkAppIsInitialized();
-
-        Set<Platform> platforms = getScreenPlatforms();
+    public void trackScreen(Context context, Screen screen, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
@@ -208,6 +231,51 @@ public class Pixalytics {
         }
     }
 
+    /**
+     * Flushes all events, that is, forces immediate sending to the server.
+     *
+     * @param platformIds platforms to flush. At least one platform must
+     *                    be provided
+     */
+    public void flush(String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().flush();
+        }
+    }
+
+    /**
+     * Sets the user identifier. Not all platforms support this feature.
+     *
+     * @param identifier Identifier for the current user
+     * @param platformIds platforms where to set the user identifier. At least one platform must
+     *                    be provided
+     */
+    public void setIdentifier(String identifier, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().setIdentifier(identifier);
+        }
+    }
+
+    /**
+     * Gets the identifier for the current user in the provided platform.
+     */
+    public String getIdentifier(String platformId) {
+        checkAppIsInitialized();
+        checkPlatformsAreValid(new String[] {platformId});
+
+        return getPlatformFromId(platformId).getProxy().getIdentifier();
+    }
+
+    private Set<Platform> checkAndGetPlatformsFromIds(String... platformIds) {
+        checkAppIsInitialized();
+        checkPlatformsAreValid(platformIds);
+
+        return idsToPlatforms(platformIds);
+    }
     private Set<Platform> idsToPlatforms(String[] platformIds) {
         final Set<Platform> platforms = new HashSet<>();
         for(String platformId : platformIds) {
@@ -247,25 +315,5 @@ public class Pixalytics {
             }
         }
         return null;
-    }
-
-    private Set<Platform> getSessionPlatforms() {
-        Set<Platform> filteredPlatforms = new HashSet<Platform>();
-        for (Platform platform : configuration.getPlatforms()) {
-            if (platform.getProxy().supportsSession()) {
-                filteredPlatforms.add(platform);
-            }
-        }
-        return filteredPlatforms;
-    }
-
-    private Set<Platform> getScreenPlatforms() {
-        Set<Platform> filteredPlatforms = new HashSet<Platform>();
-        for (Platform platform : configuration.getPlatforms()) {
-            if (platform.getProxy().supportsScreens()) {
-                filteredPlatforms.add(platform);
-            }
-        }
-        return filteredPlatforms;
     }
 }

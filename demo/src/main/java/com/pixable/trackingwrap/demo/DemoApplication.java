@@ -35,8 +35,11 @@ public class DemoApplication extends Application {
     private static Map<String, Integer> gaParametersMapping = new HashMap<>();
     static {
         gaParametersMapping.put("view", 1);
-        gaParametersMapping.put("property2", 2);
-        gaParametersMapping.put("property3", 3);
+        gaParametersMapping.put("Key1", 2);
+        gaParametersMapping.put("Key2", 3);
+        gaParametersMapping.put("Key3", 4);
+        gaParametersMapping.put("Key4", 5);
+        gaParametersMapping.put("Key5", 6);
     }
 
     private static Map<String, String> fbEventsMapping = new HashMap<>();
@@ -47,6 +50,7 @@ public class DemoApplication extends Application {
     private static Map<String, String> fbParametersMapping = new HashMap<>();
     static {
         fbParametersMapping.put("view", AppEventsConstants.EVENT_PARAM_DESCRIPTION);
-        fbParametersMapping.put("property2", AppEventsConstants.EVENT_PARAM_VALUE_NO);
+        fbParametersMapping.put("Key1", AppEventsConstants.EVENT_PARAM_VALUE_NO);
+        fbParametersMapping.put("Key2", AppEventsConstants.EVENT_PARAM_VALUE_YES);
     }
 }

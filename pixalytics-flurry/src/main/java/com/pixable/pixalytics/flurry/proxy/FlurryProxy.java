@@ -9,6 +9,7 @@ import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class FlurryProxy implements PlatformProxy {
@@ -26,11 +27,6 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public boolean supportsSession() {
-        return true;
-    }
-
-    @Override
     public void onSessionStart(Context context) {
         FlurryAgent.onStartSession(context);
     }
@@ -41,7 +37,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Flurry does not support Common Properties");
     }
 
@@ -52,12 +48,7 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void trackEvent(Event event) {
-        FlurryAgent.logEvent(event.getName(), event.getProperties());
-    }
-
-    @Override
-    public boolean supportsScreens() {
-        return false;
+        FlurryAgent.logEvent(event.getName(), safeGenericCasting(event.getProperties()));
     }
 
     @Override
@@ -78,5 +69,15 @@ public class FlurryProxy implements PlatformProxy {
     @Override
     public String getIdentifier() {
         throw new UnsupportedOperationException("Flurry does not support Identifier management");
+    }
+
+    private static Map<String, String> safeGenericCasting(Map<String, Object> objectMap) {
+        final Map<String, String> stringMap = new HashMap<>();
+        for (String key : objectMap.keySet()) {
+            Object value = objectMap.get(key);
+
+            stringMap.put(key, String.valueOf(value));
+        }
+        return stringMap;
     }
 }

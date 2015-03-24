@@ -128,6 +128,7 @@ public class Pixalytics {
      * Adds a set of properties to specified platforms. Some providers manage this
      * automatically, such as Mixpanel's super-properties. For others, this library will add this
      * properties explicitly to every event.
+     *
      * @param context activity context
      * @param commonProperties hashMap of properties to add as Common
      * @param platformIds platforms to which this event is to be sent. At least one platform must
@@ -206,10 +207,10 @@ public class Pixalytics {
     }
 
     /**
-     * Track Screen in all platform
+     * Tracks a screen transition in the provided platforms.
      *
-     * @param context
-     * @param screen
+     * @param context activity context
+     * @param screen screen to be tracked
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
@@ -230,11 +231,11 @@ public class Pixalytics {
     }
 
     /**
-     * Flush events
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     * Flushes all events, that is, forces immediate sending to the server.
+     *
+     * @param platformIds platforms to flush. At least one platform must
      *                    be provided
      */
-
     public void flush(String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
@@ -244,12 +245,12 @@ public class Pixalytics {
     }
 
     /**
-     * Set Identifier
-     * @param identifier Identifier to Set
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     * Sets the user identifier. Not all platforms support this feature.
+     *
+     * @param identifier Identifier for the current user
+     * @param platformIds platforms where to set the user identifier. At least one platform must
      *                    be provided
      */
-
     public void setIdentifier(String identifier, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
@@ -259,10 +260,8 @@ public class Pixalytics {
     }
 
     /**
-     * Get Identifier
-     * @param platformId platform to which this event is to be sent
+     * Gets the identifier for the current user in the provided platform.
      */
-
     public String getIdentifier(String platformId) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformId);
 

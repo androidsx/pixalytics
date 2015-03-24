@@ -41,7 +41,7 @@ public class Event extends Trackable {
         /**
          * Adds a bunch of properties
          */
-        public Builder properties(Map<String, String> properties) {
+        public Builder properties(Map<String, Object> properties) {
             this.properties.putAll(properties);
             return this;
         }

@@ -57,7 +57,7 @@ public class ToastTraceProxy implements TraceProxy {
 
         ((TextView) ButterKnife.findById(layout, R.id.toast_title)).setText(messageTitle);
         ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(
-                mapToLinedString((Map)properties));
+                mapToLinedString(properties));
 
         LinearLayout platformsList = ButterKnife.findById(layout, R.id.platforms_list);
         for (Platform platform : platforms) {
@@ -73,14 +73,14 @@ public class ToastTraceProxy implements TraceProxy {
         toast.show();
     }
 
-    private static String mapToLinedString(Map<String, String> map) {
+    private static String mapToLinedString(Map<String, Object> map) {
         final StringBuilder builder = new StringBuilder();
-        final Map<String, String> sortedMap = new TreeMap<>(map);
-        for (Map.Entry<String, String> entry : sortedMap.entrySet()) {
+        final Map<String, Object> sortedMap = new TreeMap<>(map);
+        for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
             builder.append("- ");
             builder.append(entry.getKey());
             builder.append(": ");
-            builder.append(entry.getValue());
+            builder.append(entry.getValue().toString());
             builder.append('\n');
         }
         return (builder.length() > 0) ? builder.substring(0, builder.length() - 1) : "";

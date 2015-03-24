@@ -167,6 +167,19 @@ public class Pixalytics {
     }
 
     /**
+     * Clear common properties of specified platforms
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
+     */
+    public void clearCommonProperties(String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().clearCommonProperties();
+        }
+    }
+
+    /**
      * Tracks the provided event in the provided platforms.
      *
      * @param context activity context
@@ -216,7 +229,50 @@ public class Pixalytics {
         }
     }
 
-    private Set<Platform> checkAndGetPlatformsFromIds(String[] platformIds) {
+    /**
+     * Flush events
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
+     */
+
+    public void flush(String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().flush();
+        }
+    }
+
+    /**
+     * Set Identifier
+     * @param identifier Identifier to Set
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
+     */
+
+    public void setIdentifier(String identifier, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().setIdentifier(identifier);
+        }
+    }
+
+    /**
+     * Get Identifier
+     * @param platformId platform to which this event is to be sent
+     */
+
+    public String getIdentifier(String platformId) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformId);
+
+        for (Platform platform : platforms) {
+            return platform.getProxy().getIdentifier();
+        }
+        return null;
+    }
+
+    private Set<Platform> checkAndGetPlatformsFromIds(String... platformIds) {
         checkAppIsInitialized();
         checkPlatformsAreValid(platformIds);
 

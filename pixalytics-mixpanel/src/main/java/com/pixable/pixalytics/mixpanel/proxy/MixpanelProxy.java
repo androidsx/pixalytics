@@ -37,7 +37,7 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         mixpanelAPI.registerSuperProperties(new JSONObject(commonProperties));
     }
 

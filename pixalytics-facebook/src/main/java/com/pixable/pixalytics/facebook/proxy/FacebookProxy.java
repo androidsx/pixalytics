@@ -38,7 +38,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Facebook does not support common properties");
     }
 
@@ -55,7 +55,7 @@ public class FacebookProxy implements PlatformProxy {
         }
     }
 
-    private Bundle getProperties(Map<String, String> propertiesMap) {
+    private Bundle getProperties(Map<String, Object> propertiesMap) {
         Bundle properties = new Bundle();
         Iterator it = propertiesMap.entrySet().iterator();
         while (it.hasNext()) {

@@ -45,7 +45,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Google Analytics does not support common properties");
     }
 
@@ -94,7 +94,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
      * @param builder
      * @param properties
      */
-    private void addDimensions(Object builder, Map<String, String> properties) {
+    private void addDimensions(Object builder, Map<String, Object> properties) {
         Iterator it = properties.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();

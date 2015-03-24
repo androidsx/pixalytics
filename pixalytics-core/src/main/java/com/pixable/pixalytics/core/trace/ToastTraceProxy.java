@@ -41,7 +41,7 @@ public class ToastTraceProxy implements TraceProxy {
     }
 
     @Override
-    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform> platforms) {
+    public void traceMessage(Context context, Level level, String messageTitle, Map<String, Object> properties, Collection<Platform> platforms) {
         final LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.tracking_debug_toast, null);
@@ -57,7 +57,7 @@ public class ToastTraceProxy implements TraceProxy {
 
         ((TextView) ButterKnife.findById(layout, R.id.toast_title)).setText(messageTitle);
         ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(
-                mapToLinedString(properties));
+                mapToLinedString((Map)properties));
 
         LinearLayout platformsList = ButterKnife.findById(layout, R.id.platforms_list);
         for (Platform platform : platforms) {

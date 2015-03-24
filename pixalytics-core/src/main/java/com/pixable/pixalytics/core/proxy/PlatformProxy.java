@@ -35,7 +35,7 @@ public interface PlatformProxy {
      *
      * @param commonProperties
      */
-    void addCommonProperties(Map<String, String> commonProperties);
+    void addCommonProperties(Map<String, Object> commonProperties);
 
     /**
      * Clear Common properties

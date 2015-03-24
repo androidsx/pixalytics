@@ -9,6 +9,7 @@ import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class FlurryProxy implements PlatformProxy {
@@ -36,7 +37,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperties(Map<String, String> commonProperties) {
+    public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Flurry does not support Common Properties");
     }
 
@@ -47,7 +48,8 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void trackEvent(Event event) {
-        FlurryAgent.logEvent(event.getName(), event.getProperties());
+        Map<String, String> properties = (Map) event.getProperties();
+        FlurryAgent.logEvent(event.getName(), properties);
     }
 
     @Override

@@ -14,13 +14,13 @@ public class Screen extends Trackable {
      * @param screenName
      * @param properties
      */
-    private Screen(String screenName, Map<String, String> properties) {
+    private Screen(String screenName, Map<String, Object> properties) {
         super(screenName, properties, Trackable.Type.EVENT);
     }
 
     public static class Builder {
         private String name = null;
-        private final Map<String, String> properties = new HashMap<>();
+        private final Map<String, Object> properties = new HashMap<>();
 
         /**
          * Sets the name of the Screen object. This parameter is compulsory.

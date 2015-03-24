@@ -72,7 +72,7 @@ public class Pixalytics {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "On application create",
-                    Collections.<String, String>emptyMap(),
+                    Collections.<String, Object>emptyMap(),
                     configuration.getPlatforms());
         }
 
@@ -100,7 +100,7 @@ public class Pixalytics {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Session start",
-                    Collections.<String, String>emptyMap(),
+                    Collections.<String, Object>emptyMap(),
                     platforms);
         }
 
@@ -133,7 +133,7 @@ public class Pixalytics {
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperties(Context context, Map<String, String> commonProperties, String... platformIds) {
+    public void addCommonProperties(Context context, Map<String, Object> commonProperties, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -160,7 +160,7 @@ public class Pixalytics {
      *                    be provided
      */
     public void addCommonProperty(Context context, String name, String value, String... platformIds) {
-        final Map<String, String> propertyAsMap = new HashMap<>();
+        final Map<String, Object> propertyAsMap = new HashMap<>();
         propertyAsMap.put(name, value);
 
         addCommonProperties(context, propertyAsMap);

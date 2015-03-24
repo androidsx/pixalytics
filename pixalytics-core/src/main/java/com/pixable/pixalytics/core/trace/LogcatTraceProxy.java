@@ -12,7 +12,7 @@ public class LogcatTraceProxy implements TraceProxy {
     private static final String TAG = LogcatTraceProxy.class.getSimpleName();
 
     @Override
-    public void traceMessage(Context context, Level level, String messageTitle, Map<String, String> properties, Collection<Platform> platforms) {
+    public void traceMessage(Context context, Level level, String messageTitle, Map<String, Object> properties, Collection<Platform> platforms) {
         final String finalMessage = messageTitle + " (" + properties + ") to " + platforms.toString();
         switch (level) {
             case DEBUG:

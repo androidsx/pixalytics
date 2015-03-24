@@ -263,12 +263,10 @@ public class Pixalytics {
      * Gets the identifier for the current user in the provided platform.
      */
     public String getIdentifier(String platformId) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformId);
+        checkAppIsInitialized();
+        checkPlatformsAreValid(new String[] {platformId});
 
-        for (Platform platform : platforms) {
-            return platform.getProxy().getIdentifier();
-        }
-        return null;
+        return getPlatformFromId(platformId).getProxy().getIdentifier();
     }
 
     private Set<Platform> checkAndGetPlatformsFromIds(String... platformIds) {

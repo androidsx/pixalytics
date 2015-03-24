@@ -24,7 +24,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
+
+        // Track the session start on Flurry
         Pixalytics.get().onSessionStart(this, FlurryPlatform.ID);
+
+        // Add a common property for all events sent to Google Analytics
+        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", GoogleAnalyticsPlatform.ID);
     }
 
     @Override

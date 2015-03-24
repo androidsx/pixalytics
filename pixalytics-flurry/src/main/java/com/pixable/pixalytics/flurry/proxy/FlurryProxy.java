@@ -48,8 +48,7 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void trackEvent(Event event) {
-        Map<String, String> properties = (Map) event.getProperties();
-        FlurryAgent.logEvent(event.getName(), properties);
+        FlurryAgent.logEvent(event.getName(), safeGenericCasting(event.getProperties()));
     }
 
     @Override
@@ -70,5 +69,15 @@ public class FlurryProxy implements PlatformProxy {
     @Override
     public String getIdentifier() {
         throw new UnsupportedOperationException("Flurry does not support Identifier management");
+    }
+
+    private static Map<String, String> safeGenericCasting(Map<String, Object> objectMap) {
+        final Map<String, String> stringMap = new HashMap<>();
+        for (String key : objectMap.keySet()) {
+            Object value = objectMap.get(key);
+
+            stringMap.put(key, String.valueOf(value));
+        }
+        return stringMap;
     }
 }

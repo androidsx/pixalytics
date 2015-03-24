@@ -164,12 +164,13 @@ public class Pixalytics {
         final Map<String, Object> propertyAsMap = new HashMap<>();
         propertyAsMap.put(name, value);
 
-        addCommonProperties(context, propertyAsMap);
+        addCommonProperties(context, propertyAsMap, platformIds);
     }
 
     /**
-     * Clear common properties of specified platforms
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     * Clears all common properties for the specified platforms.
+     *
+     * @param platformIds platforms where to clear common properties. At least one platform must
      *                    be provided
      */
     public void clearCommonProperties(String... platformIds) {

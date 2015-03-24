@@ -73,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key4", "Value4")
                         .property("Key5", "Value5")
                         .build(),
-                new String[]{FlurryPlatform.ID, MixpanelPlatform.ID, GoogleAnalyticsPlatform.ID, FacebookPlatform.ID});
+                FlurryPlatform.ID, MixpanelPlatform.ID, GoogleAnalyticsPlatform.ID, FacebookPlatform.ID);
     }
 
     private void trackScreen() {

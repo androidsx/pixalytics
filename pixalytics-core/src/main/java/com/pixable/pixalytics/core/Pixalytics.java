@@ -126,8 +126,8 @@ public class Pixalytics {
 
     /**
      * Adds a set of properties to specified platforms. Some providers manage this
-     * automatically, such as Mixpanel's super-properties. For others, this library will add this
-     * properties explicitly to every event.
+     * automatically, such as Mixpanel's super-properties. For others, this is not
+     * supported. TODO: for others, handle it manually
      *
      * @param context activity context
      * @param commonProperties hashMap of properties to add as Common
@@ -151,14 +151,14 @@ public class Pixalytics {
     }
 
     /**
-     * Adds a single property to specified platforms. Some providers manage this
-     * automatically, such as Mixpanel's super-properties. For others, this library will add this
-     * properties explicitly to every event.
+     * Adds a single property to specified platforms.
+     *
      * @param context activity context
      * @param name name of the property to add
      * @param value value of the property to add
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
+     * @see #addCommonProperties
      */
     public void addCommonProperty(Context context, String name, String value, String... platformIds) {
         final Map<String, Object> propertyAsMap = new HashMap<>();

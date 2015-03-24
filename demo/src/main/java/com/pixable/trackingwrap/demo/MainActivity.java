@@ -28,8 +28,8 @@ public class MainActivity extends ActionBarActivity {
         // Track the session start on Flurry
         Pixalytics.get().onSessionStart(this, FlurryPlatform.ID);
 
-        // Add a common property for all events sent to Google Analytics
-        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", GoogleAnalyticsPlatform.ID);
+        // Add a common property for all events sent to Mixpanel
+        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", MixpanelPlatform.ID);
     }
 
     @Override

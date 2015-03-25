@@ -22,8 +22,5 @@ dependencies {
     // For the tracked activity helpers
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.android.support:support-v4:21.0.2'
-
-    //Toasts
-    compile 'com.jakewharton:butterknife:6.0.0'
 }
 apply from: '../maven_push.gradle'

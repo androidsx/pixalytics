@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.ButterKnife;
-
 public class ToastTraceProxy implements TraceProxy {
 
     final Map<Level, Integer> durationMap = new HashMap<Level, Integer>() {{
@@ -52,14 +50,14 @@ public class ToastTraceProxy implements TraceProxy {
         toast.setGravity(Gravity.START | Gravity.BOTTOM,
                 context.getResources().getInteger(R.integer.tracking_toast_margin),
                 context.getResources().getInteger(R.integer.tracking_toast_margin));
-        ButterKnife.findById(layout, R.id.toast_container).setBackgroundColor(
+        layout.findViewById(R.id.toast_container).setBackgroundColor(
                 context.getResources().getColor(getBackgroundColorMap().get(level)));
 
-        ((TextView) ButterKnife.findById(layout, R.id.toast_title)).setText(messageTitle);
-        ((TextView) ButterKnife.findById(layout, R.id.toast_parameters)).setText(
+        ((TextView) layout.findViewById(R.id.toast_title)).setText(messageTitle);
+        ((TextView) layout.findViewById(R.id.toast_parameters)).setText(
                 mapToLinedString(properties));
 
-        LinearLayout platformsList = ButterKnife.findById(layout, R.id.platforms_list);
+        LinearLayout platformsList = (LinearLayout) layout.findViewById(R.id.platforms_list);
         for (Platform platform : platforms) {
             ImageView platformIcon = new ImageView(context);
             platformIcon.setPadding(1, 1, 1, 1);

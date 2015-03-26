@@ -27,6 +27,21 @@ public class Config {
         private Set<Platform> platforms = new HashSet<>();
         private Set<TraceId> traceIds = new HashSet<>();
 
+        /** Constructor to create a new config from scratch. */
+        public Builder() {
+            // Intentionally empty
+        }
+
+        /** Constructor to create a new config on top of an existing one. */
+        public Builder(Config existingConfig) {
+            for (Platform platform : existingConfig.getPlatforms()) {
+                addPlatform(platform);
+            }
+            for (TraceId traceId : existingConfig.getTraceIds()) {
+                addTrace(traceId);
+            }
+        }
+
         /**
          * Only one configuration is allowed for every provider. That is, you cannot send events to two
          * different Mixpanel accounts, for instance. Implementing this may be a little tricky in the
@@ -40,8 +55,15 @@ public class Config {
             return this;
         }
 
+        /** Adds the provided trace, or overwrites it if it already exists. */
         public Builder addTrace(TraceId traceId) {
             traceIds.add(traceId);
+            return this;
+        }
+
+        /** Removes the provided trace, if it exists. */
+        public Builder removeTrace(TraceId traceId) {
+            traceIds.remove(traceId);
             return this;
         }
 

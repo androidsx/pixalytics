@@ -26,7 +26,7 @@ public class Pixalytics {
     private static final String TAG = Pixalytics.class.getSimpleName();
     static Pixalytics INSTANCE;
 
-    private final Config configuration;
+    private Config configuration;
 
     /**
      * Map of platform IDs to proxies to be able to have the client just use IDs.
@@ -268,6 +268,20 @@ public class Pixalytics {
         checkPlatformsAreValid(new String[] {platformId});
 
         return getPlatformFromId(platformId).getProxy().getIdentifier();
+    }
+
+    /**
+     * Returns the current configuration.
+     */
+    public Config getConfig() {
+        return configuration;
+    }
+
+    /**
+     * Updates the configuration.
+     */
+    public void updateConfiguration(Config config) {
+        this.configuration = config;
     }
 
     private Set<Platform> checkAndGetPlatformsFromIds(String... platformIds) {

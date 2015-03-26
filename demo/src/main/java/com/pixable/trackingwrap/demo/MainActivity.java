@@ -3,10 +3,13 @@ package com.pixable.trackingwrap.demo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.CheckBox;
 
+import com.pixable.pixalytics.core.Config;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
+import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
 import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
@@ -86,5 +89,18 @@ public class MainActivity extends ActionBarActivity {
                 .property("Key1", "Value1")
                 .build();
         Pixalytics.get().trackScreen(this, screen, GoogleAnalyticsPlatform.ID);
+    }
+
+    public void onEnableDisableToasts(View view) {
+        final CheckBox checkBox = (CheckBox) view;
+        final Config.Builder newConfigBuilder = new Config.Builder(Pixalytics.get().getConfig());
+        if (checkBox.isChecked()) {
+            newConfigBuilder.removeTrace(TraceId.TOAST);
+            checkBox.setText(R.string.checkbox_toasts_disabled);
+        } else {
+            newConfigBuilder.addTrace(TraceId.TOAST);
+            checkBox.setText(R.string.checkbox_toasts_enabled);
+        }
+        Pixalytics.get().updateConfiguration(newConfigBuilder.build());
     }
 }

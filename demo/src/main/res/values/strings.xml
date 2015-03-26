@@ -6,4 +6,6 @@
     <string name="foo_google_analytics">Event to Google Analytics</string>
     <string name="foo_facebook">Event to Facebook</string>
     <string name="all_platforms">Event to all platforms</string>
+    <string name="checkbox_toasts_enabled">Toasts are enabled</string>
+    <string name="checkbox_toasts_disabled">Toasts are disabled</string>
 </resources>

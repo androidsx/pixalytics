@@ -38,12 +38,17 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void addCommonProperties(Map<String, Object> commonProperties) {
-        throw new UnsupportedOperationException("Flurry does not support Common Properties");
+        throw new UnsupportedOperationException("Flurry does not support common properties");
+    }
+
+    @Override
+    public void clearCommonProperty(String name) {
+        throw new UnsupportedOperationException("Flurry does not support common properties");
     }
 
     @Override
     public void clearCommonProperties() {
-        throw new UnsupportedOperationException("Flurry does not support Common Properties");
+        throw new UnsupportedOperationException("Flurry does not support common properties");
     }
 
     @Override

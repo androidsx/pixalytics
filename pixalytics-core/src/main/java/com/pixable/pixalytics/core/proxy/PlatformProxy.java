@@ -38,7 +38,16 @@ public interface PlatformProxy {
     void addCommonProperties(Map<String, Object> commonProperties);
 
     /**
-     * Clear Common properties
+     * Clears a common property.
+     *
+     * @see #addCommonProperty
+     */
+    void clearCommonProperty(String name);
+
+    /**
+     * Clears all common properties.
+     *
+     * @see #addCommonProperty
      */
     void clearCommonProperties();
 

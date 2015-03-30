@@ -181,6 +181,14 @@ public class Pixalytics {
         }
     }
 
+    public void clearCommonProperty(String name, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().clearCommonProperty(name);
+        }
+    }
+
     /**
      * Tracks the provided event in the provided platforms.
      *

@@ -42,6 +42,11 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
+    public void clearCommonProperty(String name) {
+        mixpanelAPI.unregisterSuperProperty(name);
+    }
+
+    @Override
     public void clearCommonProperties() {
         mixpanelAPI.clearSuperProperties();
     }

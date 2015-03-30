@@ -50,6 +50,11 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
+    public void clearCommonProperty(String name) {
+        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+    }
+
+    @Override
     public void clearCommonProperties() {
         throw new UnsupportedOperationException("Google Analytics does not support common properties");
     }

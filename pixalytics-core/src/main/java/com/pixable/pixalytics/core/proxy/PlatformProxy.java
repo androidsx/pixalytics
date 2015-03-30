@@ -31,9 +31,16 @@ public interface PlatformProxy {
     void onSessionFinish(Context context);
 
     /**
-     * Platform Global properties
+     * Adds a common property, that is, a property that will be added in all events.
      *
-     * @param commonProperties
+     * @throws java.lang.UnsupportedOperationException if common properties are not supported by this platform
+     */
+    void addCommonProperty(String name, Object value);
+
+    /**
+     * Adds a common property, that is, a property that will be added in all events.
+     *
+     * @throws java.lang.UnsupportedOperationException if common properties are not supported by this platform
      */
     void addCommonProperties(Map<String, Object> commonProperties);
 

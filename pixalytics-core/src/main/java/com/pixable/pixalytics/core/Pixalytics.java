@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.core;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
@@ -125,6 +126,32 @@ public class Pixalytics {
     }
 
     /**
+     * Adds a single property to specified platforms.
+     *
+     * @param context activity context
+     * @param name name of the property to add
+     * @param value value of the property to add. It must not be null
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
+     */
+    public void addCommonProperty(Context context, final String name, @NonNull final Object value,
+                                  String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
+                    "Register common property",
+                    new HashMap<String, Object>() {{ put(name, value); }},
+                    platforms);
+        }
+
+        for (Platform platform : platforms) {
+            platform.getProxy().addCommonProperty(name, value);
+        }
+    }
+
+    /**
      * Adds a set of properties to specified platforms. Some providers manage this
      * automatically, such as Mixpanel's super-properties. For others, this is not
      * supported. TODO: for others, handle it manually
@@ -134,7 +161,8 @@ public class Pixalytics {
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperties(Context context, Map<String, Object> commonProperties, String... platformIds) {
+    public void addCommonProperties(Context context, Map<String, Object> commonProperties,
+                                    String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceId traceId : configuration.getTraceIds()) {
@@ -148,23 +176,6 @@ public class Pixalytics {
         for (Platform platform : platforms) {
             platform.getProxy().addCommonProperties(commonProperties);
         }
-    }
-
-    /**
-     * Adds a single property to specified platforms.
-     *
-     * @param context activity context
-     * @param name name of the property to add
-     * @param value value of the property to add
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
-     *                    be provided
-     * @see #addCommonProperties
-     */
-    public void addCommonProperty(Context context, String name, String value, String... platformIds) {
-        final Map<String, Object> propertyAsMap = new HashMap<>();
-        propertyAsMap.put(name, value);
-
-        addCommonProperties(context, propertyAsMap, platformIds);
     }
 
     /**

@@ -10,6 +10,7 @@ import com.pixable.pixalytics.core.proxy.PlatformProxy;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MixpanelProxy implements PlatformProxy {
@@ -34,6 +35,12 @@ public class MixpanelProxy implements PlatformProxy {
     @Override
     public void onSessionFinish(Context context) {
         throw new UnsupportedOperationException("Mixpanel does not support session tracking");
+    }
+
+    @Override
+    public void addCommonProperty(final String name, final Object value) {
+        mixpanelAPI.registerSuperProperties(new JSONObject(
+                new HashMap<String, Object>() {{ put(name, value); }}));
     }
 
     @Override

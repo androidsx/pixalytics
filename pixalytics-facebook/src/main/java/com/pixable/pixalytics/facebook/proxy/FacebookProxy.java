@@ -38,6 +38,11 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
+    public void addCommonProperty(String name, Object value) {
+        throw new UnsupportedOperationException("Facebook does not support common properties");
+    }
+
+    @Override
     public void addCommonProperties(Map<String, Object> commonProperties) {
         throw new UnsupportedOperationException("Facebook does not support common properties");
     }

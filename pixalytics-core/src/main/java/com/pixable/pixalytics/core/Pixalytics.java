@@ -179,7 +179,21 @@ public class Pixalytics {
     }
 
     /**
-     * Clears all common properties for the specified platforms.
+     * Clears a common property for the specified platforms, if it exists.
+     *
+     * @param platformIds platforms where to clear this property. At least one platform must
+     *                    be provided
+     */
+    public void clearCommonProperty(String name, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        for (Platform platform : platforms) {
+            platform.getProxy().clearCommonProperty(name);
+        }
+    }
+
+    /**
+     * Clears all common properties for the specified platforms, if any.
      *
      * @param platformIds platforms where to clear common properties. At least one platform must
      *                    be provided
@@ -189,14 +203,6 @@ public class Pixalytics {
 
         for (Platform platform : platforms) {
             platform.getProxy().clearCommonProperties();
-        }
-    }
-
-    public void clearCommonProperty(String name, String... platformIds) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
-
-        for (Platform platform : platforms) {
-            platform.getProxy().clearCommonProperty(name);
         }
     }
 

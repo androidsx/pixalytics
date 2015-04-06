@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class LogcatTraceProxy implements TraceProxy {
-    private static final String TAG = LogcatTraceProxy.class.getSimpleName();
+    private static final String TAG = "Pixalytics-" + LogcatTraceProxy.class.getSimpleName();
 
     @Override
     public void traceMessage(Context context, Level level, String messageTitle, Map<String, Object> properties, Collection<Platform> platforms) {

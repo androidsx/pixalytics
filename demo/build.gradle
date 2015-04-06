@@ -31,11 +31,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.2'
 
     // List of dependencies that the typical library user should include
-    releaseCompile 'com.pixable.pixalytics:core:0.1-SNAPSHOT'
-    releaseCompile 'com.pixable.pixalytics:mixpanel:0.1-SNAPSHOT'
-    releaseCompile 'com.pixable.pixalytics:flurry:0.1-SNAPSHOT'
-    releaseCompile 'com.pixable.pixalytics:ga:0.1-SNAPSHOT'
-    releaseCompile 'com.pixable.pixalytics:facebook:0.1-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:core:0.2-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:mixpanel:0.2-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:flurry:0.2-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:ga:0.2-SNAPSHOT'
+    releaseCompile 'com.pixable.pixalytics:facebook:0.2-SNAPSHOT'
 
     // For the development of the library itself, we'll use local dependencies instead
     debugCompile project(':pixalytics-core')

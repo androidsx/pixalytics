@@ -33,10 +33,7 @@ public abstract class Platform {
             if (o == null || getClass() != o.getClass()) return false;
 
             Config that = (Config) o;
-
-            if (appKey != that.appKey) return false;
-
-            return true;
+            return appKey.equals(that.appKey);
         }
 
         @Override
@@ -69,10 +66,7 @@ public abstract class Platform {
         if (o == null || getClass() != o.getClass()) return false;
 
         Platform platform = (Platform) o;
-
-        if (getId() != platform.getId()) return false;
-
-        return true;
+        return getId().equals(platform.getId());
     }
 
     @Override

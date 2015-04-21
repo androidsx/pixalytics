@@ -7,20 +7,16 @@ buildscript {
     }
 }
 
-def isReleaseBuild() {
-    return version.contains("SNAPSHOT") == false
+// To release, go to a module, such as pixalytics-core, and run `../gradlew clean build generateRelease`
+ext {
+    PUBLISH_GROUP_ID = 'com.pixable'
+    PUBLISH_VERSION = '0.1.0'
 }
 
 allprojects {
-
-    version = VERSION_NAME
-    group = GROUP
-
     repositories {
+        jcenter()
         mavenCentral()
         mavenLocal()
     }
 }
-//apply plugin: 'android-reporting'
-
-//apply from: 'maven_push.gradle'

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+ext {
+    PUBLISH_ARTIFACT_ID = 'pixalytics-facebook'
+}
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -7,8 +11,6 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 21
-        versionName project.VERSION_NAME
-        versionCode Integer.parseInt(project.VERSION_CODE)
     }
     buildTypes {
         release {
@@ -23,4 +25,4 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:3.23.0'
 }
 
-apply from: '../maven_push.gradle'
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

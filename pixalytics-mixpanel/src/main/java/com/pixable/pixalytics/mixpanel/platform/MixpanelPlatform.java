@@ -6,14 +6,7 @@ import com.pixable.pixalytics.mixpanel.proxy.MixpanelProxy;
 
 public class MixpanelPlatform extends Platform {
 
-    public static String ID = "mixpanel";
-
-    public MixpanelPlatform(Config config) {
-        super(R.drawable.tracking_toast_mixpanel, new MixpanelProxy(config));
-    }
-
-    @Override
-    public String getId() {
-        return ID;
+    public MixpanelPlatform(String id, Config config) {
+        super(id, R.drawable.tracking_toast_mixpanel, new MixpanelProxy(config));
     }
 }

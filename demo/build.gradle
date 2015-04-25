@@ -8,8 +8,8 @@ android {
         applicationId "com.pixable.trackingwrap.demo"
         minSdkVersion 14
         targetSdkVersion 21
-        versionName project.VERSION_NAME
-        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName '0.1.0'
+        versionCode 1
     }
     buildTypes {
         release {
@@ -44,5 +44,3 @@ dependencies {
     debugCompile project(':pixalytics-ga')
     debugCompile project(':pixalytics-facebook')
 }
-
-apply from: '../maven_push.gradle'

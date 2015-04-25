@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
-
-ext {
-    PUBLISH_ARTIFACT_ID = 'pixalytics-core'
-}
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 21
@@ -26,4 +24,90 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+// To publish a new version, update the version and execute `../gradlew bintrayUpload`
+// You need to have a bintray.properties in the project root that defines bintray.user and bintray.apikey
+// properties, matching your Bintray account. This account needs to belong to a team (not necessarily a
+// company) with access to the repo (or the artifacts?) in Bintray
+
+version = '0.1.1'
+group = 'com.pixable'
+def artifactId = 'pixalytics-core'
+def description = 'Core of the library, that provides the client API'
+def siteUrl = 'https://github.com/pixable/pixalytics'
+def gitUrl = 'https://github.com/pixable/pixalytics.git'
+
+install {
+    repositories.mavenInstaller {
+      // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                name description
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'http://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'espinchi'
+                        name 'Pablo Pera'
+                        email 'pablo.sx@gmail.com'
+                    }
+                    developer {
+                        id 'rubenKid'
+                        name 'Ruben Gomez'
+                        email 'ruben@pixable.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('bintray.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty('bintray.user')
+    key = properties.getProperty('bintray.apikey')
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = artifactId
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+    }
+}

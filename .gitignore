@@ -38,3 +38,6 @@ proguard/
 # Android Studio
 .idea/
 *.iml
+
+# Bintray credentials
+bintray.properties

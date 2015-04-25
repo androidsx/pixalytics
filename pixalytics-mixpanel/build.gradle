@@ -1,9 +1,5 @@
 apply plugin: 'com.android.library'
 
-ext {
-    PUBLISH_ARTIFACT_ID = 'pixalytics-mixpanel'
-}
-
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -25,5 +21,3 @@ dependencies {
 
     compile project(':pixalytics-core')
 }
-
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'

@@ -35,8 +35,8 @@ public class ToastTraceProxy implements TraceProxy {
 
     private Map<Level, Integer> getBackgroundColorMap() {
         if (backgroundColorMap.isEmpty()) {
-            backgroundColorMap.put(Level.DEBUG, R.color.toast_debug);
-            backgroundColorMap.put(Level.INFO, R.color.toast_info);
+            backgroundColorMap.put(Level.DEBUG, R.color.pixalytics__toast_debug);
+            backgroundColorMap.put(Level.INFO, R.color.pixalytics__toast_info);
         }
 
         return backgroundColorMap;
@@ -75,12 +75,12 @@ public class ToastTraceProxy implements TraceProxy {
         //noinspection ResourceType
         toast.setDuration(duration);
         toast.setGravity(Gravity.START | Gravity.BOTTOM,
-                context.getResources().getInteger(R.integer.tracking_toast_margin),
-                context.getResources().getInteger(R.integer.tracking_toast_margin));
-        layout.findViewById(R.id.pixalytics_toast_container).setBackgroundColor(
+                context.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin),
+                context.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin));
+        layout.findViewById(R.id.pixalytics__toast_container).setBackgroundColor(
                 color);
 
-        ((TextView) layout.findViewById(R.id.pixalytics_toast_title)).setText(messageTitle);
+        ((TextView) layout.findViewById(R.id.pixalytics__toast_title)).setText(messageTitle);
         ((TextView) layout.findViewById(R.id.pixalytics_toast_parameters)).setText(messageBody);
 
         LinearLayout platformsList = (LinearLayout) layout.findViewById(R.id.pixalytics_platforms_list);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pixalytics_toast_container"
+    android:id="@+id/pixalytics__toast_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,12 +11,12 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/pixalytics_toast_title"
+            android:id="@+id/pixalytics__toast_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:textColor="@color/tracking_toast_mixpanel_text"
-            android:textSize="@dimen/tracking_toast_title" />
+            android:textColor="@color/pixalytics__tracking_toast_mixpanel_text"
+            android:textSize="@dimen/pixalytics__tracking_toast_title" />
 
         <LinearLayout
             android:id="@+id/pixalytics_platforms_list"
@@ -30,7 +30,7 @@
         android:id="@+id/pixalytics_toast_parameters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/tracking_toast_mixpanel_text"
-        android:textSize="@dimen/tracking_toast_parameters" />
+        android:textColor="@color/pixalytics__tracking_toast_mixpanel_text"
+        android:textSize="@dimen/pixalytics__tracking_toast_parameters" />
 
 </LinearLayout>

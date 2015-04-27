@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Not in use yet -->
-    <color name="tracking_toast_event_background">#DD7086A7</color>
-    <color name="tracking_toast_screen_background">#DDF7991C</color>
-    <color name="tracking_toast_social_action_background">#DD3B5999</color>
+    <color name="pixalytics__tracking_toast_event_background">#DD7086A7</color>
+    <color name="pixalytics__tracking_toast_screen_background">#DDF7991C</color>
+    <color name="pixalytics__tracking_toast_social_action_background">#DD3B5999</color>
 
-    <color name="toast_debug">#7986CB</color>
-    <color name="toast_info">#DD2E7D32</color>
+    <color name="pixalytics__toast_debug">#7986CB</color>
+    <color name="pixalytics__toast_info">#DD2E7D32</color>
 
-    <color name="tracking_toast_track_failed">#FF1010</color>
-    <color name="tracking_toast_mixpanel_text">#FFFFFF</color>
+    <color name="pixalytics__tracking_toast_track_failed">#FF1010</color>
+    <color name="pixalytics__tracking_toast_mixpanel_text">#FFFFFF</color>
 </resources>

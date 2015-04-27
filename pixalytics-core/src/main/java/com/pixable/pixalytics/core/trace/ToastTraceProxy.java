@@ -1,5 +1,6 @@
 package com.pixable.pixalytics.core.trace;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
@@ -69,7 +70,7 @@ public class ToastTraceProxy implements TraceProxy {
     private void displayToast(Context context, int color, int duration, String messageTitle, String messageBody, Collection<Platform> platforms) {
         final LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.pixalytics_tracking_debug_toast, null);
+        @SuppressLint("InflateParams") final View layout = inflater.inflate(R.layout.pixalytics__tracking_debug_toast, null);
 
         final Toast toast = new Toast(context);
         //noinspection ResourceType

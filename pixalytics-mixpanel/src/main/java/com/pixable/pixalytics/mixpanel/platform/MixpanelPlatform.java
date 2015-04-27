@@ -9,7 +9,7 @@ public class MixpanelPlatform extends Platform {
     public static String ID = "mixpanel";
 
     public MixpanelPlatform(Config config) {
-        super(R.drawable.tracking_toast_mixpanel, new MixpanelProxy(config));
+        super(R.drawable.pixalytics__tracking_toast_mixpanel, new MixpanelProxy(config));
     }
 
     @Override

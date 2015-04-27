@@ -9,7 +9,7 @@ public class FlurryPlatform extends Platform {
     public static String ID = "flurry";
 
     public FlurryPlatform(Config config) {
-        super(R.drawable.tracking_toast_flurry, new FlurryProxy(config));
+        super(R.drawable.pixalytics__tracking_toast_flurry, new FlurryProxy(config));
     }
 
     @Override

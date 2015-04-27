@@ -11,7 +11,7 @@ public class GoogleAnalyticsPlatform extends Platform {
     public static String ID = "ga";
 
     public GoogleAnalyticsPlatform(Config config) {
-        super(R.drawable.tracking_toast_ga, new GoogleAnalyticsProxy(config));
+        super(R.drawable.pixalytics__tracking_toast_ga, new GoogleAnalyticsProxy(config));
     }
 
     @Override

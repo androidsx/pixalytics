@@ -22,95 +22,38 @@ dependencies {
 }
 
 // To publish a new version, update the version and execute `../gradlew bintrayUpload`
+ext {
+    // Library identifier. Your final dependency will be `group:artifact:version
+    libraryGroup = 'com.pixable'
+    libraryArtifact = 'pixalytics-core'
+    libraryVersion = '0.1.5'
 
-// Library identifier. Your final dependency will be `group:artifact:version
-def libraryGroup = 'com.pixable'
-def libraryArtifact = 'pixalytics-core'
-def libraryVersion = '0.1.3'
-
-// Optional Maven parameters to build the pom.xml
-def libraryDescription = 'Core of the library, that provides the client API'
-def librarySiteUrl = 'https://github.com/pixable/pixalytics'
-def libraryGitUrl = 'https://github.com/pixable/pixalytics.git'
-def libraryLicense = {
-    name 'MIT'
-    url 'http://opensource.org/licenses/MIT'
-}
-def libraryDevelopers = {
-    developer {
-        id 'espinchi'
-        name 'Pablo Pera'
-        email 'pablo.sx@gmail.com'
+    // Optional Maven parameters to build the pom.xml
+    libraryDescription = 'Core of the library, that provides the client API'
+    librarySiteUrl = 'https://github.com/pixable/pixalytics'
+    libraryGitUrl = 'https://github.com/pixable/pixalytics.git'
+    libraryLicense = {
+        name 'MIT'
+        url 'http://opensource.org/licenses/MIT'
     }
-    developer {
-        id 'rubenKid'
-        name 'Ruben Gomez'
-        email 'ruben@pixable.com'
-    }
-}
-
-// Credentials in Bintray
-Properties properties = new Properties()
-properties.load(project.rootProject.file('bintray.properties').newDataInputStream())
-def bintrayUser = properties.getProperty('bintray.user')
-def bintrayApiKey = properties.getProperty('bintray.apikey')
-
-// -------------------------------------------------------------------------------------------------
-
-version = libraryVersion
-group = libraryGroup
-
-bintray {
-    user = bintrayUser
-    key = bintrayApiKey
-
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name =  libraryArtifact
-        websiteUrl = librarySiteUrl
-        vcsUrl = libraryGitUrl
-        licenses = [libraryLicense.name]
-        publish = true
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name libraryDescription
-                url librarySiteUrl
-                licenses {
-                    license libraryLicense
-                }
-                developers libraryDevelopers
-                scm {
-                    connection libraryGitUrl
-                    developerConnection libraryGitUrl
-                    url librarySiteUrl
-                }
-            }
+    libraryDevelopers = {
+        developer {
+            id 'espinchi'
+            name 'Pablo Pera'
+            email 'pablo.sx@gmail.com'
+        }
+        developer {
+            id 'rubenKid'
+            name 'Ruben Gomez'
+            email 'ruben@pixable.com'
         }
     }
+
+    // Credentials in Bintray
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('bintray.properties').newDataInputStream())
+    bintrayUser = properties.getProperty('bintray.user')
+    bintrayApiKey = properties.getProperty('bintray.apikey')
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+apply from: '../bintray_publish.gradle'

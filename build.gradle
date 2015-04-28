@@ -17,3 +17,34 @@ allprojects {
         mavenLocal()
     }
 }
+
+ext {
+    // Library identifier. Group and version defined in the module, for the final `group:artifact:version
+    libraryGroup = 'com.pixable'
+
+    // Optional Maven parameters to build the pom.xml
+    librarySiteUrl = 'https://github.com/pixable/pixalytics'
+    libraryGitUrl = 'https://github.com/pixable/pixalytics.git'
+    libraryLicense = {
+        name 'MIT'
+        url 'http://opensource.org/licenses/MIT'
+    }
+    libraryDevelopers = {
+        developer {
+            id 'espinchi'
+            name 'Pablo Pera'
+            email 'pablo.sx@gmail.com'
+        }
+        developer {
+            id 'rubenKid'
+            name 'Ruben Gomez'
+            email 'ruben@pixable.com'
+        }
+    }
+
+    // Credentials in Bintray
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('bintray.properties').newDataInputStream())
+    bintrayUser = properties.getProperty('bintray.user')
+    bintrayApiKey = properties.getProperty('bintray.apikey')
+}

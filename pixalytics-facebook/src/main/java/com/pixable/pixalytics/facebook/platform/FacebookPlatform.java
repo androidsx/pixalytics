@@ -8,15 +8,8 @@ import java.util.Map;
 
 public class FacebookPlatform extends Platform {
 
-    public static String ID = "facebook";
-
-    public FacebookPlatform(Config config) {
-        super(R.drawable.pixalytics__tracking_toast_facebook, new FacebookProxy(config));
-    }
-
-    @Override
-    public String getId() {
-        return ID;
+    public FacebookPlatform(String id, Config config) {
+        super(id, R.drawable.pixalytics__tracking_toast_facebook, new FacebookProxy(config));
     }
 
     /**
@@ -27,13 +20,6 @@ public class FacebookPlatform extends Platform {
         Map<String, String> eventMapping;
         Map<String, String> propertiesMapping;
 
-        /**
-         * Constructor
-         *
-         * @param appKey
-         * @param eventMapping
-         * @param propertiesMapping
-         */
         public Config(String appKey, Map<String, String> eventMapping, Map<String, String> propertiesMapping) {
             super(appKey);
             this.eventMapping = eventMapping;

@@ -8,15 +8,8 @@ import java.util.Map;
 
 public class GoogleAnalyticsPlatform extends Platform {
 
-    public static String ID = "ga";
-
-    public GoogleAnalyticsPlatform(Config config) {
-        super(R.drawable.pixalytics__tracking_toast_ga, new GoogleAnalyticsProxy(config));
-    }
-
-    @Override
-    public String getId() {
-        return ID;
+    public GoogleAnalyticsPlatform(String id, Config config) {
+        super(id, R.drawable.pixalytics__tracking_toast_ga, new GoogleAnalyticsProxy(config));
     }
 
     /**
@@ -26,12 +19,6 @@ public class GoogleAnalyticsPlatform extends Platform {
     public static class Config extends Platform.Config {
         Map<String, Integer> parameterMapping;
 
-        /**
-         * Constructor
-         *
-         * @param appKey
-         * @param parameterMapping
-         */
         public Config(String appKey, Map<String, Integer> parameterMapping) {
             super(appKey);
             this.parameterMapping = parameterMapping;

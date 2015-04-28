@@ -42,15 +42,19 @@ public abstract class Platform {
         }
     }
 
-    private PlatformProxy proxy;
-    private int iconId;
+    private final String id;
+    private final PlatformProxy proxy;
+    private final int iconId;
 
-    public Platform(int iconId, PlatformProxy platformProxy) {
+    public Platform(String id, int iconId, PlatformProxy platformProxy) {
+        this.id = id;
         this.iconId = iconId;
         this.proxy = platformProxy;
     }
 
-    public abstract String getId();
+    public String getId() {
+        return id;
+    }
 
     public int getIconId() {
         return iconId;

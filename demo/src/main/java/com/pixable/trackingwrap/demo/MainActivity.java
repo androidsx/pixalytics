@@ -10,10 +10,6 @@ import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.trace.TraceId;
-import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
-import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
-import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
-import com.pixable.pixalytics.mixpanel.platform.MixpanelPlatform;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -29,20 +25,20 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
 
         // Track the session start on Flurry
-        Pixalytics.get().onSessionStart(this, FlurryPlatform.ID);
+        Pixalytics.get().onSessionStart(this, PlatformIds.FLURRY.getId());
 
         // Add a common property for all events sent to Mixpanel
-        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", MixpanelPlatform.ID);
+        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", PlatformIds.MIXPANEL.getId());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Pixalytics.get().onSessionFinish(this, FlurryPlatform.ID);
+        Pixalytics.get().onSessionFinish(this, PlatformIds.FLURRY.getId());
     }
 
     public void onFlurryClick(View view) {
-        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), FlurryPlatform.ID);
+        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), PlatformIds.FLURRY.getId());
     }
 
     public void onMixpanelClick(View view) {
@@ -50,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .build(),
-                MixpanelPlatform.ID);
+                PlatformIds.MIXPANEL.getId());
     }
 
     public void onGoogleAnalyticsClick(View view) {
@@ -59,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
                         .build(),
-                GoogleAnalyticsPlatform.ID);
+                PlatformIds.GOOGLE_ANALYTICS.getId());
     }
 
     public void onFacebookClick(View view) {
@@ -69,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key2", "Value2")
                         .property("Key3", "Value3")
                         .build(),
-                FacebookPlatform.ID);
+                PlatformIds.FACEBOOK.getId());
     }
 
     public void onAllPlatformsClick(View view) {
@@ -81,14 +77,14 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key4", "Value4")
                         .property("Key5", "Value5")
                         .build(),
-                FlurryPlatform.ID, MixpanelPlatform.ID, GoogleAnalyticsPlatform.ID, FacebookPlatform.ID);
+                PlatformIds.FLURRY.getId(), PlatformIds.MIXPANEL.getId(), PlatformIds.GOOGLE_ANALYTICS.getId(), PlatformIds.FACEBOOK.getId());
     }
 
     private void trackScreen() {
         Screen screen = new Screen.Builder().name("Main")
                 .property("Key1", "Value1")
                 .build();
-        Pixalytics.get().trackScreen(this, screen, GoogleAnalyticsPlatform.ID);
+        Pixalytics.get().trackScreen(this, screen, PlatformIds.GOOGLE_ANALYTICS.getId());
     }
 
     public void onEnableDisableToasts(View view) {

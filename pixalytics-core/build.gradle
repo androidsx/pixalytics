@@ -21,7 +21,7 @@ dependencies {
 
 ext {
     libraryArtifact = 'pixalytics-core'
-    libraryVersion = '0.1.6'
+    libraryVersion = '0.1.7'
     libraryDescription = 'Core of the library, that provides the client API'
 }
-apply from: '../bintray_publish.gradle'
+apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

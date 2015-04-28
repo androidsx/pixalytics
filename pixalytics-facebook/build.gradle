@@ -27,4 +27,4 @@ ext {
     libraryVersion = '0.1.0'
     libraryDescription = 'Pixalytics extension for Facebook Insights'
 }
-apply from: '../bintray_publish.gradle'
+apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

@@ -24,3 +24,10 @@ dependencies {
     compile project(':pixalytics-core')
     
 }
+
+ext {
+    libraryArtifact = 'pixalytics-ga'
+    libraryVersion = '0.1.0'
+    libraryDescription = 'Pixalytics extension for Google Analytics'
+}
+apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

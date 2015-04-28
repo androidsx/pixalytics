@@ -22,3 +22,11 @@ dependencies {
 
     compile project(':pixalytics-core')
 }
+
+ext {
+    libraryArtifact = 'pixalytics-mixpanel'
+    libraryVersion = '0.1.0'
+
+    libraryDescription = 'Pixalytics extension for Mixpanel'
+}
+apply from: '../bintray_publish.gradle'

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+    resourcePrefix "pixalytics__"
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 22
+    }
+    buildTypes {
+    }
+}
+
+dependencies {
+    // For the tracked activity helpers
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:support-v4:22.0.0'
+}
+
+ext {
+    libraryArtifact = 'pixalytics-core'
+    libraryVersion = '0.1.6'
+    libraryDescription = 'Core of the library, that provides the client API'
+}
+apply from: '../bintray_publish.gradle'

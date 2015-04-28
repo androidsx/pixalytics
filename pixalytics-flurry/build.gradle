@@ -21,3 +21,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':pixalytics-core')
 }
+
+ext {
+    libraryArtifact = 'pixalytics-flurry'
+    libraryVersion = '0.1.0'
+    libraryDescription = 'Pixalytics extension for Flurry'
+}
+apply from: '../bintray_publish.gradle'

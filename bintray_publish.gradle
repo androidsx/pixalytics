@@ -66,6 +66,11 @@
          bintrayApiKey = properties.getProperty('bintray.apikey') // Find it in your profile settings at bintray.com
      }
  </pre>
+ *
+ * MORE INFORMATION
+ *
+ * Great blog post: https://www.virag.si/2015/01/publishing-gradle-android-library-to-jcenter/
+ * Official Bintray plugin, that this plugin here wraps: https://github.com/bintray/gradle-bintray-plugin
  */
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'

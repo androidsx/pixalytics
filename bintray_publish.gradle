@@ -10,9 +10,10 @@
  * To publish a new library:
  *
  * 1. Create an account at bintray.com
- * 2. Configure your "ext" block as indicated in CONFIGURATION
- * 3. Execute the Gradle task as indicated in USAGE
- * 4. In a few hours, you will get a message from bintray authorising it
+ * 2. From the website, add a new package in your maven repository, with the name of your artifact
+ * 3. Configure your "ext" block as indicated in CONFIGURATION
+ * 4. Execute the Gradle task as indicated in USAGE
+ * 5. In a few hours, you will get a message from bintray authorising it
  *
  * To publish a new version of an existing library:
  *

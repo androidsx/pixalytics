@@ -22,10 +22,10 @@ public class DemoApplication extends Application {
         super.onCreate();
 
         final Config configuration = new Config.Builder()
-                .addPlatform(new FlurryPlatform(new Platform.Config("flurry-app-key")))
-                .addPlatform(new MixpanelPlatform(new Platform.Config("mixpanel-app-key")))
-                .addPlatform(new GoogleAnalyticsPlatform(new GoogleAnalyticsPlatform.Config("ga-app-key", gaParametersMapping)))
-                .addPlatform(new FacebookPlatform(new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
+                .addPlatform(new FlurryPlatform(PlatformIds.FLURRY.getId(), new Platform.Config("flurry-app-key")))
+                .addPlatform(new MixpanelPlatform(PlatformIds.MIXPANEL.getId(), new Platform.Config("mixpanel-app-key")))
+                .addPlatform(new GoogleAnalyticsPlatform(PlatformIds.GOOGLE_ANALYTICS.getId(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaParametersMapping)))
+                .addPlatform(new FacebookPlatform(PlatformIds.FACEBOOK.getId(), new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
                 .addTrace(TraceId.LOGCAT)
                 .addTrace(TraceId.TOAST)
                 .build();

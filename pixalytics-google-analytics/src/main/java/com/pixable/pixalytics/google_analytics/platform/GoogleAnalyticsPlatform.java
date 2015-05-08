@@ -1,15 +1,15 @@
-package com.pixable.pixalytics.ga.platform;
+package com.pixable.pixalytics.google_analytics.platform;
 
 import com.pixable.pixalytics.core.platform.Platform;
-import com.pixable.pixalytics.ga.R;
-import com.pixable.pixalytics.ga.proxy.GoogleAnalyticsProxy;
+import com.pixable.pixalytics.google_analytics.proxy.GoogleAnalyticsProxy;
+import com.pixable.pixalytics.google_analytics.R;
 
 import java.util.Map;
 
 public class GoogleAnalyticsPlatform extends Platform {
 
     public GoogleAnalyticsPlatform(String id, Config config) {
-        super(id, R.drawable.pixalytics__tracking_toast_ga, new GoogleAnalyticsProxy(config));
+        super(id, R.drawable.pixalytics__tracking_toast_google_analytics, new GoogleAnalyticsProxy(config));
     }
 
     /**

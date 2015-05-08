@@ -9,7 +9,7 @@ import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
-import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
+import com.pixable.pixalytics.google_analytics.platform.GoogleAnalyticsPlatform;
 import com.pixable.pixalytics.mixpanel.platform.MixpanelPlatform;
 
 import java.util.HashMap;

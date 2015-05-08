@@ -1,4 +1,4 @@
-package com.pixable.pixalytics.ga.proxy;
+package com.pixable.pixalytics.google_analytics.proxy;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
-import com.pixable.pixalytics.ga.platform.GoogleAnalyticsPlatform;
+import com.pixable.pixalytics.google_analytics.platform.GoogleAnalyticsPlatform;
 
 import java.util.Iterator;
 import java.util.Map;

@@ -41,6 +41,6 @@ dependencies {
     debugCompile project(':pixalytics-core')
     debugCompile project(':pixalytics-mixpanel')
     debugCompile project(':pixalytics-flurry')
-    debugCompile project(':pixalytics-ga')
+    debugCompile project(':pixalytics-google-analytics')
     debugCompile project(':pixalytics-facebook')
 }

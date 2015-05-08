@@ -1,1 +1,1 @@
-include ':pixalytics-core', ':pixalytics-flurry', ':pixalytics-mixpanel', ':pixalytics-ga', ':pixalytics-facebook', ':demo'
+include ':pixalytics-core', ':pixalytics-flurry', ':pixalytics-mixpanel', ':pixalytics-google-analytics', ':pixalytics-facebook', ':demo'

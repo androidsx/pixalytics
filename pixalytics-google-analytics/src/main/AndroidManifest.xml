@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pixable.pixalytics.ga">
+    package="com.pixable.pixalytics.google_analytics">
 
     <application/>
 

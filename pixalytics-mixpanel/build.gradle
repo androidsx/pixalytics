@@ -25,7 +25,7 @@ dependencies {
 
 ext {
     libraryArtifact = 'pixalytics-mixpanel'
-    libraryVersion = '0.1.0'
+    libraryVersion = '0.2.0'
 
     libraryDescription = 'Pixalytics extension for Mixpanel'
 }

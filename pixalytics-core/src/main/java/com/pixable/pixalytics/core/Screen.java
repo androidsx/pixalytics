@@ -2,6 +2,7 @@ package com.pixable.pixalytics.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * An Screen that is to be tracked, that has a name and a set of properties (key-value pairs).
@@ -35,6 +36,14 @@ public class Screen extends Trackable {
          */
         public Builder property(String name, String value) {
             properties.put(name, value);
+            return this;
+        }
+
+        /**
+         * Adds multiple properties at once.
+         */
+        public Builder properties(Map<String, Object> properties) {
+            properties.putAll(properties);
             return this;
         }
 

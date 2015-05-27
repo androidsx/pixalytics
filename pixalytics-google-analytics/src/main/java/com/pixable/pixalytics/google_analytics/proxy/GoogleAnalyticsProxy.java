@@ -11,6 +11,7 @@ import com.pixable.pixalytics.core.Screen;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
 import com.pixable.pixalytics.google_analytics.platform.GoogleAnalyticsPlatform;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     private final GoogleAnalyticsPlatform.Config config;
 
     private Tracker tracker;
+
+    private Map<String, Object> commonProperties = new HashMap<String, Object>();
 
     public GoogleAnalyticsProxy(GoogleAnalyticsPlatform.Config config) {
         this.config = config;
@@ -46,22 +49,22 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
 
     @Override
     public void addCommonProperty(String name, Object value) {
-        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+        commonProperties.put(name, value);
     }
 
     @Override
-    public void addCommonProperties(Map<String, Object> commonProperties) {
-        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+    public void addCommonProperties(Map<String, Object> properties) {
+        commonProperties.putAll(commonProperties);
     }
 
     @Override
     public void clearCommonProperty(String name) {
-        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+        commonProperties.put(name, null);
     }
 
     @Override
     public void clearCommonProperties() {
-        throw new UnsupportedOperationException("Google Analytics does not support common properties");
+        commonProperties.clear();
     }
 
     @Override

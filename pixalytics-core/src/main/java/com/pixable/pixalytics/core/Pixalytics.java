@@ -257,6 +257,35 @@ public class Pixalytics {
     }
 
     /**
+     * Tracks a social interaction
+     *
+     * @param context activity context
+     * @param network network where social interaction happened
+     * @param action action happening in social interaction
+     * @param target target associated to social interaction
+     * @param platformIds platforms to which this event is to be sent. At least one platform must
+     *                    be provided
+     */
+    public void trackSocial(Context context, String network, String action, String target, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("network", network);
+        properties.put("action", action);
+        properties.put("target", target);
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.INFO,
+                    "Social Interaction",
+                    properties,
+                    platforms);
+        }
+
+        for (Platform platform : platforms) {
+            platform.getProxy().trackSocial(network, action, target);
+        }
+    }
+
+    /**
      * Flushes all events, that is, forces immediate sending to the server.
      *
      * @param platformIds platforms to flush. At least one platform must

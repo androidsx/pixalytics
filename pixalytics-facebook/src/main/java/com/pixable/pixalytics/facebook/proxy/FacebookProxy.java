@@ -84,6 +84,11 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackSocial(String network, String action, String target) {
+        throw new UnsupportedOperationException("Facebook does not support Social Interactions tracking");
+    }
+
+    @Override
     public void flush() {
         facebookLogger.flush();
     }

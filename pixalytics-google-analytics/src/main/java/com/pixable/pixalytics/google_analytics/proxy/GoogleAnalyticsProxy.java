@@ -84,6 +84,15 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackSocial(String network, String action, String target) {
+        HitBuilders.SocialBuilder builder = new HitBuilders.SocialBuilder()
+                .setNetwork(network)
+                .setAction(action)
+                .setTarget(target);
+        tracker.send(builder.build());
+    }
+
+    @Override
     public void flush() {
         throw new UnsupportedOperationException("Google Analytics does not support Flush");
     }

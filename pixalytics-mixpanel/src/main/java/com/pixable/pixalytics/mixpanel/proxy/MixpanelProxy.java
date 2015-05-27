@@ -69,6 +69,11 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackSocial(String network, String action, String target) {
+        throw new UnsupportedOperationException("Mixpanel does not support Social Interactions tracking");
+    }
+
+    @Override
     public void flush() {
         mixpanelAPI.flush();
     }

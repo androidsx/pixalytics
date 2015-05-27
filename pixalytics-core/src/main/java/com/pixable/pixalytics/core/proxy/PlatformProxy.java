@@ -69,6 +69,11 @@ public interface PlatformProxy {
     void trackScreen(Screen screen);
 
     /**
+     * Tracks a Social interaction.
+     */
+    void trackSocial(String network, String action, String target);
+
+    /**
      * Flushes all events and screens, to force their sending to the platform. Useful while debugging.
      */
     void flush();

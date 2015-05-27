@@ -63,7 +63,12 @@ public class FlurryProxy implements PlatformProxy {
 
     @Override
     public void trackScreen(Screen screen) {
-        //No Screens in Flurry
+        throw new UnsupportedOperationException("Flurry does not support Screen tracking");
+    }
+
+    @Override
+    public void trackSocial(String network, String action, String target) {
+        throw new UnsupportedOperationException("Flurry does not support Social Interactions tracking");
     }
 
     @Override

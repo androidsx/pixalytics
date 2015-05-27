@@ -27,7 +27,7 @@ dependencies {
 
 ext {
     libraryArtifact = 'pixalytics-google-analytics'
-    libraryVersion = '0.2.2'
+    libraryVersion = '0.2.3'
     libraryDescription = 'Pixalytics extension for Google Analytics'
 }
 apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

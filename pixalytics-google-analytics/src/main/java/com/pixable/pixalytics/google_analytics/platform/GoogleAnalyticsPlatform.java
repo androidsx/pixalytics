@@ -17,15 +17,21 @@ public class GoogleAnalyticsPlatform extends Platform {
      * account.
      */
     public static class Config extends Platform.Config {
-        Map<String, Integer> parameterMapping;
+        Map<String, Integer> dimensionsMapping;
+        Map<String, Integer>  metricsMapping;
 
-        public Config(String appKey, Map<String, Integer> parameterMapping) {
+        public Config(String appKey, Map<String, Integer> dimensionsMapping, Map<String, Integer> metricsMapping) {
             super(appKey);
-            this.parameterMapping = parameterMapping;
+            this.dimensionsMapping = dimensionsMapping;
+            this.metricsMapping = metricsMapping;
         }
 
-        public Map<String, Integer> getParameterMapping() {
-            return parameterMapping;
+        public Map<String, Integer> getDimensionsMapping() {
+            return dimensionsMapping;
+        }
+
+        public Map<String, Integer> getMetricsMapping() {
+            return metricsMapping;
         }
     }
 }

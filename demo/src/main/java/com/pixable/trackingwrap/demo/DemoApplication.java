@@ -24,7 +24,7 @@ public class DemoApplication extends Application {
         final Config configuration = new Config.Builder()
                 .addPlatform(new FlurryPlatform(PlatformIds.FLURRY.getId(), new Platform.Config("flurry-app-key")))
                 .addPlatform(new MixpanelPlatform(PlatformIds.MIXPANEL.getId(), new Platform.Config("mixpanel-app-key")))
-                .addPlatform(new GoogleAnalyticsPlatform(PlatformIds.GOOGLE_ANALYTICS.getId(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaParametersMapping)))
+                .addPlatform(new GoogleAnalyticsPlatform(PlatformIds.GOOGLE_ANALYTICS.getId(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaDimensionsMapping, gaMetricsMapping)))
                 .addPlatform(new FacebookPlatform(PlatformIds.FACEBOOK.getId(), new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
                 .addTrace(TraceId.LOGCAT)
                 .addTrace(TraceId.TOAST)
@@ -32,14 +32,20 @@ public class DemoApplication extends Application {
         Pixalytics.createInstance(configuration).onApplicationCreate(this);
     }
 
-    private static Map<String, Integer> gaParametersMapping = new HashMap<>();
+    private static Map<String, Integer> gaDimensionsMapping = new HashMap<>();
     static {
-        gaParametersMapping.put("view", 1);
-        gaParametersMapping.put("Key1", 2);
-        gaParametersMapping.put("Key2", 3);
-        gaParametersMapping.put("Key3", 4);
-        gaParametersMapping.put("Key4", 5);
-        gaParametersMapping.put("Key5", 6);
+        gaDimensionsMapping.put("view", 1);
+        gaDimensionsMapping.put("Key1", 2);
+        gaDimensionsMapping.put("Key2", 3);
+        gaDimensionsMapping.put("Key3", 4);
+        gaDimensionsMapping.put("Key4", 5);
+        gaDimensionsMapping.put("Key5", 6);
+    }
+
+    private static Map<String, Integer> gaMetricsMapping = new HashMap<>();
+    static {
+        gaMetricsMapping.put("Metric1", 1);
+        gaMetricsMapping.put("Metric2", 2);
     }
 
     private static Map<String, String> fbEventsMapping = new HashMap<>();

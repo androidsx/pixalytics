@@ -71,7 +71,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
                 .setAction(event.getName())
                 .setLabel("");
         addDimensions(builder, event.getProperties());
-        //TODO: Find a way of adding Metrics somehow
+        addMetrics(builder, event.getProperties());
         tracker.send(builder.build());
     }
 
@@ -80,6 +80,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         tracker.setScreenName(screen.getName());
         HitBuilders.AppViewBuilder builder = new HitBuilders.AppViewBuilder();
         addDimensions(builder, screen.getProperties());
+        addMetrics(builder, screen.getProperties());
         tracker.send(builder.build());
     }
 
@@ -117,7 +118,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         Iterator it = properties.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
-            int key = getParameterIdForKey(pairs.getKey().toString());
+            int key = getParameterIdForKey(pairs.getKey().toString(), config.getDimensionsMapping());
             if (key >= 0) {
                 String value = pairs.getValue().toString();
                 if (builder instanceof HitBuilders.AppViewBuilder) {
@@ -130,9 +131,32 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
         }
     }
 
-    private int getParameterIdForKey(String key) {
-        if (config.getParameterMapping().containsKey(key)) {
-            return config.getParameterMapping().get(key);
+    /**
+     * Add Metrics to Screen or event according to its parameters
+     *
+     * @param builder
+     * @param properties
+     */
+    private void addMetrics(Object builder, Map<String, Object> properties) {
+        Iterator it = properties.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+            int key = getParameterIdForKey(pairs.getKey().toString(), config.getMetricsMapping());
+            if (key >= 0) {
+                float value = Float.valueOf(pairs.getValue().toString());
+                if (builder instanceof HitBuilders.AppViewBuilder) {
+                    ((HitBuilders.AppViewBuilder) builder).setCustomMetric(key, value);
+                } else {
+                    ((HitBuilders.EventBuilder) builder).setCustomMetric(key, value);
+                }
+            }
+            it.remove();
+        }
+    }
+
+    private int getParameterIdForKey(String key, Map<String, Integer> parameters) {
+        if (parameters.containsKey(key)) {
+            return parameters.get(key);
         } else {
             Log.e(TAG, "No Mapping found for parameter '" + key + "'");
             return -1;

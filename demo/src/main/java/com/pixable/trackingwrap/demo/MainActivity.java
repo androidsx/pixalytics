@@ -54,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
+                        .property("Metric1", "100")
                         .build(),
                 PlatformIds.GOOGLE_ANALYTICS.getId());
     }

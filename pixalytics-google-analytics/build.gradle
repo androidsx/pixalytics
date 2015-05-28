@@ -18,16 +18,14 @@ android {
 }
 
 dependencies {
-    //Need to include all google play services package (not just base) because project will use Pixalytics
-    //needs whole google play services package and cannot have both
-    compile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.google.android.gms:play-services-analytics:7.3.0'
     compile project(':pixalytics-core')
     
 }
 
 ext {
     libraryArtifact = 'pixalytics-google-analytics'
-    libraryVersion = '0.2.3'
+    libraryVersion = '0.2.4'
     libraryDescription = 'Pixalytics extension for Google Analytics'
 }
 apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

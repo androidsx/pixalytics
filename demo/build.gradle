@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.pixable.trackingwrap.demo"
+        applicationId "com.pixable.pixalytics.demo"
         minSdkVersion 14
         targetSdkVersion 22
         versionName '0.1.0'
@@ -24,6 +24,9 @@ repositories {
     maven {
         url 'https://oss.sonatype.org/content/repositories/snapshots'
     }
+    maven {
+        url "http://dl.bintray.com/rubenkid/maven"
+    }
 }
 
 dependencies {
@@ -31,16 +34,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
 
     // List of dependencies that the typical library user should include
-    //releaseCompile 'com.pixable:pixalytics-core:0.2.0'
-    //releaseCompile 'com.pixable:pixalytics-mixpanel:0.2.0'
-    //releaseCompile 'com.pixable:pixalytics-flurry:0.2.0'
-    //releaseCompile 'com.pixable:pixalytics-google-analytics:0.2.0'
-    //releaseCompile 'com.pixable:pixalytics-facebook:0.2.0'
+    compile 'com.pixable:pixalytics-mixpanel:0.2.1'
+    compile 'com.pixable:pixalytics-google-analytics:0.2.3'
+    compile 'com.pixable:pixalytics-flurry:0.1.+'
+    compile 'com.pixable:pixalytics-facebook:0.1.+'
 
     // For the development of the library itself, we'll use local dependencies instead
-    debugCompile project(':pixalytics-core')
-    debugCompile project(':pixalytics-mixpanel')
-    debugCompile project(':pixalytics-flurry')
-    debugCompile project(':pixalytics-google-analytics')
-    debugCompile project(':pixalytics-facebook')
+    //debugCompile project(':pixalytics-core')
+   // debugCompile project(':pixalytics-mixpanel')
+   // debugCompile project(':pixalytics-flurry')
+   // debugCompile project(':pixalytics-google-analytics')
+   // debugCompile project(':pixalytics-facebook')
 }

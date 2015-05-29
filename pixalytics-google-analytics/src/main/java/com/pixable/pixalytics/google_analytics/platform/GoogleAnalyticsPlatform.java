@@ -13,8 +13,13 @@ public class GoogleAnalyticsPlatform extends Platform {
     }
 
     /**
-     * Configuration parameters for a tracking platform. For instance, a project in your Mixpanel
+     * Configuration parameters for a tracking platform. For instance, a project in your Google Analytics
      * account.
+     * This configuration consists in:
+     * - appKey: Google Analytics Project Id (like 'UA-XXXXXXXX-1')
+     * - dimensionsMapping: Mapping of dimensions defined in Google Analytics Admin page to match Properties name and Dimensions Id
+     *   Example: ({'view', 1},{'user', 2}...)
+     * - metricsMapping: Mapping of metrics defined in Google Analytics Admin page to match Properties name and Metrics Id
      */
     public static class Config extends Platform.Config {
         Map<String, Integer> dimensionsMapping;

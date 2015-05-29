@@ -59,7 +59,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
 
     @Override
     public void clearCommonProperty(String name) {
-        commonProperties.put(name, null);
+        commonProperties.remove(name);
     }
 
     @Override
@@ -118,6 +118,9 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
      * @param properties
      */
     private void addDimensions(Object builder, Map<String, Object> properties) {
+        //Add CommonProperties added before
+        properties.putAll(commonProperties);
+
         Iterator it = properties.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();

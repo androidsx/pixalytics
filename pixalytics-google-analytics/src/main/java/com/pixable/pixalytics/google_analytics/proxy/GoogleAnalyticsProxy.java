@@ -59,7 +59,9 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
 
     @Override
     public void clearCommonProperty(String name) {
-        commonProperties.remove(name);
+        if(commonProperties.containsKey(name)) {
+            commonProperties.remove(name);
+        }
     }
 
     @Override

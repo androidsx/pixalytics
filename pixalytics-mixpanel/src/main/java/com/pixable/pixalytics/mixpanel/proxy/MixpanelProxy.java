@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.mixpanel.proxy;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.pixable.pixalytics.core.Event;
@@ -38,7 +39,7 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperty(final String name, final Object value) {
+    public void addCommonProperty(final String name, @NonNull final Object value) {
         mixpanelAPI.registerSuperProperties(new JSONObject(
                 new HashMap<String, Object>() {{ put(name, value); }}));
     }

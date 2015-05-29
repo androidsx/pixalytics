@@ -8,9 +8,12 @@ import com.pixable.pixalytics.core.proxy.PlatformProxy;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.core.trace.TraceProxy;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -136,18 +139,24 @@ public class Pixalytics {
      */
     public void addCommonProperty(Context context, final String name, @NonNull final Object value,
                                   String... platformIds) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+        if(value != null) { //If we pass Null as value, seems we need to clear Superproperty
+            final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Register common property",
-                    new HashMap<String, Object>() {{ put(name, value); }},
-                    platforms);
-        }
+            for (TraceId traceId : configuration.getTraceIds()) {
+                traceId.getProxy().traceMessage(context,
+                        TraceProxy.Level.DEBUG,
+                        "Register common property",
+                        new HashMap<String, Object>() {{
+                            put(name, value);
+                        }},
+                        platforms);
+            }
 
-        for (Platform platform : platforms) {
-            platform.getProxy().addCommonProperty(name, value);
+            for (Platform platform : platforms) {
+                platform.getProxy().addCommonProperty(name, value);
+            }
+        } else {
+            clearCommonProperty(name, platformIds);
         }
     }
 
@@ -165,6 +174,9 @@ public class Pixalytics {
                                     String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
+        //Remove invalid properties
+        commonProperties = removeInvalidCommonProperties(commonProperties, platformIds);
+
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.DEBUG,
@@ -176,6 +188,32 @@ public class Pixalytics {
         for (Platform platform : platforms) {
             platform.getProxy().addCommonProperties(commonProperties);
         }
+    }
+
+    /**
+     * Before adding properties, need to check if any of them are invalid (value is null) and in this case, remove them
+     * @param commonProperties
+     * @param platformIds
+     * @return
+     */
+    private Map<String, Object> removeInvalidCommonProperties(Map<String, Object> commonProperties,
+                                                              String... platformIds) {
+        //Find keys to remove
+        Iterator it = commonProperties.entrySet().iterator();
+        List<String> keysToRemove = new ArrayList<>();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+            if(pairs.getValue() == null) {
+                keysToRemove.add(pairs.getKey().toString());
+            }
+        }
+
+        //Remove properties from Array and from service common properties
+        for(String key : keysToRemove) {
+            clearCommonProperty(key, platformIds);
+            commonProperties.remove(key);
+        }
+        return commonProperties;
     }
 
     /**

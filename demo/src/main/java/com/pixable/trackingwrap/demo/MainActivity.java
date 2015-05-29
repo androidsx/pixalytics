@@ -9,9 +9,19 @@ import com.pixable.pixalytics.core.Config;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
+import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.trace.TraceId;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends ActionBarActivity {
+
+    private static Map<String, Object> commonProperties = new HashMap<>();
+    static {
+        commonProperties.put("Property1", "Value1");
+        commonProperties.put("Common Key", null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +37,11 @@ public class MainActivity extends ActionBarActivity {
         // Track the session start on Flurry
         Pixalytics.get().onSessionStart(this, PlatformIds.FLURRY.getId());
 
-        // Add a common property for all events sent to Mixpanel
-        Pixalytics.get().addCommonProperty(this, "Common Key", "Common Value", PlatformIds.MIXPANEL.getId());
+        // Add a common property for all events sent to Mixpanel and Google Analytics
+        Pixalytics.get().addCommonProperty(this, "Common Key", null, PlatformIds.MIXPANEL.getId(), PlatformIds.GOOGLE_ANALYTICS.getId());
+
+        //Add some commonProperties
+        Pixalytics.get().addCommonProperties(this, commonProperties, PlatformIds.MIXPANEL.getId(), PlatformIds.GOOGLE_ANALYTICS.getId());
     }
 
     @Override

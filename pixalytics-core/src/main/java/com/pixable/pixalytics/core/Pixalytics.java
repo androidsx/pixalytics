@@ -139,7 +139,7 @@ public class Pixalytics {
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperty(Context context, final String name, @NonNull final Object value,
+    public void addCommonProperty(Context context, final String name, final Object value,
                                   String... platformIds) {
         if (value == null) {
             clearCommonProperty(name, platformIds);

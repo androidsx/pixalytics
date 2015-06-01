@@ -87,8 +87,10 @@ public class ToastTraceProxy implements TraceProxy {
         LinearLayout platformsList = (LinearLayout) layout.findViewById(R.id.pixalytics_platforms_list);
         for (Platform platform : platforms) {
             ImageView platformIcon = new ImageView(context);
-            platformIcon.setPadding(1, 1, 1, 1);
+            platformIcon.setPadding(8, 0, 0, 0); // A little separation between platform icons
             platformIcon.setImageResource(platform.getIconId());
+            final int iconSize = (int) context.getResources().getDimension(R.dimen.pixalytics__tracking_toast_platform_icon_size);
+            platformIcon.setLayoutParams(new LinearLayout.LayoutParams(iconSize, iconSize));
             platformsList.addView(platformIcon);
         }
 

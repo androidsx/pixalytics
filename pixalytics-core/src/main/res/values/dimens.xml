@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="pixalytics__tracking_toast_title">20sp</dimen>
-    <dimen name="pixalytics__tracking_toast_parameters">14sp</dimen>
+    <dimen name="pixalytics__tracking_toast_title">18sp</dimen>
+    <dimen name="pixalytics__tracking_toast_parameters">12sp</dimen>
     <dimen name="pixalytics__tracking_toast_platform_icon_size">24dp</dimen>
 
     <integer name="pixalytics__tracking_toast_margin">50</integer>

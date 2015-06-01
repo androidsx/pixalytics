@@ -92,11 +92,11 @@ public class MainActivity extends ActionBarActivity {
         final CheckBox checkBox = (CheckBox) view;
         final Config.Builder newConfigBuilder = new Config.Builder(Pixalytics.get().getConfig());
         if (checkBox.isChecked()) {
-            newConfigBuilder.removeTrace(TraceId.TOAST);
-            checkBox.setText(R.string.checkbox_toasts_disabled);
-        } else {
             newConfigBuilder.addTrace(TraceId.TOAST);
             checkBox.setText(R.string.checkbox_toasts_enabled);
+        } else {
+            newConfigBuilder.removeTrace(TraceId.TOAST);
+            checkBox.setText(R.string.checkbox_toasts_disabled);
         }
         Pixalytics.get().updateConfiguration(newConfigBuilder.build());
     }

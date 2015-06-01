@@ -61,6 +61,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/checkbox_toasts_enabled"
             android:onClick="onEnableDisableToasts"/>
     </LinearLayout>

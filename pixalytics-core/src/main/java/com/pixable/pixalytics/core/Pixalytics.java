@@ -129,17 +129,21 @@ public class Pixalytics {
     }
 
     /**
-     * Adds a single property to specified platforms.
+     * Adds a single property to specified platforms. In some platform, this is a native
+     * concept, such as Mixpanel's super-properties. For others, this is managed by an
+     * external mechanism or not supported.
      *
      * @param context activity context
      * @param name name of the property to add
-     * @param value value of the property to add. It must not be null
+     * @param value value of the property to add. If null, the property will be cleared
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
     public void addCommonProperty(Context context, final String name, @NonNull final Object value,
                                   String... platformIds) {
-        if(value != null) { //If we pass Null as value, seems we need to clear Superproperty
+        if (value == null) {
+            clearCommonProperty(name, platformIds);
+        } else {
             final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
             for (TraceId traceId : configuration.getTraceIds()) {
@@ -155,65 +159,17 @@ public class Pixalytics {
             for (Platform platform : platforms) {
                 platform.getProxy().addCommonProperty(name, value);
             }
-        } else {
-            clearCommonProperty(name, platformIds);
         }
     }
 
     /**
-     * Adds a set of properties to specified platforms. Some providers manage this
-     * automatically, such as Mixpanel's super-properties. For others, this is not
-     * supported. TODO: for others, handle it manually
-     *
-     * @param context activity context
-     * @param commonProperties hashMap of properties to add as Common
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
-     *                    be provided
+     * @see #addCommonProperty
      */
     public void addCommonProperties(Context context, Map<String, Object> commonProperties,
                                     String... platformIds) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
-
-        //Remove invalid properties
-        commonProperties = removeInvalidCommonProperties(commonProperties, platformIds);
-
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Register " + commonProperties.size() + " common properties",
-                    commonProperties,
-                    platforms);
+        for (Map.Entry<String, Object> entry : commonProperties.entrySet()) {
+            addCommonProperty(context, entry.getKey(), entry.getValue(), platformIds);
         }
-
-        for (Platform platform : platforms) {
-            platform.getProxy().addCommonProperties(commonProperties);
-        }
-    }
-
-    /**
-     * Before adding properties, need to check if any of them are invalid (value is null) and in this case, remove them
-     * @param commonProperties
-     * @param platformIds
-     * @return
-     */
-    private Map<String, Object> removeInvalidCommonProperties(Map<String, Object> commonProperties,
-                                                              String... platformIds) {
-        //Find keys to remove
-        Iterator it = commonProperties.entrySet().iterator();
-        List<String> keysToRemove = new ArrayList<>();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
-            if(pairs.getValue() == null) {
-                keysToRemove.add(pairs.getKey().toString());
-            }
-        }
-
-        //Remove properties from Array and from service common properties
-        for(String key : keysToRemove) {
-            clearCommonProperty(key, platformIds);
-            commonProperties.remove(key);
-        }
-        return commonProperties;
     }
 
     /**

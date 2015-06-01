@@ -2,6 +2,7 @@ package com.pixable.pixalytics.facebook.proxy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 
 import com.facebook.AppEventsLogger;
@@ -38,7 +39,7 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperty(String name, Object value) {
+    public void addCommonProperty(String name, @NonNull Object value) {
         throw new UnsupportedOperationException("Facebook does not support common properties");
     }
 

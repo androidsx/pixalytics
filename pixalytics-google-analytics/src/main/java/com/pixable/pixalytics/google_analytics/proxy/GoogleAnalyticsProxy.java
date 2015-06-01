@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.google_analytics.proxy;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -48,7 +49,7 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperty(String name, Object value) {
+    public void addCommonProperty(String name, @NonNull Object value) {
         commonProperties.put(name, value);
     }
 
@@ -59,7 +60,9 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
 
     @Override
     public void clearCommonProperty(String name) {
-        commonProperties.remove(name);
+        if(commonProperties.containsKey(name)) {
+            commonProperties.remove(name);
+        }
     }
 
     @Override

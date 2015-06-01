@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.core.proxy;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Screen;
@@ -34,7 +35,7 @@ public interface PlatformProxy {
      * @throws java.lang.UnsupportedOperationException if common properties are not supported by
      *                                                 this platform
      */
-    void addCommonProperty(String name, Object value);
+    void addCommonProperty(String name, @NonNull Object value);
 
     /**
      * Adds a common property, that is, a property that will be added in all events.

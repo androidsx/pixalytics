@@ -1,6 +1,7 @@
 package com.pixable.pixalytics.flurry.proxy;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
@@ -37,7 +38,7 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
-    public void addCommonProperty(String name, Object value) {
+    public void addCommonProperty(String name, @NonNull Object value) {
         throw new UnsupportedOperationException("Flurry does not support common properties");
     }
 

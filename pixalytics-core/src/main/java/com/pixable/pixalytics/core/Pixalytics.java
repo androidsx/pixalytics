@@ -8,9 +8,12 @@ import com.pixable.pixalytics.core.proxy.PlatformProxy;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.core.trace.TraceProxy;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -126,55 +129,46 @@ public class Pixalytics {
     }
 
     /**
-     * Adds a single property to specified platforms.
+     * Adds a single property to specified platforms. In some platform, this is a native
+     * concept, such as Mixpanel's super-properties. For others, this is managed by an
+     * external mechanism or not supported.
      *
      * @param context activity context
      * @param name name of the property to add
-     * @param value value of the property to add. It must not be null
+     * @param value value of the property to add. If null, the property will be cleared
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperty(Context context, final String name, @NonNull final Object value,
+    public void addCommonProperty(Context context, final String name, final Object value,
                                   String... platformIds) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+        if (value == null) {
+            clearCommonProperty(name, platformIds);
+        } else {
+            final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Register common property",
-                    new HashMap<String, Object>() {{ put(name, value); }},
-                    platforms);
-        }
+            for (TraceId traceId : configuration.getTraceIds()) {
+                traceId.getProxy().traceMessage(context,
+                        TraceProxy.Level.DEBUG,
+                        "Register common property",
+                        new HashMap<String, Object>() {{
+                            put(name, value);
+                        }},
+                        platforms);
+            }
 
-        for (Platform platform : platforms) {
-            platform.getProxy().addCommonProperty(name, value);
+            for (Platform platform : platforms) {
+                platform.getProxy().addCommonProperty(name, value);
+            }
         }
     }
 
     /**
-     * Adds a set of properties to specified platforms. Some providers manage this
-     * automatically, such as Mixpanel's super-properties. For others, this is not
-     * supported. TODO: for others, handle it manually
-     *
-     * @param context activity context
-     * @param commonProperties hashMap of properties to add as Common
-     * @param platformIds platforms to which this event is to be sent. At least one platform must
-     *                    be provided
+     * @see #addCommonProperty
      */
     public void addCommonProperties(Context context, Map<String, Object> commonProperties,
                                     String... platformIds) {
-        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
-
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.DEBUG,
-                    "Register " + commonProperties.size() + " common properties",
-                    commonProperties,
-                    platforms);
-        }
-
-        for (Platform platform : platforms) {
-            platform.getProxy().addCommonProperties(commonProperties);
+        for (Map.Entry<String, Object> entry : commonProperties.entrySet()) {
+            addCommonProperty(context, entry.getKey(), entry.getValue(), platformIds);
         }
     }
 

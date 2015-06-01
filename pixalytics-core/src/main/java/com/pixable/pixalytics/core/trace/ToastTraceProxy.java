@@ -104,7 +104,7 @@ public class ToastTraceProxy implements TraceProxy {
             builder.append("- ");
             builder.append(entry.getKey());
             builder.append(": ");
-            builder.append(entry.getValue().toString());
+            builder.append(entry.getValue() == null ? "<null>" : entry.getValue().toString());
             builder.append('\n');
         }
         return (builder.length() > 0) ? builder.substring(0, builder.length() - 1) : "";

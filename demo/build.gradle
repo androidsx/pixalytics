@@ -34,15 +34,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
 
     // List of dependencies that the typical library user should include
-    compile 'com.pixable:pixalytics-mixpanel:0.2.1'
-    compile 'com.pixable:pixalytics-google-analytics:0.2.3'
-    compile 'com.pixable:pixalytics-flurry:0.1.+'
-    compile 'com.pixable:pixalytics-facebook:0.1.+'
+    //compile 'com.pixable:pixalytics-mixpanel:0.2.1'
+    //compile 'com.pixable:pixalytics-google-analytics:0.2.3'
+    //compile 'com.pixable:pixalytics-flurry:0.1.+'
+    //compile 'com.pixable:pixalytics-facebook:0.1.+'
 
     // For the development of the library itself, we'll use local dependencies instead
-    //debugCompile project(':pixalytics-core')
-   // debugCompile project(':pixalytics-mixpanel')
-   // debugCompile project(':pixalytics-flurry')
-   // debugCompile project(':pixalytics-google-analytics')
-   // debugCompile project(':pixalytics-facebook')
+    debugCompile project(':pixalytics-core')
+    debugCompile project(':pixalytics-mixpanel')
+    debugCompile project(':pixalytics-flurry')
+    debugCompile project(':pixalytics-google-analytics')
+    debugCompile project(':pixalytics-facebook')
 }

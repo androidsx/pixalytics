@@ -24,7 +24,7 @@ dependencies {
 
 ext {
     libraryArtifact = 'pixalytics-facebook'
-    libraryVersion = '0.1.3'
+    libraryVersion = '0.3.0'
     libraryDescription = 'Pixalytics extension for Facebook Insights'
 }
 apply from: 'https://raw.githubusercontent.com/androidsx/jcenter-publish/master/bintray_publish.gradle'

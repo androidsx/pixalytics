@@ -45,9 +45,9 @@ dependencies {
         compile project(':pixalytics-google-analytics')
         compile project(':pixalytics-facebook')
     } else { // Dependencies for users of Pixalytics (version numbers may not be up to date)
-        compile 'com.pixable:pixalytics-mixpanel:0.2.1'
-        compile 'com.pixable:pixalytics-google-analytics:0.2.3'
-        compile 'com.pixable:pixalytics-flurry:0.1.1'
-        compile 'com.pixable:pixalytics-facebook:0.1.1'
+        compile 'com.pixable:pixalytics-mixpanel:0.3.0'
+        compile 'com.pixable:pixalytics-google-analytics:0.3.0'
+        compile 'com.pixable:pixalytics-flurry:0.3.0'
+        compile 'com.pixable:pixalytics-facebook:0.3.0'
     }
 }

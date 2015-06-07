@@ -3,5 +3,5 @@
     <color name="pixalytics__toast_debug">#7986CB</color>
     <color name="pixalytics__toast_info">#DD2E7D32</color>
 
-    <color name="pixalytics__tracking_toast_mixpanel_text">#FFFFFF</color>
+    <color name="pixalytics__toast_text">#FFFFFF</color>
 </resources>

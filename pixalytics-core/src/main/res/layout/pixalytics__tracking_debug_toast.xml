@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textColor="@color/pixalytics__tracking_toast_mixpanel_text"
+            android:textColor="@color/pixalytics__toast_text"
             android:textSize="@dimen/pixalytics__tracking_toast_title" />
 
         <LinearLayout
@@ -33,7 +33,7 @@
         android:id="@+id/pixalytics_toast_parameters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pixalytics__tracking_toast_mixpanel_text"
+        android:textColor="@color/pixalytics__toast_text"
         android:textSize="@dimen/pixalytics__tracking_toast_parameters" />
 
 </LinearLayout>

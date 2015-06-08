@@ -211,18 +211,21 @@ public class Pixalytics {
     public void trackEvent(Context context, Event event, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
+        // Let's work on a copy to make sure tracers or platforms don't fiddle with the properties
+        final Event eventCopy = new Event.Builder(event).build();
+
         // Trace
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
                     TraceProxy.Level.INFO,
-                    event.getName(),
-                    event.getProperties(),
+                    eventCopy.getName(),
+                    eventCopy.getProperties(),
                     platforms);
         }
 
         // Track the event
         for (Platform platform : platforms) {
-            platformProxyMap.get(platform.getId()).trackEvent(event);
+            platformProxyMap.get(platform.getId()).trackEvent(eventCopy);
         }
     }
 

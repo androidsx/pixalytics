@@ -136,7 +136,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
                     ((HitBuilders.EventBuilder) builder).setCustomDimension(key, value);
                 }
             }
-            it.remove();
         }
     }
 
@@ -159,7 +158,6 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
                     ((HitBuilders.EventBuilder) builder).setCustomMetric(key, value);
                 }
             }
-            it.remove();
         }
     }
 

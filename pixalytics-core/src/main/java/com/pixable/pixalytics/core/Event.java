@@ -9,10 +9,7 @@ import java.util.Map;
 public class Event extends Trackable {
 
     /**
-     * Use the {@link Event.Builder}.
-     *
-     * @param eventName
-     * @param properties
+     * Use the {@link Event.Builder} to create an instance.
      */
     private Event(String eventName, Map<String, Object> properties) {
         super(eventName, properties, Type.EVENT);
@@ -21,6 +18,17 @@ public class Event extends Trackable {
     public static class Builder {
         private String name = null;
         private final Map<String, Object> properties = new HashMap<>();
+
+        /** Constructor to create a new event from scratch. */
+        public Builder() {
+            // Intentionally empty
+        }
+
+        /** Constructor to create an event copy.*/
+        Builder(Event existingEvent) {
+            this.name = existingEvent.getName();
+            properties(existingEvent.getProperties());
+        }
 
         /**
          * Sets the name of the Event object. This parameter is compulsory.

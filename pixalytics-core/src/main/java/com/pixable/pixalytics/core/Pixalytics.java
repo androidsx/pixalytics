@@ -239,7 +239,7 @@ public class Pixalytics {
 
         for (TraceId traceId : configuration.getTraceIds()) {
             traceId.getProxy().traceMessage(context,
-                    TraceProxy.Level.INFO,
+                    TraceProxy.Level.DEBUG,
                     "Screen " + screen.getName(),
                     screen.getProperties(),
                     platforms);

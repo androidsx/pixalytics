@@ -1,13 +1,22 @@
 Pixalytics is an Android client API to send events to the top Analytics platforms, such as Mixpanel, Google Analytics or Flurry.
 
-Well, rather, it will be. It is now under development, so it is *not* recommended that you use it just yet.
+Download
+--------
 
+The platform core:
 
-How to import locally
----------------------
+```
+compile 'com.pixable:pixalytics-core:0.3.2'
+```
 
-First, generate the Maven artifacts for every `pixalytics-*` module. For instance, `cd pixalytics-core && ../gradlew clean build generateRelease`.
+And the platforms that you need, out of these:
 
-Now, move the generated files into your local Maven repository: ![Local Maven repo location](readme-images/local-repo.png).
+```
+compile 'com.pixable:pixalytics-mixpanel:0.3.0'
+compile 'com.pixable:pixalytics-flurry:0.3.0'
+compile 'com.pixable:pixalytics-facebook:0.3.0'
+```
 
-And now you can import the dependency as you normally would: `compile 'com.pixable:pixalytics-core:0.1.0'`.
+Check the latest versions at in [Bintray JCenter].
+
+[Bintray JCenter]:https://bintray.com/search?query=pixalytics

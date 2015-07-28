@@ -20,3 +20,10 @@ compile 'com.pixable:pixalytics-facebook:0.3.0'
 Check the latest versions at in [Bintray JCenter].
 
 [Bintray JCenter]:https://bintray.com/search?query=pixalytics
+
+License
+-------
+
+MIT. See the [License file].
+
+[License file]:LICENSE.md

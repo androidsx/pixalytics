@@ -8,14 +8,12 @@ import java.util.Map;
  * A trackable object that is to be tracked, that has a name and a set of properties (key-value pairs).
  */
 public class Trackable {
-    private final Type type;
     private final String name;
     private final Map<String, Object> properties;
 
-    protected Trackable(String name, Map<String, Object> properties, Type type) {
+    protected Trackable(String name, Map<String, Object> properties) {
         this.name = name;
         this.properties = properties;
-        this.type = type;
     }
 
     public String getName() {
@@ -37,7 +35,7 @@ public class Trackable {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(type.name() + " \"").append(getName()).append("\" ");
+        builder.append("Trackable" + " \"").append(getName()).append("\" ");
         if (getProperties().isEmpty()) {
             builder.append("with no properties");
         } else {
@@ -49,12 +47,5 @@ public class Trackable {
             builder.append(")");
         }
         return builder.toString();
-    }
-
-    protected enum Type {
-        EVENT("event"), Screen("screen");
-
-        Type(String name) {
-        }
     }
 }

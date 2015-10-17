@@ -12,7 +12,7 @@ public class Event extends Trackable {
      * Use the {@link Event.Builder} to create an instance.
      */
     private Event(String eventName, Map<String, Object> properties) {
-        super(eventName, properties, Type.EVENT);
+        super(eventName, properties);
     }
 
     public static class Builder {

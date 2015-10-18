@@ -60,6 +60,11 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
+    public void addUserProperty(@NonNull String name, @NonNull Object value) {
+        mixpanelAPI.getPeople().set(name, value);
+    }
+
+    @Override
     public void trackEvent(Event event) {
         mixpanelAPI.track(event.getName(), event.getPropertiesAsJson());
     }

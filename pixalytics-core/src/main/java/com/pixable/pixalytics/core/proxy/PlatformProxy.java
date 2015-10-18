@@ -60,6 +60,15 @@ public interface PlatformProxy {
     void clearCommonProperties();
 
     /**
+     * Adds a user property, that is, a property that is linked to this user. Also known
+     * as identification properties or traits.
+     *
+     * @throws java.lang.UnsupportedOperationException if user properties are not supported by
+     *                                                 this platform
+     */
+    void addUserProperty(@NonNull String name, @NonNull Object value);
+
+    /**
      * Tracks an event.
      */
     void trackEvent(Event event);

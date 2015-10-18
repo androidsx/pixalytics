@@ -71,6 +71,11 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
+    public void addUserProperty(@NonNull String name, @NonNull Object value) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public void trackEvent(Event event) {
         HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder()
                 .setCategory(EVENT_CATEGORY)

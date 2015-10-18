@@ -1,19 +1,15 @@
 package com.pixable.pixalytics.core;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
 import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.core.trace.TraceProxy;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -197,6 +193,33 @@ public class Pixalytics {
 
         for (Platform platform : platforms) {
             platform.getProxy().clearCommonProperties();
+        }
+    }
+
+    /**
+     * Adds a user property, that is, a property that is linked to this user. Also known
+     * as identification properties or traits.
+     *
+     * @param platformIds platforms where to clear common properties. At least one platform must
+     *                    be provided
+     * @throws java.lang.UnsupportedOperationException if user properties are not supported by
+     *                                                 this platform
+     */
+    public void addUserProperty(Context context, String name, Object value, String... platformIds) {
+        final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
+
+        // Trace
+        for (TraceId traceId : configuration.getTraceIds()) {
+            traceId.getProxy().traceMessage(context,
+                    TraceProxy.Level.DEBUG,
+                    "Register user property",
+                    Collections.singletonMap(name, value),
+                    platforms);
+        }
+
+        // Track the user property
+        for (Platform platform : platforms) {
+            platformProxyMap.get(platform.getId()).addUserProperty(name, value);
         }
     }
 

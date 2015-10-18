@@ -58,6 +58,11 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
+    public void addUserProperty(@NonNull String name, @NonNull Object value) {
+        throw new UnsupportedOperationException("Flurry does not support user properties");
+    }
+
+    @Override
     public void trackEvent(Event event) {
         FlurryAgent.logEvent(event.getName(), safeGenericCasting(event.getProperties()));
     }

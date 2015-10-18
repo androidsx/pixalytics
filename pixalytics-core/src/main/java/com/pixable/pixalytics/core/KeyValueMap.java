@@ -5,13 +5,13 @@ import org.json.JSONObject;
 import java.util.Map;
 
 /**
- * A trackable object that is to be tracked, that has a name and a set of properties (key-value pairs).
+ * A simple key-value map storage.
  */
-public class Trackable {
+public class KeyValueMap {
     private final String name;
     private final Map<String, Object> properties;
 
-    protected Trackable(String name, Map<String, Object> properties) {
+    protected KeyValueMap(String name, Map<String, Object> properties) {
         this.name = name;
         this.properties = properties;
     }
@@ -35,7 +35,7 @@ public class Trackable {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Trackable" + " \"").append(getName()).append("\" ");
+        builder.append("KeyValueMap" + " \"").append(getName()).append("\" ");
         if (getProperties().isEmpty()) {
             builder.append("with no properties");
         } else {

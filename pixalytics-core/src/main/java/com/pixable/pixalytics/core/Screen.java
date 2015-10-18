@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * An Screen that is to be tracked, that has a name and a set of properties (key-value pairs).
  */
-public class Screen extends Trackable {
+public class Screen extends KeyValueMap {
 
     /**
      * Use the {@link Screen.Builder}.

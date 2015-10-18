@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * An event that is to be tracked, that has a name and a set of properties (key-value pairs).
  */
-public class Event extends Trackable {
+public class Event extends KeyValueMap {
 
     /**
      * Use the {@link Event.Builder} to create an instance.

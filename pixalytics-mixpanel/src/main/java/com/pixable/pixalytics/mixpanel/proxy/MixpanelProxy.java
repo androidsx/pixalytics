@@ -80,6 +80,11 @@ public class MixpanelProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackRevenue(String product, double revenue) {
+        throw new UnsupportedOperationException("Mixpanel does not support revenue tracking");
+    }
+
+    @Override
     public void flush() {
         mixpanelAPI.flush();
     }

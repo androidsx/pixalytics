@@ -105,6 +105,11 @@ public class GoogleAnalyticsProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackRevenue(String product, double revenue) {
+        throw new UnsupportedOperationException("Google Analytics does not support revenue tracking");
+    }
+
+    @Override
     public void flush() {
         throw new UnsupportedOperationException("Google Analytics does not support Flush");
     }

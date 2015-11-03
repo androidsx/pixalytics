@@ -84,6 +84,11 @@ public interface PlatformProxy {
     void trackSocial(String network, String action, String target);
 
     /**
+     * Tracks revenue generated after the purchase of a product.
+     */
+    void trackRevenue(String product, double revenue);
+
+    /**
      * Flushes all events and screens, to force their sending to the platform. Useful while debugging.
      */
     void flush();

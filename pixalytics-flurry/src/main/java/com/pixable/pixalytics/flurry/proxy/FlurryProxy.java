@@ -78,6 +78,11 @@ public class FlurryProxy implements PlatformProxy {
     }
 
     @Override
+    public void trackRevenue(String product, double revenue) {
+        throw new UnsupportedOperationException("Flurry does not support revenue tracking");
+    }
+
+    @Override
     public void flush() {
         throw new UnsupportedOperationException("Flurry does not support Flush");
     }

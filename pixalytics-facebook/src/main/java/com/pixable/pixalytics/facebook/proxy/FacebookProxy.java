@@ -59,6 +59,11 @@ public class FacebookProxy implements PlatformProxy {
     }
 
     @Override
+    public void addUserProperty(@NonNull String name, @NonNull Object value) {
+        throw new UnsupportedOperationException("Facebook does not support user properties");
+    }
+
+    @Override
     public void trackEvent(Event event) {
         if (this.config.getEventMapping().containsKey(event.getName())) {
             Bundle properties = getProperties(event.getProperties());
@@ -87,6 +92,11 @@ public class FacebookProxy implements PlatformProxy {
     @Override
     public void trackSocial(String network, String action, String target) {
         throw new UnsupportedOperationException("Facebook does not support Social Interactions tracking");
+    }
+
+    @Override
+    public void trackRevenue(String product, double revenue) {
+        throw new UnsupportedOperationException("Facebook does not support revenue tracking");
     }
 
     @Override

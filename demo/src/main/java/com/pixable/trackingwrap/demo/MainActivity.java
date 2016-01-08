@@ -9,8 +9,8 @@ import com.pixable.pixalytics.core.Config;
 import com.pixable.pixalytics.core.Event;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.Screen;
-import com.pixable.pixalytics.core.platform.Platform;
-import com.pixable.pixalytics.core.trace.TraceId;
+import com.pixable.pixalytics.core.trace.ToastTraceProxy;
+import com.pixable.pixalytics.core.trace.TraceProxy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
         commonProperties.put("Property1", "Value1");
         commonProperties.put("Common Key", "Value2");
     }
+
+    private TraceProxy toastTrace = new ToastTraceProxy(Constants.Traces.TOASTS.name());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +37,20 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
 
         // Track the session start on Flurry
-        Pixalytics.get().onSessionStart(this, PlatformIds.FLURRY.getId());
+        Pixalytics.get().onSessionStart(this, Constants.PlatformIds.FLURRY.name());
 
         //Add some commonProperties
-        Pixalytics.get().addCommonProperties(this, commonProperties, PlatformIds.MIXPANEL.getId(), PlatformIds.GOOGLE_ANALYTICS.getId());
+        Pixalytics.get().addCommonProperties(this, commonProperties, Constants.PlatformIds.MIXPANEL.name(), Constants.PlatformIds.GOOGLE_ANALYTICS.name());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Pixalytics.get().onSessionFinish(this, PlatformIds.FLURRY.getId());
+        Pixalytics.get().onSessionFinish(this, Constants.PlatformIds.FLURRY.name());
     }
 
     public void onFlurryClick(View view) {
-        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), PlatformIds.FLURRY.getId());
+        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), Constants.PlatformIds.FLURRY.name());
     }
 
     public void onMixpanelClick(View view) {
@@ -56,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .build(),
-                PlatformIds.MIXPANEL.getId());
+                Constants.PlatformIds.MIXPANEL.name());
     }
 
     public void onGoogleAnalyticsClick(View view) {
@@ -66,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key2", "Value2")
                         .property("Metric1", "100")
                         .build(),
-                PlatformIds.GOOGLE_ANALYTICS.getId());
+                Constants.PlatformIds.GOOGLE_ANALYTICS.name());
     }
 
     public void onFacebookClick(View view) {
@@ -76,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key2", "Value2")
                         .property("Key3", "Value3")
                         .build(),
-                PlatformIds.FACEBOOK.getId());
+                Constants.PlatformIds.FACEBOOK.name());
     }
 
     public void onAllPlatformsClick(View view) {
@@ -88,24 +90,24 @@ public class MainActivity extends ActionBarActivity {
                         .property("Key4", "Value4")
                         .property("Key5", "Value5")
                         .build(),
-                PlatformIds.FLURRY.getId(), PlatformIds.MIXPANEL.getId(), PlatformIds.GOOGLE_ANALYTICS.getId(), PlatformIds.FACEBOOK.getId());
+                Constants.PlatformIds.FLURRY.name(), Constants.PlatformIds.MIXPANEL.name(), Constants.PlatformIds.GOOGLE_ANALYTICS.name(), Constants.PlatformIds.FACEBOOK.name());
     }
 
     private void trackScreen() {
         Screen screen = new Screen.Builder().name("Main")
                 .property("Key1", "Value1")
                 .build();
-        Pixalytics.get().trackScreen(this, screen, PlatformIds.GOOGLE_ANALYTICS.getId());
+        Pixalytics.get().trackScreen(this, screen, Constants.PlatformIds.GOOGLE_ANALYTICS.name());
     }
 
     public void onEnableDisableToasts(View view) {
         final CheckBox checkBox = (CheckBox) view;
         final Config.Builder newConfigBuilder = new Config.Builder(Pixalytics.get().getConfig());
         if (checkBox.isChecked()) {
-            newConfigBuilder.addTrace(TraceId.TOAST);
+            newConfigBuilder.addTrace(toastTrace);
             checkBox.setText(R.string.checkbox_toasts_enabled);
         } else {
-            newConfigBuilder.removeTrace(TraceId.TOAST);
+            newConfigBuilder.removeTrace(toastTrace);
             checkBox.setText(R.string.checkbox_toasts_disabled);
         }
         Pixalytics.get().updateConfiguration(newConfigBuilder.build());

@@ -6,7 +6,8 @@ import com.facebook.AppEventsConstants;
 import com.pixable.pixalytics.core.Config;
 import com.pixable.pixalytics.core.Pixalytics;
 import com.pixable.pixalytics.core.platform.Platform;
-import com.pixable.pixalytics.core.trace.TraceId;
+import com.pixable.pixalytics.core.trace.LogcatTraceProxy;
+import com.pixable.pixalytics.core.trace.ToastTraceProxy;
 import com.pixable.pixalytics.facebook.platform.FacebookPlatform;
 import com.pixable.pixalytics.flurry.platform.FlurryPlatform;
 import com.pixable.pixalytics.google_analytics.platform.GoogleAnalyticsPlatform;
@@ -22,12 +23,12 @@ public class DemoApplication extends Application {
         super.onCreate();
 
         final Config configuration = new Config.Builder()
-                .addPlatform(new FlurryPlatform(PlatformIds.FLURRY.getId(), new Platform.Config("flurry-app-key")))
-                .addPlatform(new MixpanelPlatform(PlatformIds.MIXPANEL.getId(), new Platform.Config("mixpanel-app-key")))
-                .addPlatform(new GoogleAnalyticsPlatform(PlatformIds.GOOGLE_ANALYTICS.getId(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaDimensionsMapping, gaMetricsMapping)))
-                .addPlatform(new FacebookPlatform(PlatformIds.FACEBOOK.getId(), new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
-                .addTrace(TraceId.LOGCAT)
-                .addTrace(TraceId.TOAST)
+                .addPlatform(new FlurryPlatform(Constants.PlatformIds.FLURRY.name(), new Platform.Config("flurry-app-key")))
+                .addPlatform(new MixpanelPlatform(Constants.PlatformIds.MIXPANEL.name(), new Platform.Config("mixpanel-app-key")))
+                .addPlatform(new GoogleAnalyticsPlatform(Constants.PlatformIds.GOOGLE_ANALYTICS.name(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaDimensionsMapping, gaMetricsMapping)))
+                .addPlatform(new FacebookPlatform(Constants.PlatformIds.FACEBOOK.name(), new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
+                .addTrace(new LogcatTraceProxy(Constants.Traces.LOGCAT.name()))
+                .addTrace(new ToastTraceProxy(Constants.Traces.TOASTS.name()))
                 .build();
         Pixalytics.createInstance(configuration).onApplicationCreate(this);
     }

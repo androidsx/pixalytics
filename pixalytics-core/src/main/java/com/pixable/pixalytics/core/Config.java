@@ -1,31 +1,36 @@
 package com.pixable.pixalytics.core;
 
 import com.pixable.pixalytics.core.platform.Platform;
-import com.pixable.pixalytics.core.trace.TraceId;
+import com.pixable.pixalytics.core.trace.TraceProxy;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Config {
-    private final Set<Platform> platforms;
-    private final Set<TraceId> traceIds;
+    private final Collection<Platform> platforms;
+    private final Collection<TraceProxy> traces;
 
-    public Config(Set<Platform> platforms, Set<TraceId> traceIds) {
+    public Config(Set<Platform> platforms, Collection<TraceProxy> traces) {
         this.platforms = platforms;
-        this.traceIds = traceIds;
+        this.traces = traces;
     }
 
-    public Set<Platform> getPlatforms() {
+    public Collection<Platform> getPlatforms() {
         return platforms;
     }
 
-    public Set<TraceId> getTraceIds() {
-        return traceIds;
+    public Collection<TraceProxy> getTraces() {
+        return traces;
     }
 
     public static class Builder {
         private Set<Platform> platforms = new HashSet<>();
-        private Set<TraceId> traceIds = new HashSet<>();
+
+        // A map because we want to enforce uniqueness on the ID. For platforms, there's no
+        // need because we provide a superclass that already does that. Not so consistent :(
+        private HashMap<String, TraceProxy> traces = new HashMap<>();
 
         /** Constructor to create a new config from scratch. */
         public Builder() {
@@ -37,8 +42,8 @@ public class Config {
             for (Platform platform : existingConfig.getPlatforms()) {
                 addPlatform(platform);
             }
-            for (TraceId traceId : existingConfig.getTraceIds()) {
-                addTrace(traceId);
+            for (TraceProxy trace : existingConfig.getTraces()) {
+                addTrace(trace);
             }
         }
 
@@ -56,14 +61,14 @@ public class Config {
         }
 
         /** Adds the provided trace, or overwrites it if it already exists. */
-        public Builder addTrace(TraceId traceId) {
-            traceIds.add(traceId);
+        public Builder addTrace(TraceProxy trace) {
+            traces.put(trace.getId(), trace);
             return this;
         }
 
         /** Removes the provided trace, if it exists. */
-        public Builder removeTrace(TraceId traceId) {
-            traceIds.remove(traceId);
+        public Builder removeTrace(TraceProxy trace) {
+            traces.remove(trace.getId());
             return this;
         }
 
@@ -72,7 +77,7 @@ public class Config {
                 throw new IllegalStateException("You should configure at least one platform");
             }
 
-            return new Config(platforms, traceIds);
+            return new Config(platforms, traces.values());
         }
     }
 }

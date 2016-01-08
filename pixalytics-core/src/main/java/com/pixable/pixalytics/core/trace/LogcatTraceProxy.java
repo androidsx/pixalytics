@@ -11,6 +11,17 @@ import java.util.Map;
 public class LogcatTraceProxy implements TraceProxy {
     private static final String TAG = "Pixalytics-" + LogcatTraceProxy.class.getSimpleName();
 
+    private final String id;
+
+    public LogcatTraceProxy(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
     @Override
     public void traceMessage(Context context, Level level, String messageTitle, Map<String, Object> properties, Collection<Platform> platforms) {
         final String finalMessage = messageTitle + " (" + properties + ") to " + platforms.toString();

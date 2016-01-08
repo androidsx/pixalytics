@@ -29,10 +29,15 @@ public class ToastTraceProxy implements TraceProxy {
         put(Level.DEBUG, Toast.LENGTH_SHORT);
         put(Level.INFO, Toast.LENGTH_LONG);
     }};
+
     /**
      * Read always through {@link #getBackgroundColorMap}
      */
     final Map<Level, Integer> backgroundColorMap = new HashMap<>();
+
+    public ToastTraceProxy(String id) {
+        this.id = id;
+    }
 
     private Map<Level, Integer> getBackgroundColorMap() {
         if (backgroundColorMap.isEmpty()) {
@@ -41,6 +46,13 @@ public class ToastTraceProxy implements TraceProxy {
         }
 
         return backgroundColorMap;
+    }
+
+    private final String id;
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override

@@ -11,6 +11,8 @@ public interface TraceProxy {
 
     enum Level {DEBUG, INFO;}
 
+    String getId();
+
     /**
      * Must be run in the UI thread.
      */

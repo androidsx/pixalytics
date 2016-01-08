@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.pixable.pixalytics.core.platform.Platform;
 import com.pixable.pixalytics.core.proxy.PlatformProxy;
-import com.pixable.pixalytics.core.trace.TraceId;
 import com.pixable.pixalytics.core.trace.TraceProxy;
 
 import java.util.Collections;
@@ -68,8 +67,8 @@ public class Pixalytics {
      * @param context application context
      */
     public void onApplicationCreate(Context context) {
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "On application create",
                     Collections.<String, Object>emptyMap(),
@@ -96,8 +95,8 @@ public class Pixalytics {
     public void onSessionStart(Context context, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Session start",
                     Collections.<String, Object>emptyMap(),
@@ -142,8 +141,8 @@ public class Pixalytics {
         } else {
             final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-            for (TraceId traceId : configuration.getTraceIds()) {
-                traceId.getProxy().traceMessage(context,
+            for (TraceProxy trace : configuration.getTraces()) {
+                trace.traceMessage(context,
                         TraceProxy.Level.DEBUG,
                         "Register common property",
                         new HashMap<String, Object>() {{
@@ -209,8 +208,8 @@ public class Pixalytics {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Trace
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Register user property",
                     Collections.singletonMap(name, value),
@@ -238,8 +237,8 @@ public class Pixalytics {
         final Event eventCopy = new Event.Builder(event).build();
 
         // Trace
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.INFO,
                     eventCopy.getName(),
                     eventCopy.getProperties(),
@@ -263,8 +262,8 @@ public class Pixalytics {
     public void trackScreen(Context context, Screen screen, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Screen " + screen.getName(),
                     screen.getProperties(),
@@ -292,8 +291,8 @@ public class Pixalytics {
         properties.put("network", network);
         properties.put("action", action);
         properties.put("target", target);
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.INFO,
                     "Social Interaction",
                     properties,
@@ -317,8 +316,8 @@ public class Pixalytics {
     public void trackRevenue(Context context, String product, double revenue, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
-        for (TraceId traceId : configuration.getTraceIds()) {
-            traceId.getProxy().traceMessage(context,
+        for (TraceProxy trace : configuration.getTraces()) {
+            trace.traceMessage(context,
                     TraceProxy.Level.DEBUG,
                     "Purchased " + product,
                     Collections.singletonMap("Revenue", (Object) ("$" + revenue)),

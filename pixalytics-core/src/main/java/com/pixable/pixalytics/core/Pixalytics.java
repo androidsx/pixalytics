@@ -14,11 +14,11 @@ import java.util.Set;
 
 /**
  * Entry point for the Pixalytics. To make usage simple, it is a singleton.
- * <p/>
+ * <p>
  * In your {@link android.app.Application#onCreate} lifecycle method, construct the singleton
  * instance with {@link #createInstance}, and then use {@link #onApplicationCreate} right there to
  * initialize the application tracking.
- * <p/>
+ * <p>
  * After that, use {@link #get} to call the other methods as needed.
  */
 public class Pixalytics {
@@ -61,7 +61,7 @@ public class Pixalytics {
     /**
      * To be called from the {@code onCreate} method of your {@link android.app.Application}
      * instance.
-     * <p/>
+     * <p>
      * This is required.
      *
      * @param context application context

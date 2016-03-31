@@ -38,6 +38,10 @@ public class ToastTraceProxy implements TraceProxy {
      */
     final Map<Level, Integer> backgroundColorMap = new HashMap<>();
 
+    /**
+     * @param context any type of context. Only the application context will be accessed and retained
+     * @param id your unique identifier for this trace proxy
+     */
     public ToastTraceProxy(Context context, String id) {
         this.applicationContext = context.getApplicationContext();
         this.id = id;

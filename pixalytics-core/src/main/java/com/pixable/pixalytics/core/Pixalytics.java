@@ -68,8 +68,7 @@ public class Pixalytics {
      */
     public void onApplicationCreate(Context context) {
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.DEBUG,
+            trace.traceMessage(TraceProxy.Level.DEBUG,
                     "On application create",
                     Collections.<String, Object>emptyMap(),
                     configuration.getPlatforms());
@@ -96,8 +95,7 @@ public class Pixalytics {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.DEBUG,
+            trace.traceMessage(TraceProxy.Level.DEBUG,
                     "Session start",
                     Collections.<String, Object>emptyMap(),
                     platforms);
@@ -128,22 +126,19 @@ public class Pixalytics {
      * concept, such as Mixpanel's super-properties. For others, this is managed by an
      * external mechanism or not supported.
      *
-     * @param context activity context
      * @param name name of the property to add
      * @param value value of the property to add. If null, the property will be cleared
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void addCommonProperty(Context context, final String name, final Object value,
-                                  String... platformIds) {
+    public void addCommonProperty(final String name, final Object value, String... platformIds) {
         if (value == null) {
             clearCommonProperty(name, platformIds);
         } else {
             final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
             for (TraceProxy trace : configuration.getTraces()) {
-                trace.traceMessage(context,
-                        TraceProxy.Level.DEBUG,
+                trace.traceMessage(TraceProxy.Level.DEBUG,
                         "Register common property",
                         new HashMap<String, Object>() {{
                             put(name, value);
@@ -160,10 +155,9 @@ public class Pixalytics {
     /**
      * @see #addCommonProperty
      */
-    public void addCommonProperties(Context context, Map<String, Object> commonProperties,
-                                    String... platformIds) {
+    public void addCommonProperties(Map<String, Object> commonProperties, String... platformIds) {
         for (Map.Entry<String, Object> entry : commonProperties.entrySet()) {
-            addCommonProperty(context, entry.getKey(), entry.getValue(), platformIds);
+            addCommonProperty(entry.getKey(), entry.getValue(), platformIds);
         }
     }
 
@@ -204,13 +198,12 @@ public class Pixalytics {
      * @throws java.lang.UnsupportedOperationException if user properties are not supported by
      *                                                 this platform
      */
-    public void addUserProperty(Context context, String name, Object value, String... platformIds) {
+    public void addUserProperty(String name, Object value, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Trace
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.DEBUG,
+            trace.traceMessage(TraceProxy.Level.DEBUG,
                     "Register user property",
                     Collections.singletonMap(name, value),
                     platforms);
@@ -225,12 +218,11 @@ public class Pixalytics {
     /**
      * Tracks the provided event in the provided platforms.
      *
-     * @param context activity context
      * @param event event to be tracked
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void trackEvent(Context context, Event event, String... platformIds) {
+    public void trackEvent(Event event, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         // Let's work on a copy to make sure tracers or platforms don't fiddle with the properties
@@ -238,8 +230,7 @@ public class Pixalytics {
 
         // Trace
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.INFO,
+            trace.traceMessage(TraceProxy.Level.INFO,
                     eventCopy.getName(),
                     eventCopy.getProperties(),
                     platforms);
@@ -254,7 +245,6 @@ public class Pixalytics {
     /**
      * Tracks a screen transition in the provided platforms.
      *
-     * @param context activity context
      * @param screen screen to be tracked
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
@@ -263,8 +253,7 @@ public class Pixalytics {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.DEBUG,
+            trace.traceMessage(TraceProxy.Level.DEBUG,
                     "Screen " + screen.getName(),
                     screen.getProperties(),
                     platforms);
@@ -278,22 +267,20 @@ public class Pixalytics {
     /**
      * Tracks a social interaction
      *
-     * @param context activity context
      * @param network network where social interaction happened
      * @param action action happening in social interaction
      * @param target target associated to social interaction
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void trackSocial(Context context, String network, String action, String target, String... platformIds) {
+    public void trackSocial(String network, String action, String target, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
         Map<String, Object> properties = new HashMap<>();
         properties.put("network", network);
         properties.put("action", action);
         properties.put("target", target);
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.INFO,
+            trace.traceMessage(TraceProxy.Level.INFO,
                     "Social Interaction",
                     properties,
                     platforms);
@@ -307,18 +294,16 @@ public class Pixalytics {
     /**
      * Tracks revenue generated after the purchase of a product.
      *
-     * @param context activity context
      * @param product product that was purchased
      * @param revenue revenue generated by this purchase
      * @param platformIds platforms to which this event is to be sent. At least one platform must
      *                    be provided
      */
-    public void trackRevenue(Context context, String product, double revenue, String... platformIds) {
+    public void trackRevenue(String product, double revenue, String... platformIds) {
         final Set<Platform> platforms = checkAndGetPlatformsFromIds(platformIds);
 
         for (TraceProxy trace : configuration.getTraces()) {
-            trace.traceMessage(context,
-                    TraceProxy.Level.DEBUG,
+            trace.traceMessage(TraceProxy.Level.DEBUG,
                     "Purchased " + product,
                     Collections.singletonMap("Revenue", (Object) ("$" + revenue)),
                     platforms);

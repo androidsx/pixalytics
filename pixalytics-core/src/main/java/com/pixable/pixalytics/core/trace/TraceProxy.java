@@ -1,7 +1,5 @@
 package com.pixable.pixalytics.core.trace;
 
-import android.content.Context;
-
 import com.pixable.pixalytics.core.platform.Platform;
 
 import java.util.Collection;
@@ -13,11 +11,7 @@ public interface TraceProxy {
 
     String getId();
 
-    /**
-     * Must be run in the UI thread.
-     */
-    void traceMessage(Context context,
-                      Level level,
+    void traceMessage(Level level,
                       String messageTitle,
                       Map<String, Object> properties, Collection<Platform> platforms);
 }

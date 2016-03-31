@@ -1,11 +1,10 @@
 package com.pixable.pixalytics.core.trace;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,10 @@ import java.util.TreeMap;
 public class ToastTraceProxy implements TraceProxy {
     private static final String TAG = "Pixalytics-" + ToastTraceProxy.class.getSimpleName();
 
+    private final String id;
+
+    private final Context applicationContext;
+
     final Map<Level, Integer> durationMap = new HashMap<Level, Integer>() {{
         put(Level.DEBUG, Toast.LENGTH_SHORT);
         put(Level.INFO, Toast.LENGTH_LONG);
@@ -35,7 +38,8 @@ public class ToastTraceProxy implements TraceProxy {
      */
     final Map<Level, Integer> backgroundColorMap = new HashMap<>();
 
-    public ToastTraceProxy(String id) {
+    public ToastTraceProxy(Context context, String id) {
+        this.applicationContext = context.getApplicationContext();
         this.id = id;
     }
 
@@ -48,48 +52,43 @@ public class ToastTraceProxy implements TraceProxy {
         return backgroundColorMap;
     }
 
-    private final String id;
-
     @Override
     public String getId() {
         return id;
     }
 
     @Override
-    public void traceMessage(final Context context, Level level, final String messageTitle, Map<String, Object> properties, final Collection<Platform> platforms) {
-        final int color = context.getResources().getColor(getBackgroundColorMap().get(level));
+    public void traceMessage(Level level, final String messageTitle, Map<String, Object> properties, final Collection<Platform> platforms) {
+        final int color = applicationContext.getResources().getColor(getBackgroundColorMap().get(level));
         final Integer duration = durationMap.get(level);
         final String messageBody = mapToLinedString(properties);
 
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             // We're in the UI thread, all fine
-            displayToast(context, color, duration, messageTitle, messageBody, platforms);
-        } else if (context instanceof Activity) {
-            // Well, even if we were not called in the UI thread, let's try to fix it
-            ((Activity) context).runOnUiThread(new Runnable() {
+            displayToast(color, duration, messageTitle, messageBody, platforms);
+        } else {
+            // Well, even if we were not called in the UI thread, let's fix it
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    displayToast(context, color, duration, messageTitle, messageBody, platforms);
+                    displayToast(color, duration, messageTitle, messageBody, platforms);
                 }
             });
-        } else {
-            // Nop, no way we can show a toast
-            Log.w(TAG, "Can't create the toast for the message \"" + messageTitle + "\": we're not in the UI thread");
         }
     }
 
     /** Must be run in the UI thread. */
-    private void displayToast(Context context, int color, int duration, String messageTitle, String messageBody, Collection<Platform> platforms) {
+    private void displayToast(int color, int duration, String messageTitle, String messageBody, Collection<Platform> platforms) {
         final LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
+                (LayoutInflater) applicationContext.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") final View layout = inflater.inflate(R.layout.pixalytics__tracking_debug_toast, null);
 
-        final Toast toast = new Toast(context);
+        final Toast toast = new Toast(applicationContext);
         //noinspection ResourceType
         toast.setDuration(duration);
         toast.setGravity(Gravity.START | Gravity.BOTTOM,
-                context.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin),
-                context.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin));
+                applicationContext.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin),
+                applicationContext.getResources().getInteger(R.integer.pixalytics__tracking_toast_margin));
         layout.findViewById(R.id.pixalytics__toast_container).setBackgroundColor(
                 color);
 
@@ -98,10 +97,10 @@ public class ToastTraceProxy implements TraceProxy {
 
         LinearLayout platformsList = (LinearLayout) layout.findViewById(R.id.pixalytics_platforms_list);
         for (Platform platform : platforms) {
-            ImageView platformIcon = new ImageView(context);
+            ImageView platformIcon = new ImageView(applicationContext);
             platformIcon.setPadding(8, 0, 0, 0); // A little separation between platform icons
             platformIcon.setImageResource(platform.getIconId());
-            final int iconSize = (int) context.getResources().getDimension(R.dimen.pixalytics__tracking_toast_platform_icon_size);
+            final int iconSize = (int) applicationContext.getResources().getDimension(R.dimen.pixalytics__tracking_toast_platform_icon_size);
             platformIcon.setLayoutParams(new LinearLayout.LayoutParams(iconSize, iconSize));
             platformsList.addView(platformIcon);
         }

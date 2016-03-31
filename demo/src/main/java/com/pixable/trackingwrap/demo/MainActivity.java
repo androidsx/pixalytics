@@ -23,12 +23,13 @@ public class MainActivity extends ActionBarActivity {
         commonProperties.put("Common Key", "Value2");
     }
 
-    private TraceProxy toastTrace = new ToastTraceProxy(Constants.Traces.TOASTS.name());
+    private TraceProxy toastTrace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toastTrace = new ToastTraceProxy(this, Constants.Traces.TOASTS.name());
         trackScreen();
     }
 
@@ -40,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         Pixalytics.get().onSessionStart(this, Constants.PlatformIds.FLURRY.name());
 
         //Add some commonProperties
-        Pixalytics.get().addCommonProperties(this, commonProperties, Constants.PlatformIds.MIXPANEL.name(), Constants.PlatformIds.GOOGLE_ANALYTICS.name());
+        Pixalytics.get().addCommonProperties(commonProperties, Constants.PlatformIds.MIXPANEL.name(), Constants.PlatformIds.GOOGLE_ANALYTICS.name());
     }
 
     @Override
@@ -50,11 +51,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onFlurryClick(View view) {
-        Pixalytics.get().trackEvent(this, new Event.Builder().name("Foo").build(), Constants.PlatformIds.FLURRY.name());
+        Pixalytics.get().trackEvent(new Event.Builder().name("Foo").build(), Constants.PlatformIds.FLURRY.name());
     }
 
     public void onMixpanelClick(View view) {
-        Pixalytics.get().trackEvent(this,
+        Pixalytics.get().trackEvent(
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .build(),
@@ -62,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onGoogleAnalyticsClick(View view) {
-        Pixalytics.get().trackEvent(this,
+        Pixalytics.get().trackEvent(
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
@@ -72,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onFacebookClick(View view) {
-        Pixalytics.get().trackEvent(this,
+        Pixalytics.get().trackEvent(
                 new Event.Builder().name("Foo")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")
@@ -82,7 +83,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onAllPlatformsClick(View view) {
-        Pixalytics.get().trackEvent(this,
+        Pixalytics.get().trackEvent(
                 new Event.Builder().name("Bar")
                         .property("Key1", "Value1")
                         .property("Key2", "Value2")

@@ -28,7 +28,7 @@ public class DemoApplication extends Application {
                 .addPlatform(new GoogleAnalyticsPlatform(Constants.PlatformIds.GOOGLE_ANALYTICS.name(), new GoogleAnalyticsPlatform.Config("ga-app-key", gaDimensionsMapping, gaMetricsMapping)))
                 .addPlatform(new FacebookPlatform(Constants.PlatformIds.FACEBOOK.name(), new FacebookPlatform.Config("fb-app-key", fbEventsMapping, fbParametersMapping)))
                 .addTrace(new LogcatTraceProxy(Constants.Traces.LOGCAT.name()))
-                .addTrace(new ToastTraceProxy(Constants.Traces.TOASTS.name()))
+                .addTrace(new ToastTraceProxy(this, Constants.Traces.TOASTS.name()))
                 .build();
         Pixalytics.createInstance(configuration).onApplicationCreate(this);
     }

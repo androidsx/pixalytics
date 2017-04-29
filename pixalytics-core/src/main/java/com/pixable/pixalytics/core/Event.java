@@ -41,7 +41,7 @@ public class Event extends KeyValueMap {
         /**
          * Adds a property. Add as many properties (key-value pairs) as you wish.
          */
-        public Builder property(String name, String value) {
+        public Builder property(String name, Object value) {
             properties.put(name, value);
             return this;
         }
